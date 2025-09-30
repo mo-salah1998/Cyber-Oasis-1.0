@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyber Oasis 1.0: Hack the Dunes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'desert-night': '#0a0e1a',
+                        'desert-blue': '#1e293b',
+                        'desert-orange': '#ea580c',
+                        'desert-sand': '#f59e0b',
+                        'desert-gold': '#fbbf24',
+                        'desert-warm': '#fed7aa',
+                        'cyber-dark': '#0f172a',
+                        'cyber-blue': '#1e3a8a',
+                        'cyber-orange': '#ea580c',
+                        'cyber-sand': '#f59e0b'
+                    },
+                    backgroundImage: {
+                        'desert-gradient': 'linear-gradient(135deg, #0a0e1a 0%, #1e293b 50%, #ea580c 100%)',
+                        'dune-gradient': 'linear-gradient(45deg, #f59e0b 0%, #ea580c 50%, #fbbf24 100%)',
+                        'cyber-gradient': 'linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #ea580c 100%)'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-desert-night text-white overflow-x-hidden">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-desert-night/95 backdrop-blur-md z-50 border-b border-desert-orange/30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <div class="text-2xl font-bold bg-gradient-to-r from-desert-orange to-desert-sand bg-clip-text text-transparent">
+                    Cyber Oasis 1.0
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#home" class="hover:text-desert-orange transition-colors duration-300">Home</a>
+                    <a href="#about" class="hover:text-desert-orange transition-colors duration-300">About</a>
+                    <a href="#program" class="hover:text-desert-orange transition-colors duration-300">Program</a>
+                    <a href="#hackathon" class="hover:text-desert-orange transition-colors duration-300">Hackathon</a>
+                    <a href="#conferences" class="hover:text-desert-orange transition-colors duration-300">Conferences</a>
+                    <a href="#partners" class="hover:text-desert-orange transition-colors duration-300">Partners</a>
+                    <a href="#contact" class="hover:text-desert-orange transition-colors duration-300">Contact</a>
+                </div>
+                <button id="mobile-menu-btn" class="md:hidden text-desert-orange">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-desert-night border-t border-desert-orange/30">
+            <div class="px-4 py-2 space-y-2">
+                <a href="#home" class="block py-2 hover:text-desert-orange transition-colors">Home</a>
+                <a href="#about" class="block py-2 hover:text-desert-orange transition-colors">About</a>
+                <a href="#program" class="block py-2 hover:text-desert-orange transition-colors">Program</a>
+                <a href="#hackathon" class="block py-2 hover:text-desert-orange transition-colors">Hackathon</a>
+                <a href="#conferences" class="block py-2 hover:text-desert-orange transition-colors">Conferences</a>
+                <a href="#partners" class="block py-2 hover:text-desert-orange transition-colors">Partners</a>
+                <a href="#contact" class="block py-2 hover:text-desert-orange transition-colors">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center justify-center relative overflow-hidden">
+        <!-- Desert-themed background with dunes -->
+        <div class="absolute inset-0 bg-desert-gradient"></div>
+        
+        <!-- Starry night sky effect -->
+        <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23f59e0b" fill-opacity="0.3"%3E%3Ccircle cx="30" cy="30" r="1"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-40"></div>
+        
+        <!-- Dune silhouettes -->
+        <div class="absolute bottom-0 left-0 w-full h-64 bg-gradient-to-t from-desert-orange/20 to-transparent"></div>
+        <div class="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-desert-sand/30 to-transparent"></div>
+        
+        <!-- Floating digital elements inspired by the poster -->
+        <div class="absolute top-20 left-10 w-24 h-24 border border-desert-orange/40 rounded-full animate-pulse"></div>
+        <div class="absolute top-32 right-16 w-16 h-16 border border-desert-sand/40 rounded-full animate-pulse delay-1000"></div>
+        <div class="absolute bottom-32 left-20 w-20 h-20 border border-desert-orange/30 rounded-full animate-pulse delay-500"></div>
+        <div class="absolute top-1/2 right-10 w-12 h-12 border border-desert-sand/30 rounded-full animate-pulse delay-700"></div>
+        
+        <!-- Circuit board pattern overlay -->
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute top-1/4 left-1/4 w-32 h-32 border border-desert-orange/20 transform rotate-45"></div>
+            <div class="absolute bottom-1/4 right-1/4 w-24 h-24 border border-desert-sand/20 transform rotate-12"></div>
+        </div>
+        
+        <div class="relative z-10 text-center max-w-6xl mx-auto px-4">
+            <h1 class="text-6xl md:text-8xl font-bold mb-6 bg-gradient-to-r from-desert-orange via-desert-sand to-desert-gold bg-clip-text text-transparent">
+                Cyber Oasis 1.0
+            </h1>
+            <h2 class="text-4xl md:text-6xl font-bold mb-8 text-white drop-shadow-lg">
+                Hack the Dunes
+            </h2>
+            <p class="text-xl md:text-2xl mb-12 text-gray-300 max-w-4xl mx-auto leading-relaxed">
+                The first Maghreb student forum & hackathon in cybersecurity.<br>
+                <span class="text-desert-orange font-semibold text-2xl">Tunisia – Algeria – Libya</span>, united to build a resilient cyber culture.<br>
+                Three days of challenges, innovation, and regional cooperation.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-6 justify-center">
+                <button onclick="openRegistrationModal()" class="bg-gradient-to-r from-desert-orange to-desert-sand hover:from-orange-600 hover:to-yellow-500 text-white px-10 py-5 rounded-lg font-bold text-xl transition-all transform hover:scale-105 shadow-lg shadow-desert-orange/25">
+                    <i class="fas fa-user-plus mr-3"></i>Register
+                </button>
+                <button onclick="scrollToSection('program')" class="border-2 border-desert-orange text-desert-orange hover:bg-desert-orange hover:text-white px-10 py-5 rounded-lg font-bold text-xl transition-all duration-300 shadow-lg">
+                    <i class="fas fa-calendar-alt mr-3"></i>View Program
+                </button>
+                <button onclick="scrollToSection('partners')" class="border-2 border-desert-sand text-desert-sand hover:bg-desert-sand hover:text-desert-night px-10 py-5 rounded-lg font-bold text-xl transition-all duration-300 shadow-lg">
+                    <i class="fas fa-handshake mr-3"></i>Become a Partner
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-gradient-to-r from-desert-blue/30 to-desert-orange/20">
+        <div class="max-w-6xl mx-auto px-4">
+            <h2 class="text-5xl md:text-6xl font-bold text-center mb-12 bg-gradient-to-r from-desert-orange to-desert-sand bg-clip-text text-transparent">
+                A Journey Beyond the Digital Horizon
+            </h2>
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <p class="text-2xl text-gray-300 leading-relaxed mb-8 font-light">
+                        In the desert, finding an oasis is survival. In cyberspace, detecting a vulnerability is security.
+                    </p>
+                    <p class="text-xl text-gray-400 leading-relaxed">
+                        Cyber Oasis 1.0 bridges this symbolism with one mission: to train the next generation of Maghreb cyber defenders.
+                    </p>
+                </div>
+                <div class="bg-desert-night/60 p-8 rounded-xl border border-desert-orange/30 backdrop-blur-sm">
+                    <h3 class="text-3xl font-bold text-desert-sand mb-6">Event Details</h3>
+                    <div class="space-y-4 text-gray-300">
+                        <p class="flex items-center text-lg">
+                            <i class="fas fa-map-marker-alt text-desert-orange mr-4 text-xl"></i>
+                            Faculty of Sciences of Gabès – Tunisia
+                        </p>
+                        <p class="flex items-center text-lg">
+                            <i class="fas fa-calendar text-desert-orange mr-4 text-xl"></i>
+                            October 24-26, 2025
+                        </p>
+                        <p class="flex items-center text-lg">
+                            <i class="fas fa-users text-desert-orange mr-4 text-xl"></i>
+                            3 Countries: Tunisia, Algeria, Libya
+                        </p>
+                        <p class="flex items-center text-lg">
+                            <i class="fas fa-clock text-desert-orange mr-4 text-xl"></i>
+                            3 Days of Innovation
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Program Section -->
+    <section id="program" class="py-20 bg-desert-night">
+        <div class="max-w-6xl mx-auto px-4">
+            <h2 class="text-5xl md:text-6xl font-bold text-center mb-12 bg-gradient-to-r from-desert-orange to-desert-sand bg-clip-text text-transparent">
+                Program
+            </h2>
+            <p class="text-2xl text-gray-300 text-center mb-16 max-w-4xl mx-auto">
+                Cyber Oasis 1.0 unfolds in three stages:
+            </p>
+            
+            <div class="grid md:grid-cols-3 gap-8 mb-16">
+                <div class="bg-gradient-to-br from-desert-blue/40 to-desert-orange/30 p-8 rounded-xl border border-desert-orange/30 backdrop-blur-sm hover:scale-105 transition-transform duration-300">
+                    <div class="text-center mb-6">
+                        <i class="fas fa-laptop-code text-6xl text-desert-orange mb-4"></i>
+                        <h3 class="text-3xl font-bold text-desert-sand">Before the Event</h3>
+                    </div>
+                    <p class="text-gray-300 text-lg">
+                        Online training sessions with international experts and student ambassadors.
+                    </p>
+                </div>
+                
+                <div class="bg-gradient-to-br from-desert-orange/40 to-desert-sand/30 p-8 rounded-xl border border-desert-sand/30 backdrop-blur-sm hover:scale-105 transition-transform duration-300">
+                    <div class="text-center mb-6">
+                        <i class="fas fa-calendar-day text-6xl text-desert-sand mb-4"></i>
+                        <h3 class="text-3xl font-bold text-desert-orange">During the Event</h3>
+                    </div>
+                    <p class="text-gray-300 text-lg">
+                        Inspiring conferences, hands-on workshops, CTF hackathon, networking, partnership agreements.
+                    </p>
+                </div>
+                
+                <div class="bg-gradient-to-br from-desert-sand/40 to-desert-blue/30 p-8 rounded-xl border border-desert-blue/30 backdrop-blur-sm hover:scale-105 transition-transform duration-300">
+                    <div class="text-center mb-6">
+                        <i class="fas fa-infinity text-6xl text-desert-blue mb-4"></i>
+                        <h3 class="text-3xl font-bold text-desert-orange">After</h3>
+                    </div>
+                    <p class="text-gray-300 text-lg">
+                        A lasting legacy – a cyclical event hosted each year by a Maghreb university.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Detailed Schedule -->
+            <div class="bg-desert-night/80 p-8 rounded-xl border border-desert-orange/30 backdrop-blur-sm">
+                <h3 class="text-4xl font-bold text-desert-orange mb-10 text-center">Detailed Schedule</h3>
+                
+                <!-- Day 1 -->
+                <div class="mb-10">
+                    <h4 class="text-3xl font-bold text-desert-sand mb-6">Day 1 – Friday, October 24, 2025</h4>
+                    <div class="space-y-4 text-gray-300">
+                        <div class="flex items-center bg-desert-blue/20 p-3 rounded-lg">
+                            <span class="w-32 text-desert-orange font-bold text-lg">08:30-09:30</span>
+                            <span class="text-lg">Welcome and participant registration</span>
+                        </div>
+                        <div class="flex items-center bg-desert-blue/20 p-3 rounded-lg">
+                            <span class="w-32 text-desert-orange font-bold text-lg">09:30-10:30</span>
+                            <span class="text-lg">Opening ceremony</span>
+                        </div>
+                        <div class="flex items-center bg-desert-blue/20 p-3 rounded-lg">
+                            <span class="w-32 text-desert-orange font-bold text-lg">10:30-11:10</span>
+                            <span class="text-lg">Conference 1 – Cyber threats in 2025: challenges and issues</span>
+                        </div>
+                        <div class="flex items-center bg-desert-blue/20 p-3 rounded-lg">
+                            <span class="w-32 text-desert-orange font-bold text-lg">11:15-12:00</span>
+                            <span class="text-lg">Conference 2 – Cybersecurity and the Maghreb job market</span>
+                        </div>
+                        <div class="flex items-center bg-desert-blue/20 p-3 rounded-lg">
+                            <span class="w-32 text-desert-orange font-bold text-lg">14:00-16:00</span>
+                            <span class="text-lg">Technical workshops: Penetration testing, Cryptographic analysis, Web application security</span>
+                        </div>
+                        <div class="flex items-center bg-desert-blue/20 p-3 rounded-lg">
+                            <span class="w-32 text-desert-orange font-bold text-lg">16:00-17:00</span>
+                            <span class="text-lg">Roundtable on cybersecurity ethics</span>
+                        </div>
+                        <div class="flex items-center bg-desert-blue/20 p-3 rounded-lg">
+                            <span class="w-32 text-desert-orange font-bold text-lg">20:30-22:30</span>
+                            <span class="text-lg">Musical evening with "Lotos Hand Band"</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Day 2 -->
+                <div class="mb-10">
+                    <h4 class="text-3xl font-bold text-desert-sand mb-6">Day 2 – Saturday, October 25, 2025</h4>
+                    <div class="space-y-4 text-gray-300">
+                        <div class="flex items-center bg-desert-orange/20 p-3 rounded-lg">
+                            <span class="w-32 text-desert-orange font-bold text-lg">09:00-10:00</span>
+                            <span class="text-lg">Conference 3 – Cybersecurity governance: Protection and Vision (Sami Sahraoui, CEO Protected Consulting)</span>
+                        </div>
+                        <div class="flex items-center bg-desert-orange/20 p-3 rounded-lg">
+                            <span class="w-32 text-desert-orange font-bold text-lg">10:00-12:00</span>
+                            <span class="text-lg">Advanced workshops: Vulnerability analysis and exploitation, Attack detection tools</span>
+                        </div>
+                        <div class="flex items-center bg-desert-orange/20 p-3 rounded-lg">
+                            <span class="w-32 text-desert-orange font-bold text-lg">14:00-16:00</span>
+                            <span class="text-lg">Hackathon preparation workshop</span>
+                        </div>
+                        <div class="flex items-center bg-desert-orange/20 p-3 rounded-lg">
+                            <span class="w-32 text-desert-orange font-bold text-lg">16:00-17:00</span>
+                            <span class="text-lg">Team presentations and final instructions</span>
+                        </div>
+                        <div class="flex items-center bg-gradient-to-r from-desert-sand/30 to-desert-orange/30 p-3 rounded-lg">
+                            <span class="w-32 text-desert-orange font-bold text-lg">17:00</span>
+                            <span class="text-desert-sand font-bold text-xl">🚀 Launch of the 24-hour Cybersecurity Hackathon!</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Day 3 -->
+                <div>
+                    <h4 class="text-3xl font-bold text-desert-sand mb-6">Day 3 – Sunday, October 26, 2025</h4>
+                    <div class="space-y-4 text-gray-300">
+                        <div class="flex items-center bg-desert-sand/20 p-3 rounded-lg">
+                            <span class="w-32 text-desert-orange font-bold text-lg">10:00</span>
+                            <span class="text-lg">End of Hackathon and project submission</span>
+                        </div>
+                        <div class="flex items-center bg-desert-sand/20 p-3 rounded-lg">
+                            <span class="w-32 text-desert-orange font-bold text-lg">11:00-12:30</span>
+                            <span class="text-lg">Team presentations to the jury</span>
+                        </div>
+                        <div class="flex items-center bg-desert-sand/20 p-3 rounded-lg">
+                            <span class="w-32 text-desert-orange font-bold text-lg">12:30-13:30</span>
+                            <span class="text-lg">Jury deliberations</span>
+                        </div>
+                        <div class="flex items-center bg-gradient-to-r from-desert-gold/30 to-desert-orange/30 p-3 rounded-lg">
+                            <span class="w-32 text-desert-orange font-bold text-lg">13:30-14:00</span>
+                            <span class="text-desert-sand font-bold text-xl">🏆 Results announcement and closing ceremony</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hackathon Section -->
+    <section id="hackathon" class="py-20 bg-gradient-to-r from-desert-orange/20 to-desert-sand/20">
+        <div class="max-w-6xl mx-auto px-4">
+            <h2 class="text-5xl md:text-6xl font-bold text-center mb-12 bg-gradient-to-r from-desert-orange to-desert-sand bg-clip-text text-transparent">
+                Hack the Dunes – Capture the Flag
+            </h2>
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <p class="text-2xl text-gray-300 leading-relaxed mb-8 font-light">
+                        A Jeopardy-style CTF where the brightest student teams take on real cyber threats.
+                    </p>
+                    <div class="space-y-6">
+                        <div class="flex items-center text-xl text-gray-300">
+                            <i class="fas fa-clock text-desert-orange mr-4 text-3xl"></i>
+                            <span>24 hours of adrenaline, strategy, and creativity</span>
+                        </div>
+                        <div class="flex items-center text-xl text-gray-300">
+                            <i class="fas fa-trophy text-desert-sand mr-4 text-3xl"></i>
+                            <span>Prizes, recognition, and a place in the history of Maghreb cybersecurity</span>
+                        </div>
+                        <div class="flex items-center text-xl text-gray-300">
+                            <i class="fas fa-users text-desert-blue mr-4 text-3xl"></i>
+                            <span>Teams of 2 students from Tunisia, Algeria, and Libya</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-desert-night/60 p-8 rounded-xl border border-desert-orange/30 backdrop-blur-sm">
+                    <h3 class="text-3xl font-bold text-desert-sand mb-6">Registration Requirements</h3>
+                    <ul class="space-y-4 text-gray-300">
+                        <li class="flex items-start text-lg">
+                            <i class="fas fa-check text-desert-orange mr-4 mt-1 text-xl"></i>
+                            <span>Each team consists of 2 students (binôme)</span>
+                        </li>
+                        <li class="flex items-start text-lg">
+                            <i class="fas fa-check text-desert-orange mr-4 mt-1 text-xl"></i>
+                            <span>Students from Tunisia, Algeria, or Libya</span>
+                        </li>
+                        <li class="flex items-start text-lg">
+                            <i class="fas fa-check text-desert-orange mr-4 mt-1 text-xl"></i>
+                            <span>All levels welcome: Beginner to Advanced</span>
+                        </li>
+                        <li class="flex items-start text-lg">
+                            <i class="fas fa-check text-desert-orange mr-4 mt-1 text-xl"></i>
+                            <span>Complete registration form required</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Conferences & Workshops Section -->
+    <section id="conferences" class="py-20 bg-desert-night">
+        <div class="max-w-6xl mx-auto px-4">
+            <h2 class="text-5xl md:text-6xl font-bold text-center mb-12 bg-gradient-to-r from-desert-orange to-desert-sand bg-clip-text text-transparent">
+                Conferences & Workshops
+            </h2>
+            <p class="text-2xl text-gray-300 text-center mb-16 max-w-4xl mx-auto">
+                Sessions led by renowned cybersecurity experts.
+            </p>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-gradient-to-br from-desert-blue/40 to-desert-orange/30 p-8 rounded-xl border border-desert-orange/30 backdrop-blur-sm">
+                    <h3 class="text-3xl font-bold text-desert-sand mb-8">
+                        <i class="fas fa-microphone text-desert-orange mr-4"></i>Conferences
+                    </h3>
+                    <ul class="space-y-4 text-gray-300">
+                        <li class="flex items-start text-lg">
+                            <i class="fas fa-shield-alt text-desert-orange mr-4 mt-1 text-xl"></i>
+                            <span>Cyber threats in 2025: challenges and issues</span>
+                        </li>
+                        <li class="flex items-start text-lg">
+                            <i class="fas fa-robot text-desert-orange mr-4 mt-1 text-xl"></i>
+                            <span>AI & Security</span>
+                        </li>
+                        <li class="flex items-start text-lg">
+                            <i class="fas fa-database text-desert-orange mr-4 mt-1 text-xl"></i>
+                            <span>Data protection</span>
+                        </li>
+                        <li class="flex items-start text-lg">
+                            <i class="fas fa-briefcase text-desert-orange mr-4 mt-1 text-xl"></i>
+                            <span>Cybersecurity and the Maghreb job market</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="bg-gradient-to-br from-desert-orange/40 to-desert-sand/30 p-8 rounded-xl border border-desert-sand/30 backdrop-blur-sm">
+                    <h3 class="text-3xl font-bold text-desert-orange mb-8">
+                        <i class="fas fa-tools text-desert-sand mr-4"></i>Workshops
+                    </h3>
+                    <ul class="space-y-4 text-gray-300">
+                        <li class="flex items-start text-lg">
+                            <i class="fas fa-bug text-desert-sand mr-4 mt-1 text-xl"></i>
+                            <span>Penetration testing</span>
+                        </li>
+                        <li class="flex items-start text-lg">
+                            <i class="fas fa-search text-desert-sand mr-4 mt-1 text-xl"></i>
+                            <span>Digital forensics</span>
+                        </li>
+                        <li class="flex items-start text-lg">
+                            <i class="fas fa-wifi text-desert-sand mr-4 mt-1 text-xl"></i>
+                            <span>IoT security</span>
+                        </li>
+                        <li class="flex items-start text-lg">
+                            <i class="fas fa-code text-desert-sand mr-4 mt-1 text-xl"></i>
+                            <span>Web application security</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="text-center mt-16">
+                <p class="text-xl text-gray-400">
+                    A unique chance to learn directly from top professionals and industry experts.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partners Section -->
+    <section id="partners" class="py-20 bg-gradient-to-r from-desert-blue/30 to-desert-orange/20">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-5xl md:text-6xl font-bold text-center mb-12 bg-gradient-to-r from-desert-orange to-desert-sand bg-clip-text text-transparent">
+                Partners
+            </h2>
+            <div class="text-center mb-16">
+                <p class="text-2xl text-gray-300 mb-8">
+                    Under the patronage of the Ministries of Higher Education & Scientific Research of Tunisia, Algeria, and Libya.
+                </p>
+                <p class="text-xl text-gray-400 mb-8">
+                    Partner with us and associate your brand with a landmark regional event.
+                </p>
+            </div>
+            
+            <!-- Ministry Patronage -->
+            <div class="mb-16">
+                <h3 class="text-3xl font-bold text-desert-sand mb-8 text-center">Ministry Patronage</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+                    <!-- Tunisian Ministry -->
+                    <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+                        <div class="text-center">
+                            <div class="w-24 h-24 mx-auto mb-4 bg-gray-100 rounded-lg flex items-center justify-center">
+                                <div class="text-xs text-gray-600 text-center">
+                                    <div class="font-bold">الجمهورية التونسية</div>
+                                    <div class="text-red-600">🔴</div>
+                                    <div class="text-xs">وزارة التعليم العالي</div>
+                                </div>
+                            </div>
+                            <h4 class="text-lg font-semibold text-gray-800">Tunisian Ministry</h4>
+                            <p class="text-sm text-gray-600">Higher Education & Scientific Research</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Libyan Ministry -->
+                    <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+                        <div class="text-center">
+                            <div class="w-24 h-24 mx-auto mb-4 bg-gray-100 rounded-lg flex items-center justify-center">
+                                <div class="text-xs text-gray-600 text-center">
+                                    <div class="text-yellow-600">🌙⭐</div>
+                                    <div class="text-xs">حكومة الوحدة الوطنية</div>
+                                    <div class="text-xs">وزارة التعليم العالي</div>
+                                </div>
+                            </div>
+                            <h4 class="text-lg font-semibold text-gray-800">Libyan Ministry</h4>
+                            <p class="text-sm text-gray-600">Higher Education & Scientific Research</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Algerian Ministry -->
+                    <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+                        <div class="text-center">
+                            <div class="w-24 h-24 mx-auto mb-4 bg-gray-100 rounded-lg flex items-center justify-center">
+                                <div class="text-xs text-gray-600 text-center">
+                                    <div class="text-green-600">🖐️📚</div>
+                                    <div class="text-xs">وزارة التعليم العالي</div>
+                                    <div class="text-xs">الجمهورية الجزائرية</div>
+                                </div>
+                            </div>
+                            <h4 class="text-lg font-semibold text-gray-800">Algerian Ministry</h4>
+                            <p class="text-sm text-gray-600">Higher Education & Scientific Research</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- University Partners -->
+            <div class="mb-16">
+                <h3 class="text-3xl font-bold text-desert-orange mb-8 text-center">Organizing Universities</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+                    <!-- University of Gabes -->
+                    <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+                        <div class="text-center">
+                            <div class="w-24 h-24 mx-auto mb-4 bg-gradient-to-br from-blue-500 to-orange-500 rounded-lg flex items-center justify-center">
+                                <div class="text-white font-bold text-xs text-center">
+                                    <div>U</div>
+                                    <div>GABES</div>
+                                </div>
+                            </div>
+                            <h4 class="text-lg font-semibold text-gray-800">University of Gabès</h4>
+                            <p class="text-sm text-gray-600">Tunisia</p>
+                        </div>
+                    </div>
+                    
+                    <!-- University of Zawia -->
+                    <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+                        <div class="text-center">
+                            <div class="w-24 h-24 mx-auto mb-4 bg-gradient-to-br from-blue-600 to-yellow-500 rounded-lg flex items-center justify-center">
+                                <div class="text-white font-bold text-xs text-center">
+                                    <div>اقرأ</div>
+                                    <div class="text-xs">1988</div>
+                                </div>
+                            </div>
+                            <h4 class="text-lg font-semibold text-gray-800">University of Zawia</h4>
+                            <p class="text-sm text-gray-600">Libya</p>
+                        </div>
+                    </div>
+                    
+                    <!-- University of Guelma -->
+                    <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+                        <div class="text-center">
+                            <div class="w-24 h-24 mx-auto mb-4 bg-gradient-to-br from-green-600 to-red-500 rounded-lg flex items-center justify-center">
+                                <div class="text-white font-bold text-xs text-center">
+                                    <div>8 ماي</div>
+                                    <div class="text-xs">1945</div>
+                                </div>
+                            </div>
+                            <h4 class="text-lg font-semibold text-gray-800">University 8 May 1945</h4>
+                            <p class="text-sm text-gray-600">Guelma, Algeria</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Technical Partners -->
+            <div class="bg-desert-night/60 p-8 rounded-xl border border-desert-sand/30 backdrop-blur-sm">
+                <h3 class="text-3xl font-bold text-desert-orange mb-8 text-center">Technical Partners</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="flex items-center justify-center p-4 bg-white/10 rounded-lg">
+                        <i class="fas fa-shield-alt text-desert-sand mr-4 text-2xl"></i>
+                        <span class="text-lg font-semibold text-gray-300">Protected Consulting</span>
+                    </div>
+                    <div class="flex items-center justify-center p-4 bg-white/10 rounded-lg">
+                        <i class="fas fa-lock text-desert-sand mr-4 text-2xl"></i>
+                        <span class="text-lg font-semibold text-gray-300">KyubiSec</span>
+                    </div>
+                    <div class="flex items-center justify-center p-4 bg-white/10 rounded-lg">
+                        <i class="fas fa-plus text-desert-sand mr-4 text-2xl"></i>
+                        <span class="text-lg font-semibold text-gray-300">More partners to be announced</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-desert-night">
+        <div class="max-w-6xl mx-auto px-4">
+            <h2 class="text-5xl md:text-6xl font-bold text-center mb-12 bg-gradient-to-r from-desert-orange to-desert-sand bg-clip-text text-transparent">
+                Contact
+            </h2>
+            <p class="text-2xl text-gray-300 text-center mb-16 max-w-4xl mx-auto">
+                Interested in participating, sponsoring, or covering the event? Get in touch:
+            </p>
+            
+            <div class="grid md:grid-cols-2 gap-12">
+                <div class="bg-desert-night/60 p-8 rounded-xl border border-desert-orange/30 backdrop-blur-sm">
+                    <h3 class="text-3xl font-bold text-desert-sand mb-8">Get in Touch</h3>
+                    <div class="space-y-6 text-gray-300">
+                        <div class="flex items-center text-lg">
+                            <i class="fas fa-envelope text-desert-orange mr-4 text-2xl"></i>
+                            <span>Official Cyber Oasis email</span>
+                        </div>
+                        <div class="flex items-center text-lg">
+                            <i class="fas fa-phone text-desert-orange mr-4 text-2xl"></i>
+                            <span>Organizing committee phone number</span>
+                        </div>
+                        <div class="flex items-center text-lg">
+                            <i class="fas fa-map-marker-alt text-desert-orange mr-4 text-2xl"></i>
+                            <span>University of Gabès – Faculty of Sciences</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-desert-night/60 p-8 rounded-xl border border-desert-sand/30 backdrop-blur-sm">
+                    <h3 class="text-3xl font-bold text-desert-orange mb-8">Quick Contact Form</h3>
+                    <form id="contact-form" class="space-y-6">
+                        <div>
+                            <input type="text" id="contact-name" placeholder="Your Name" class="w-full px-4 py-4 bg-desert-night border border-desert-orange/30 rounded-lg text-white placeholder-gray-400 focus:border-desert-orange focus:outline-none text-lg">
+                        </div>
+                        <div>
+                            <input type="email" id="contact-email" placeholder="Your Email" class="w-full px-4 py-4 bg-desert-night border border-desert-orange/30 rounded-lg text-white placeholder-gray-400 focus:border-desert-orange focus:outline-none text-lg">
+                        </div>
+                        <div>
+                            <textarea id="contact-message" placeholder="Your Message" rows="4" class="w-full px-4 py-4 bg-desert-night border border-desert-orange/30 rounded-lg text-white placeholder-gray-400 focus:border-desert-orange focus:outline-none resize-none text-lg"></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-gradient-to-r from-desert-orange to-desert-sand hover:from-orange-600 hover:to-yellow-500 text-white px-8 py-4 rounded-lg font-bold text-xl transition-all shadow-lg shadow-desert-orange/25">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-desert-night border-t border-desert-orange/30 py-12">
+        <div class="max-w-6xl mx-auto px-4 text-center">
+            <div class="text-3xl font-bold bg-gradient-to-r from-desert-orange to-desert-sand bg-clip-text text-transparent mb-6">Cyber Oasis 1.0</div>
+            <p class="text-gray-400 mb-6 text-xl">Hack the Dunes - October 24-26, 2025</p>
+            <p class="text-gray-500 text-lg">
+                © 2025 Cyber Oasis 1.0. All rights reserved. | 
+                <span class="text-desert-orange font-semibold">Tunisia – Algeria – Libya</span>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Registration Modal -->
+    <div id="registration-modal" class="fixed inset-0 bg-black/60 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-desert-night border border-desert-orange/40 rounded-xl max-w-5xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-8 border-b border-desert-orange/30">
+                <div class="flex justify-between items-center">
+                    <h2 class="text-4xl font-bold bg-gradient-to-r from-desert-orange to-desert-sand bg-clip-text text-transparent">Registration Form</h2>
+                    <button onclick="closeRegistrationModal()" class="text-gray-400 hover:text-white text-3xl">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <p class="text-gray-300 mt-4 text-lg">
+                    Cyber Oasis 1.0 – Hack The Dunes<br>
+                    Welcome to the First Maghrebian Student Forum & Hackathon in Cybersecurity
+                </p>
+            </div>
+            
+            <form id="registration-form" class="p-8 space-y-8">
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <label class="block text-desert-sand font-bold mb-3 text-lg">Team Name (Nickname) *</label>
+                        <input type="text" id="team-name" required class="w-full px-4 py-4 bg-desert-night border border-desert-orange/30 rounded-lg text-white placeholder-gray-400 focus:border-desert-orange focus:outline-none text-lg">
+                    </div>
+                    <div>
+                        <label class="block text-desert-sand font-bold mb-3 text-lg">University *</label>
+                        <select id="university" required class="w-full px-4 py-4 bg-desert-night border border-desert-orange/30 rounded-lg text-white focus:border-desert-orange focus:outline-none text-lg">
+                            <option value="">Select University</option>
+                            <option value="university-gabes">University of Gabès (Tunisia)</option>
+                            <option value="university-guelma">University 8 May 1945 Guelma (Algeria)</option>
+                            <option value="university-zawia">University of Zawia (Libya)</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <label class="block text-desert-sand font-bold mb-3 text-lg">Team Leader - First Name & Last Name *</label>
+                        <input type="text" id="leader-name" required class="w-full px-4 py-4 bg-desert-night border border-desert-orange/30 rounded-lg text-white placeholder-gray-400 focus:border-desert-orange focus:outline-none text-lg">
+                    </div>
+                    <div>
+                        <label class="block text-desert-sand font-bold mb-3 text-lg">Team Member - First Name & Last Name *</label>
+                        <input type="text" id="member-name" required class="w-full px-4 py-4 bg-desert-night border border-desert-orange/30 rounded-lg text-white placeholder-gray-400 focus:border-desert-orange focus:outline-none text-lg">
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <label class="block text-desert-sand font-bold mb-3 text-lg">Faculty / School / Institute *</label>
+                        <input type="text" id="faculty" required class="w-full px-4 py-4 bg-desert-night border border-desert-orange/30 rounded-lg text-white placeholder-gray-400 focus:border-desert-orange focus:outline-none text-lg">
+                    </div>
+                    <div>
+                        <label class="block text-desert-sand font-bold mb-3 text-lg">Level of Study *</label>
+                        <select id="study-level" required class="w-full px-4 py-4 bg-desert-night border border-desert-orange/30 rounded-lg text-white focus:border-desert-orange focus:outline-none text-lg">
+                            <option value="">Select Level</option>
+                            <option value="bachelor">Bachelor's Student</option>
+                            <option value="master">Master's Student</option>
+                            <option value="engineering">Engineering Student</option>
+                            <option value="phd">PhD Student</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <label class="block text-desert-sand font-bold mb-3 text-lg">Field of Study / Major *</label>
+                        <input type="text" id="field-study" required class="w-full px-4 py-4 bg-desert-night border border-desert-orange/30 rounded-lg text-white placeholder-gray-400 focus:border-desert-orange focus:outline-none text-lg">
+                    </div>
+                    <div>
+                        <label class="block text-desert-sand font-bold mb-3 text-lg">Team Leader Email Address *</label>
+                        <input type="email" id="leader-email" required class="w-full px-4 py-4 bg-desert-night border border-desert-orange/30 rounded-lg text-white placeholder-gray-400 focus:border-desert-orange focus:outline-none text-lg">
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <label class="block text-desert-sand font-bold mb-3 text-lg">Team Leader Mobile / WhatsApp Number *</label>
+                        <input type="tel" id="leader-phone" required class="w-full px-4 py-4 bg-desert-night border border-desert-orange/30 rounded-lg text-white placeholder-gray-400 focus:border-desert-orange focus:outline-none text-lg">
+                    </div>
+                    <div>
+                        <label class="block text-desert-sand font-bold mb-3 text-lg">Previous Knowledge in Cybersecurity *</label>
+                        <select id="cyber-knowledge" required class="w-full px-4 py-4 bg-desert-night border border-desert-orange/30 rounded-lg text-white focus:border-desert-orange focus:outline-none text-lg">
+                            <option value="">Select Level</option>
+                            <option value="beginner">Beginner</option>
+                            <option value="intermediate">Intermediate</option>
+                            <option value="advanced">Advanced</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-desert-sand font-bold mb-4 text-lg">Has your team already participated in other cybersecurity hackathons? *</label>
+                    <div class="space-y-3">
+                        <label class="flex items-center">
+                            <input type="radio" name="hackathon-experience" value="yes" class="mr-4 text-desert-orange text-lg">
+                            <span class="text-gray-300 text-lg">Yes</span>
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="hackathon-experience" value="no" class="mr-4 text-desert-orange text-lg">
+                            <span class="text-gray-300 text-lg">No</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div id="hackathon-details" class="hidden">
+                    <label class="block text-desert-sand font-bold mb-3 text-lg">If Yes, please specify</label>
+                    <textarea id="hackathon-specify" rows="4" class="w-full px-4 py-4 bg-desert-night border border-desert-orange/30 rounded-lg text-white placeholder-gray-400 focus:border-desert-orange focus:outline-none resize-none text-lg" placeholder="Please describe your previous hackathon experience..."></textarea>
+                </div>
+
+                <div class="flex justify-end space-x-6 pt-8 border-t border-desert-orange/30">
+                    <button type="button" onclick="closeRegistrationModal()" class="px-8 py-4 border border-desert-orange text-desert-orange hover:bg-desert-orange hover:text-white rounded-lg font-bold text-lg transition-all">
+                        Cancel
+                    </button>
+                    <button type="submit" class="px-10 py-4 bg-gradient-to-r from-desert-orange to-desert-sand hover:from-orange-600 hover:to-yellow-500 text-white rounded-lg font-bold text-lg transition-all shadow-lg shadow-desert-orange/25">
+                        <i class="fas fa-paper-plane mr-3"></i>Submit Registration
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

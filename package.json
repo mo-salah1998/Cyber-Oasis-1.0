@@ -1,0 +1,38 @@
+{
+  "name": "cyber-oasis-website",
+  "version": "1.0.0",
+  "description": "Cyber Oasis 1.0: Hack the Dunes - Official Website",
+  "type": "module",
+  "main": "index.html",
+  "scripts": {
+    "dev": "node server.js",
+    "dev:static": "npx serve . -p 3000",
+    "test": "node test-api.js",
+    "build": "echo 'Static site - no build needed'",
+    "start": "node server.js",
+    "deploy": "vercel --prod"
+  },
+  "keywords": [
+    "cybersecurity",
+    "hackathon",
+    "ctf",
+    "tunisia",
+    "algeria",
+    "libya",
+    "maghreb",
+    "cyber-oasis"
+  ],
+  "author": "Cyber Oasis 1.0 Team",
+  "license": "MIT",
+  "devDependencies": {
+    "serve": "^14.2.1"
+  },
+  "dependencies": {
+    "googleapis": "^128.0.0",
+    "express": "^4.18.2",
+    "dotenv": "^16.3.1"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
