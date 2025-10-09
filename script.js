@@ -297,9 +297,22 @@ function initScrollAnimations() {
     });
 }
 
+// Parallax effect for cover image
+function initParallaxEffect() {
+    const coverImage = document.querySelector('#home img');
+    if (!coverImage) return;
+    
+    window.addEventListener('scroll', () => {
+        const scrolled = window.pageYOffset;
+        const rate = scrolled * -0.5;
+        coverImage.style.transform = `translateY(${rate}px)`;
+    });
+}
+
 // Initialize animations when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
     initScrollAnimations();
+    initParallaxEffect();
 });
 
 // Add CSS for animations

@@ -134,10 +134,16 @@ async function addContactHeaders() {
 // Save registration data to Google Sheets
 export async function saveRegistration(data) {
   try {
+    // Generate registration ID if not provided
+    const registrationId = data.registrationId || generateRegistrationId();
+    
+    // First, ensure the sheet is initialized
+    await initializeSheet();
+    
     const values = [
       [
         data.submittedAt,
-        data.registrationId,
+        registrationId,
         data.teamName,
         data.university,
         data.leaderName,
@@ -155,9 +161,10 @@ export async function saveRegistration(data) {
       ]
     ];
     
+    // Use append method with a proper range format
     await sheets.spreadsheets.values.append({
       spreadsheetId: SPREADSHEET_ID,
-      range: `${SHEET_NAME}!A:P`,
+      range: `${SHEET_NAME}!A:Z`,
       valueInputOption: 'RAW',
       insertDataOption: 'INSERT_ROWS',
       requestBody: {
@@ -166,11 +173,18 @@ export async function saveRegistration(data) {
     });
     
     console.log('Registration data saved to Google Sheets');
-    return { success: true };
+    return { success: true, registrationId };
   } catch (error) {
     console.error('Error saving registration to Google Sheets:', error);
     throw error;
   }
+}
+
+// Generate a unique registration ID
+function generateRegistrationId() {
+  const timestamp = Date.now().toString(36);
+  const random = Math.random().toString(36).substr(2, 5);
+  return `CO-${timestamp}-${random}`.toUpperCase();
 }
 
 // Save contact data to Google Sheets

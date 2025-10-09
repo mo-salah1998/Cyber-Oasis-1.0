@@ -66,8 +66,12 @@ export default async function handler(req, res) {
             });
         }
         
+        // Generate registration ID
+        const registrationId = generateRegistrationId();
+        
         // Prepare registration data
         const registrationData = {
+            registrationId,
             teamName,
             university,
             leaderName,
@@ -86,8 +90,9 @@ export default async function handler(req, res) {
         };
         
         // Save to Google Sheets
+        let sheetsResult = null;
         try {
-            await saveRegistration(registrationData);
+            sheetsResult = await saveRegistration(registrationData);
             console.log('Registration saved to Google Sheets:', registrationData);
         } catch (error) {
             console.error('Failed to save registration to Google Sheets:', error);
@@ -101,7 +106,7 @@ export default async function handler(req, res) {
         return res.status(200).json({
             success: true,
             message: 'Registration submitted successfully!',
-            registrationId: generateRegistrationId(),
+            registrationId: registrationId,
             data: {
                 teamName,
                 leaderEmail,
@@ -138,7 +143,7 @@ async function sendRegistrationNotification(data) {
             teamName: data.teamName,
             leaderName: data.leaderName,
             eventDate: data.eventDate,
-            registrationId: generateRegistrationId()
+            registrationId: data.registrationId
         }
     };
     
