@@ -4,7 +4,86 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cyber Oasis 1.0: Hack the Dunes</title>
-    <link href="/styles.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'orbitron': ['Orbitron', 'monospace'],
+                    },
+                    colors: {
+                        'desert-night': '#0a0e1a',
+                        'desert-blue': '#1e293b',
+                        'desert-orange': '#ea580c',
+                        'desert-sand': '#f59e0b',
+                        'desert-gold': '#fbbf24',
+                        'desert-warm': '#fed7aa',
+                        'cyber-dark': '#0f172a',
+                        'cyber-blue': '#1e3a8a',
+                        'cyber-orange': '#ea580c',
+                        'cyber-sand': '#f59e0b'
+                    },
+                    backgroundImage: {
+                        'desert-gradient': 'linear-gradient(135deg, #0a0e1a 0%, #1e293b 50%, #ea580c 100%)',
+                        'dune-gradient': 'linear-gradient(45deg, #f59e0b 0%, #ea580c 50%, #fbbf24 100%)',
+                        'cyber-gradient': 'linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #ea580c 100%)'
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 2s ease-in-out',
+                        'slide-up': 'slideUp 1.5s ease-out',
+                        'gradient-shift': 'gradientShift 8s ease-in-out infinite',
+                        'float-1': 'float1 6s ease-in-out infinite',
+                        'float-2': 'float2 8s ease-in-out infinite',
+                        'float-3': 'float3 7s ease-in-out infinite',
+                        'float-4': 'float4 9s ease-in-out infinite',
+                        'float-5': 'float5 5s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'bounce-slow': 'bounce 3s infinite'
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'scale(1.1)' },
+                            '100%': { opacity: '1', transform: 'scale(1)' }
+                        },
+                        slideUp: {
+                            '0%': { opacity: '0', transform: 'translateY(50px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' }
+                        },
+                        gradientShift: {
+                            '0%, 100%': { opacity: '0.8' },
+                            '50%': { opacity: '0.6' }
+                        },
+                        float1: {
+                            '0%, 100%': { transform: 'translateY(0px) translateX(0px)' },
+                            '25%': { transform: 'translateY(-20px) translateX(10px)' },
+                            '50%': { transform: 'translateY(-10px) translateX(-5px)' },
+                            '75%': { transform: 'translateY(-15px) translateX(8px)' }
+                        },
+                        float2: {
+                            '0%, 100%': { transform: 'translateY(0px) translateX(0px)' },
+                            '33%': { transform: 'translateY(-25px) translateX(-8px)' },
+                            '66%': { transform: 'translateY(-15px) translateX(12px)' }
+                        },
+                        float3: {
+                            '0%, 100%': { transform: 'translateY(0px) translateX(0px)' },
+                            '50%': { transform: 'translateY(-30px) translateX(-10px)' }
+                        },
+                        float4: {
+                            '0%, 100%': { transform: 'translateY(0px) translateX(0px)' },
+                            '25%': { transform: 'translateY(-18px) translateX(15px)' },
+                            '75%': { transform: 'translateY(-22px) translateX(-12px)' }
+                        },
+                        float5: {
+                            '0%, 100%': { transform: 'translateY(0px) translateX(0px)' },
+                            '40%': { transform: 'translateY(-12px) translateX(6px)' },
+                            '80%': { transform: 'translateY(-8px) translateX(-8px)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
@@ -251,91 +330,236 @@
                 </div>
             </div>
 
-            <!-- Detailed Schedule -->
+            <!-- Dynamic Timeline Schedule -->
             <div class="bg-desert-night/80 p-8 rounded-xl border border-desert-orange/30 backdrop-blur-sm">
-                <h3 class="text-4xl font-bold text-desert-orange mb-10 text-center">Detailed Schedule</h3>
+                <div class="flex justify-between items-center mb-10">
+                    <h3 class="text-4xl font-bold text-desert-orange">Detailed Schedule</h3>
+                    <button onclick="downloadSchedule()" class="bg-gradient-to-r from-desert-orange to-desert-sand hover:from-orange-600 hover:to-yellow-500 text-white px-6 py-3 rounded-lg font-bold text-lg transition-all shadow-lg shadow-desert-orange/25 hover:scale-105">
+                        <i class="fas fa-download mr-2"></i>Download Schedule
+                    </button>
+                </div>
                 
-                <!-- Day 1 -->
-                <div class="mb-10">
-                    <h4 class="text-3xl font-bold text-desert-sand mb-6">Day 1 – Friday, October 24, 2025</h4>
-                    <div class="space-y-4 text-gray-300">
-                        <div class="flex items-center bg-desert-blue/20 p-3 rounded-lg">
-                            <span class="w-32 text-desert-orange font-bold text-lg">08:30-09:30</span>
-                            <span class="text-lg">Welcome and participant registration</span>
+                <!-- Timeline Container -->
+                <div class="relative">
+                    <!-- Timeline Line -->
+                    <div class="absolute left-4 md:left-8 top-0 bottom-0 w-1 timeline-line rounded-full opacity-60"></div>
+                    
+                    <!-- Day 1 -->
+                    <div class="relative mb-16">
+                        <div class="flex items-center mb-8 day-header">
+                            <div class="w-16 h-16 bg-gradient-to-br from-desert-orange to-desert-sand rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg animate-pulse-slow">
+                                <i class="fas fa-calendar-day"></i>
+                            </div>
+                            <div class="ml-6">
+                                <h4 class="text-3xl font-bold text-desert-sand">Day 1 – Friday, November 7, 2025 </h4>
+                                <p class="text-gray-400 text-lg">Opening Day & Technical Workshops</p>
+                            </div>
                         </div>
-                        <div class="flex items-center bg-desert-blue/20 p-3 rounded-lg">
-                            <span class="w-32 text-desert-orange font-bold text-lg">09:30-10:30</span>
-                            <span class="text-lg">Opening ceremony</span>
-                        </div>
-                        <div class="flex items-center bg-desert-blue/20 p-3 rounded-lg">
-                            <span class="w-32 text-desert-orange font-bold text-lg">10:30-11:10</span>
-                            <span class="text-lg">Conference 1 – Cyber threats in 2025: challenges and issues</span>
-                        </div>
-                        <div class="flex items-center bg-desert-blue/20 p-3 rounded-lg">
-                            <span class="w-32 text-desert-orange font-bold text-lg">11:15-12:00</span>
-                            <span class="text-lg">Conference 2 – Cybersecurity and the Maghreb job market</span>
-                        </div>
-                        <div class="flex items-center bg-desert-blue/20 p-3 rounded-lg">
-                            <span class="w-32 text-desert-orange font-bold text-lg">14:00-16:00</span>
-                            <span class="text-lg">Technical workshops: Penetration testing, Cryptographic analysis, Web application security</span>
-                        </div>
-                        <div class="flex items-center bg-desert-blue/20 p-3 rounded-lg">
-                            <span class="w-32 text-desert-orange font-bold text-lg">16:00-17:00</span>
-                            <span class="text-lg">Roundtable on cybersecurity ethics</span>
-                        </div>
-                        <div class="flex items-center bg-desert-blue/20 p-3 rounded-lg">
-                            <span class="w-32 text-desert-orange font-bold text-lg">20:30-22:30</span>
-                            <span class="text-lg">Musical evening with "Lotos Hand Band"</span>
+                        
+                        <div class="ml-0 md:ml-8 space-y-6">
+                            <div class="timeline-item bg-desert-blue/20 p-6 rounded-xl border-l-4 border-desert-orange hover:bg-desert-blue/30 transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                                <div class="flex items-center">
+                                    <div class="w-4 h-4 bg-desert-orange rounded-full animate-pulse timeline-dot"></div>
+                                    <span class="ml-4 w-32 text-desert-orange font-bold text-lg">08:30-09:30</span>
+                                    <span class="ml-6 text-lg text-gray-300">Registration and participant check-in</span>
+                                </div>
+                            </div>
+                            
+                            <div class="timeline-item bg-desert-blue/20 p-6 rounded-xl border-l-4 border-desert-orange hover:bg-desert-blue/30 transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                                <div class="flex items-center">
+                                    <div class="w-4 h-4 bg-desert-orange rounded-full animate-pulse timeline-dot"></div>
+                                    <span class="ml-4 w-32 text-desert-orange font-bold text-lg">09:30-10:30</span>
+                                    <span class="ml-6 text-lg text-gray-300">Opening ceremony</span>
+                                </div>
+                            </div>
+                            
+                            <div class="timeline-item bg-desert-blue/20 p-6 rounded-xl border-l-4 border-desert-orange hover:bg-desert-blue/30 transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                                <div class="flex items-center">
+                                    <div class="w-4 h-4 bg-desert-orange rounded-full animate-pulse timeline-dot"></div>
+                                    <span class="ml-4 w-32 text-desert-orange font-bold text-lg">10:30-11:00</span>
+                                    <span class="ml-6 text-lg text-gray-300">Conference 1 – Cyber threats in 2025: challenges and Emerging issues</span>
+                                </div>
+                            </div>
+                            
+                            <div class="timeline-item bg-desert-blue/20 p-6 rounded-xl border-l-4 border-desert-orange hover:bg-desert-blue/30 transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                                <div class="flex items-center">
+                                    <div class="w-4 h-4 bg-desert-orange rounded-full animate-pulse timeline-dot"></div>
+                                    <span class="ml-4 w-32 text-desert-orange font-bold text-lg">11:00-11:30</span>
+                                    <span class="ml-6 text-lg text-gray-300">Conference 2 – Cybersecurity Careers: Professional Roles and Specializations in Arab and Global Markets</span>
+                                </div>
+                            </div>
+                            <div class="timeline-item bg-desert-blue/20 p-6 rounded-xl border-l-4 border-desert-orange hover:bg-desert-blue/30 transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                                <div class="flex items-center">
+                                    <div class="w-4 h-4 bg-desert-orange rounded-full animate-pulse timeline-dot"></div>
+                                    <span class="ml-4 w-32 text-desert-orange font-bold text-lg">11:30-12:00</span>
+                                    <span class="ml-6 text-lg text-gray-300">Conference 3 – Cybersecurity and Artificial Intelligence: A Strategic Duo,</span>
+                                </div>
+                            </div>
+                            <div class="timeline-item bg-desert-blue/20 p-6 rounded-xl border-l-4 border-desert-orange hover:bg-desert-blue/30 transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                                <div class="flex items-center">
+                                    <div class="w-4 h-4 bg-desert-orange rounded-full animate-pulse timeline-dot"></div>
+                                    <span class="ml-4 w-32 text-desert-orange font-bold text-lg">12:00-14:00</span>
+                                    <span class="ml-6 text-lg text-gray-300">Lunch Break and Networking </span>
+                                </div>
+                            </div>
+                            
+                            <div class="timeline-item bg-desert-blue/20 p-6 rounded-xl border-l-4 border-desert-orange hover:bg-desert-blue/30 transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                                <div class="flex items-center">
+                                    <div class="w-4 h-4 bg-desert-orange rounded-full animate-pulse timeline-dot"></div>
+                                    <span class="ml-4 w-32 text-desert-orange font-bold text-lg">14:00-14:30</span>
+                                    <span class="ml-6 text-lg text-gray-300">Conference 4 – Cybersecurity Governance: Protection and Vision
+                                        Mr.</span>
+                                </div>
+                            </div>
+                            
+                            <div class="timeline-item bg-desert-blue/20 p-6 rounded-xl border-l-4 border-desert-orange hover:bg-desert-blue/30 transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                                <div class="flex items-center">
+                                    <div class="w-4 h-4 bg-desert-orange rounded-full animate-pulse timeline-dot"></div>
+                                    <span class="ml-4 w-32 text-desert-orange font-bold text-lg">14:30-15:00</span>
+                                    <span class="ml-6 text-lg text-gray-300"> Conference 5 – Applied Ethics in Cybersecurity: Frameworks, Practices</span>
+                                    
+                                </div>
+                            </div>
+                            <div class="timeline-item bg-desert-blue/20 p-6 rounded-xl border-l-4 border-desert-orange hover:bg-desert-blue/30 transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                                <div class="flex items-center">
+                                    <div class="w-4 h-4 bg-desert-orange rounded-full animate-pulse timeline-dot"></div>
+                                    <span class="ml-4 w-32 text-desert-orange font-bold text-lg">15:00-15:30</span>
+                                    <span class="ml-6 text-lg text-gray-300"> Conference 6 – AI Implementation in TPRM (Third-Party Risk Management)</span>
+                                    
+                                </div>
+                            </div>
+                            <div class="timeline-item bg-desert-blue/20 p-6 rounded-xl border-l-4 border-desert-orange hover:bg-desert-blue/30 transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                                <div class="flex items-center">
+                                    <div class="w-4 h-4 bg-desert-orange rounded-full animate-pulse timeline-dot"></div>
+                                    <span class="ml-4 w-32 text-desert-orange font-bold text-lg">15:30-16:30</span>
+                                    <span class="ml-6 text-lg text-gray-300"> Roundtable Discussion – Academic Pathways and Research Areas in Cybersecurity</span>
+                                    
+                                </div>
+                            </div>
+                            <div class="timeline-item bg-desert-blue/20 p-6 rounded-xl border-l-4 border-desert-orange hover:bg-desert-blue/30 transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                                <div class="flex items-center">
+                                    <div class="w-4 h-4 bg-desert-orange rounded-full animate-pulse timeline-dot"></div>
+                                    <span class="ml-4 w-32 text-desert-orange font-bold text-lg">18:00</span>
+                                    <span class="ml-6 text-lg text-gray-300">Dinner Break</span>
+                                </div>
+                            </div>
+                            
+                            <div class="timeline-item special-event bg-gradient-to-r from-desert-blue/30 to-desert-orange/30 p-6 rounded-xl border-l-4 border-desert-sand hover:from-desert-blue/40 hover:to-desert-orange/40 transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                                <div class="flex items-center">
+                                    <div class="w-4 h-4 bg-desert-sand rounded-full animate-bounce-slow timeline-dot"></div>
+                                    <span class="ml-4 w-32 text-desert-sand font-bold text-lg">20:30-22:30</span>
+                                    <span class="ml-6 text-lg text-desert-sand font-semibold">🎵 Social Evening with Live Music Performance</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Day 2 -->
-                <div class="mb-10">
-                    <h4 class="text-3xl font-bold text-desert-sand mb-6">Day 2 – Saturday, October 25, 2025</h4>
-                    <div class="space-y-4 text-gray-300">
-                        <div class="flex items-center bg-desert-orange/20 p-3 rounded-lg">
-                            <span class="w-32 text-desert-orange font-bold text-lg">09:00-10:00</span>
-                            <span class="text-lg">Conference 3 – Cybersecurity governance: Protection and Vision (Sami Sahraoui, CEO Protected Consulting)</span>
+                    <!-- Day 2 -->
+                    <div class="relative mb-16">
+                        <div class="flex items-center mb-8 day-header">
+                            <div class="w-16 h-16 bg-gradient-to-br from-desert-sand to-desert-orange rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg animate-pulse-slow">
+                                <i class="fas fa-code"></i>
+                            </div>
+                            <div class="ml-6">
+                                <h4 class="text-3xl font-bold text-desert-sand">Day 2 – Saturday, November 8, 2025 </h4>
+                                <p class="text-gray-400 text-lg">Advanced Workshops & Hackathon Launch</p>
+                            </div>
                         </div>
-                        <div class="flex items-center bg-desert-orange/20 p-3 rounded-lg">
-                            <span class="w-32 text-desert-orange font-bold text-lg">10:00-12:00</span>
-                            <span class="text-lg">Advanced workshops: Vulnerability analysis and exploitation, Attack detection tools</span>
-                        </div>
-                        <div class="flex items-center bg-desert-orange/20 p-3 rounded-lg">
-                            <span class="w-32 text-desert-orange font-bold text-lg">14:00-16:00</span>
-                            <span class="text-lg">Hackathon preparation workshop</span>
-                        </div>
-                        <div class="flex items-center bg-desert-orange/20 p-3 rounded-lg">
-                            <span class="w-32 text-desert-orange font-bold text-lg">16:00-17:00</span>
-                            <span class="text-lg">Team presentations and final instructions</span>
-                        </div>
-                        <div class="flex items-center bg-gradient-to-r from-desert-sand/30 to-desert-orange/30 p-3 rounded-lg">
-                            <span class="w-32 text-desert-orange font-bold text-lg">17:00</span>
-                            <span class="text-desert-sand font-bold text-xl">🚀 Launch of the 24-hour Cybersecurity Hackathon!</span>
+                        
+                        <div class="ml-0 md:ml-8 space-y-6">
+                            <div class="timeline-item bg-desert-orange/20 p-6 rounded-xl border-l-4 border-desert-sand hover:bg-desert-orange/30 transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                                <div class="flex items-center">
+                                    <div class="w-4 h-4 bg-desert-sand rounded-full animate-pulse timeline-dot"></div>
+                                    <span class="ml-4 w-32 text-desert-sand font-bold text-lg">09:00-12:30</span>
+                                    <span class="ml-6 text-lg text-gray-300"> Thematic Cybersecurity Workshops (NVIDIA Workshop , Orange Digital Center Workshop, Elite International University Workshop, MEDIATEL-IT Workshop ...) </span>
+                                </div>
+                            </div>
+                            
+                            <div class="timeline-item bg-desert-orange/20 p-6 rounded-xl border-l-4 border-desert-sand hover:bg-desert-orange/30 transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                                <div class="flex items-center">
+                                    <div class="w-4 h-4 bg-desert-sand rounded-full animate-pulse timeline-dot"></div>
+                                    <span class="ml-4 w-32 text-desert-sand font-bold text-lg">12:30-14:00</span>
+                                    <span class="ml-6 text-lg text-gray-300">Lunch Break</span>
+                                </div>
+                            </div>
+                            
+                            <div class="timeline-item bg-desert-orange/20 p-6 rounded-xl border-l-4 border-desert-sand hover:bg-desert-orange/30 transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                                <div class="flex items-center">
+                                    <div class="w-4 h-4 bg-desert-sand rounded-full animate-pulse timeline-dot"></div>
+                                    <span class="ml-4 w-32 text-desert-sand font-bold text-lg">14:00-16:00</span>
+                                    <span class="ml-6 text-lg text-gray-300">Thematic Cybersecurity Workshops (Afternoon Session)</span>
+                                </div>
+                            </div>
+                            
+                            <div class="timeline-item bg-desert-orange/20 p-6 rounded-xl border-l-4 border-desert-sand hover:bg-desert-orange/30 transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                                <div class="flex items-center">
+                                    <div class="w-4 h-4 bg-desert-sand rounded-full animate-pulse timeline-dot"></div>
+                                    <span class="ml-4 w-32 text-desert-sand font-bold text-lg">16:00-17:00</span>
+                                    <span class="ml-6 text-lg text-gray-300">Hackathon Preparatory Workshop</span>
+                                </div>
+                            </div>
+                            <div class="timeline-item bg-desert-orange/20 p-6 rounded-xl border-l-4 border-desert-sand hover:bg-desert-orange/30 transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                                <div class="flex items-center">
+                                    <div class="w-4 h-4 bg-desert-sand rounded-full animate-pulse timeline-dot"></div>
+                                    <span class="ml-4 w-32 text-desert-sand font-bold text-lg">17:00-18:00</span>
+                                    <span class="ml-6 text-lg text-gray-300">Team Presentations and Final Instructions</span>
+                                </div>
+                            </div>
+                            
+                            <div class="timeline-item special-event bg-gradient-to-r from-desert-sand/40 to-desert-orange/40 p-6 rounded-xl border-l-4 border-desert-gold hover:from-desert-sand/50 hover:to-desert-orange/50 transition-all duration-300 hover:scale-110 hover:shadow-xl">
+                                <div class="flex items-center">
+                                    <div class="w-6 h-6 bg-desert-gold rounded-full animate-bounce-slow timeline-dot"></div>
+                                    <span class="ml-4 w-32 text-desert-gold font-bold text-xl">18:00</span>
+                                    <span class="ml-6 text-desert-gold font-bold text-xl">🚀 Official Launch of the Cybersecurity Hackathon (24-hour non-stop challenge)</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Day 3 -->
-                <div>
-                    <h4 class="text-3xl font-bold text-desert-sand mb-6">Day 3 – Sunday, October 26, 2025</h4>
-                    <div class="space-y-4 text-gray-300">
-                        <div class="flex items-center bg-desert-sand/20 p-3 rounded-lg">
-                            <span class="w-32 text-desert-orange font-bold text-lg">10:00</span>
-                            <span class="text-lg">End of Hackathon and project submission</span>
+                    <!-- Day 3 -->
+                    <div class="relative">
+                        <div class="flex items-center mb-8 day-header">
+                            <div class="w-16 h-16 bg-gradient-to-br from-desert-gold to-desert-orange rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg animate-pulse-slow">
+                                <i class="fas fa-trophy"></i>
+                            </div>
+                            <div class="ml-6">
+                                <h4 class="text-3xl font-bold text-desert-sand">Day 3 – Sunday, November 9, 2025</h4>
+                                <p class="text-gray-400 text-lg">Final Presentations and Closing Ceremony</p>
+                            </div>
                         </div>
-                        <div class="flex items-center bg-desert-sand/20 p-3 rounded-lg">
-                            <span class="w-32 text-desert-orange font-bold text-lg">11:00-12:30</span>
-                            <span class="text-lg">Team presentations to the jury</span>
-                        </div>
-                        <div class="flex items-center bg-desert-sand/20 p-3 rounded-lg">
-                            <span class="w-32 text-desert-orange font-bold text-lg">12:30-13:30</span>
-                            <span class="text-lg">Jury deliberations</span>
-                        </div>
-                        <div class="flex items-center bg-gradient-to-r from-desert-gold/30 to-desert-orange/30 p-3 rounded-lg">
-                            <span class="w-32 text-desert-orange font-bold text-lg">13:30-14:00</span>
-                            <span class="text-desert-sand font-bold text-xl">🏆 Results announcement and closing ceremony</span>
+                        
+                        <div class="ml-0 md:ml-8 space-y-6">
+                            <div class="timeline-item bg-desert-sand/20 p-6 rounded-xl border-l-4 border-desert-gold hover:bg-desert-sand/30 transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                                <div class="flex items-center">
+                                    <div class="w-4 h-4 bg-desert-gold rounded-full animate-pulse timeline-dot"></div>
+                                    <span class="ml-4 w-32 text-desert-gold font-bold text-lg">10:00</span>
+                                    <span class="ml-6 text-lg text-gray-300">End of Hackathon and project submission</span>
+                                </div>
+                            </div>
+                            
+                            <div class="timeline-item bg-desert-sand/20 p-6 rounded-xl border-l-4 border-desert-gold hover:bg-desert-sand/30 transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                                <div class="flex items-center">
+                                    <div class="w-4 h-4 bg-desert-gold rounded-full animate-pulse timeline-dot"></div>
+                                    <span class="ml-4 w-32 text-desert-gold font-bold text-lg">10:00-11:00</span>
+                                    <span class="ml-6 text-lg text-gray-300">Jury Deliberations </span>
+                                </div>
+                            </div>
+                            
+                            <div class="timeline-item bg-desert-sand/20 p-6 rounded-xl border-l-4 border-desert-gold hover:bg-desert-sand/30 transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                                <div class="flex items-center">
+                                    <div class="w-4 h-4 bg-desert-gold rounded-full animate-pulse timeline-dot"></div>
+                                    <span class="ml-4 w-32 text-desert-gold font-bold text-lg">11:30-12:30</span>
+                                    <span class="ml-6 text-lg text-gray-300">Results Announcement and Closing Ceremony</span>
+                                </div>
+                            </div>
+                            
+                            <div class="timeline-item special-event bg-gradient-to-r from-desert-gold/40 to-desert-orange/40 p-6 rounded-xl border-l-4 border-desert-sand hover:from-desert-gold/50 hover:to-desert-orange/50 transition-all duration-300 hover:scale-110 hover:shadow-xl">
+                                <div class="flex items-center">
+                                    <div class="w-6 h-6 bg-desert-sand rounded-full animate-bounce-slow timeline-dot"></div>
+                                    <span class="ml-4 w-32 text-desert-sand font-bold text-xl">13:30-14:00</span>
+                                    <span class="ml-6 text-desert-sand font-bold text-xl">Official Group Photo </span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -661,7 +885,7 @@
     </footer>
 
     <!-- Registration Modal -->
-    <div id="registration-modal" class="fixed inset-0 bg-black/60 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+    <div id="registration-modal" class="fixed inset-0 bg-black/60 backdrop-blur-md z-50 hidden items-center justify-center p-4">
         <div class="bg-desert-night border border-desert-orange/40 rounded-xl max-w-5xl w-full max-h-[90vh] overflow-y-auto">
             <div class="p-8 border-b border-desert-orange/30">
                 <div class="flex justify-between items-center">
@@ -793,6 +1017,7 @@
                     const modal = document.getElementById('registration-modal');
                     if (modal) {
                         modal.classList.remove('hidden');
+                        modal.classList.add('flex');
                         document.body.style.overflow = 'hidden';
                     }
                 };
@@ -803,6 +1028,7 @@
                     const modal = document.getElementById('registration-modal');
                     if (modal) {
                         modal.classList.add('hidden');
+                        modal.classList.remove('flex');
                         document.body.style.overflow = 'auto';
                     }
                 };

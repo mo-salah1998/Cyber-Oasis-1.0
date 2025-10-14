@@ -34,6 +34,7 @@ window.openRegistrationModal = function() {
     const modal = document.getElementById('registration-modal');
     if (modal) {
         modal.classList.remove('hidden');
+        modal.classList.add('flex');
         document.body.style.overflow = 'hidden';
     }
 }
@@ -42,6 +43,7 @@ window.closeRegistrationModal = function() {
     const modal = document.getElementById('registration-modal');
     if (modal) {
         modal.classList.add('hidden');
+        modal.classList.remove('flex');
         document.body.style.overflow = 'auto';
     }
 }
@@ -309,10 +311,126 @@ function initParallaxEffect() {
     });
 }
 
+// Download schedule functionality
+window.downloadSchedule = function() {
+    try {
+        // Create a link element to download the Word document
+        const link = document.createElement('a');
+        link.href = '/assets/prog_cyber_oasisV_Ang.docx';
+        link.download = 'Cyber_Oasis_1.0_Program_Schedule.docx';
+        link.target = '_blank';
+        
+        // Append to body, click, and remove
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        
+        // Show success notification
+        showNotification('Schedule downloaded successfully!', 'success');
+    } catch (error) {
+        console.error('Download error:', error);
+        showNotification('Download failed. Please try again or contact us directly.', 'error');
+    }
+};
+
+// Enhanced timeline animations
+function initTimelineAnimations() {
+    const timelineItems = document.querySelectorAll('.timeline-item');
+    
+    const observerOptions = {
+        threshold: 0.2,
+        rootMargin: '0px 0px -100px 0px'
+    };
+    
+    const timelineObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+                // Stagger the animation for each item
+                setTimeout(() => {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateX(0)';
+                    entry.target.classList.add('animate-slide-in');
+                }, index * 150);
+            }
+        });
+    }, observerOptions);
+    
+    timelineItems.forEach(item => {
+        // Set initial state
+        item.style.opacity = '0';
+        item.style.transform = 'translateX(-50px)';
+        item.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+        
+        timelineObserver.observe(item);
+    });
+}
+
+// Timeline item hover effects
+function initTimelineHoverEffects() {
+    const timelineItems = document.querySelectorAll('.timeline-item');
+    
+    timelineItems.forEach(item => {
+        item.addEventListener('mouseenter', function() {
+            // Add glow effect
+            this.style.boxShadow = '0 10px 30px rgba(234, 88, 12, 0.3)';
+            
+            // Animate the timeline dot
+            const dot = this.querySelector('.w-4, .w-6');
+            if (dot) {
+                dot.style.transform = 'scale(1.5)';
+                dot.style.transition = 'transform 0.3s ease';
+            }
+        });
+        
+        item.addEventListener('mouseleave', function() {
+            // Remove glow effect
+            this.style.boxShadow = '';
+            
+            // Reset timeline dot
+            const dot = this.querySelector('.w-4, .w-6');
+            if (dot) {
+                dot.style.transform = 'scale(1)';
+            }
+        });
+    });
+}
+
+// Progressive timeline reveal
+function initProgressiveTimelineReveal() {
+    const timelineContainer = document.querySelector('.relative');
+    if (!timelineContainer) return;
+    
+    const timelineLine = timelineContainer.querySelector('.absolute');
+    if (!timelineLine) return;
+    
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -200px 0px'
+    };
+    
+    const lineObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Animate the timeline line
+                timelineLine.style.height = '100%';
+                timelineLine.style.transition = 'height 2s ease-in-out';
+                
+                // Add pulsing effect to the line
+                timelineLine.classList.add('animate-pulse');
+            }
+        });
+    }, observerOptions);
+    
+    lineObserver.observe(timelineContainer);
+}
+
 // Initialize animations when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
     initScrollAnimations();
     initParallaxEffect();
+    initTimelineAnimations();
+    initTimelineHoverEffects();
+    initProgressiveTimelineReveal();
 });
 
 // Add CSS for animations
@@ -333,8 +451,199 @@ style.textContent = `
         }
     }
     
+    .animate-slide-in {
+        animation: slideInFromLeft 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    @keyframes slideInFromLeft {
+        from {
+            opacity: 0;
+            transform: translateX(-50px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+    
+    .timeline-item {
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .timeline-item::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(234, 88, 12, 0.1), transparent);
+        transition: left 0.6s ease;
+    }
+    
+    .timeline-item:hover::before {
+        left: 100%;
+    }
+    
+    .timeline-item:hover {
+        transform: translateX(10px) scale(1.02);
+    }
+    
     .notification {
         backdrop-filter: blur(10px);
+    }
+    
+    /* Enhanced timeline line animation */
+    .timeline-line {
+        background: linear-gradient(180deg, 
+            #ea580c 0%, 
+            #f59e0b 25%, 
+            #fbbf24 50%, 
+            #f59e0b 75%, 
+            #ea580c 100%);
+        background-size: 100% 200%;
+        animation: gradientFlow 3s ease-in-out infinite;
+    }
+    
+    @keyframes gradientFlow {
+        0%, 100% {
+            background-position: 0% 0%;
+        }
+        50% {
+            background-position: 0% 100%;
+        }
+    }
+    
+    /* Day header animations */
+    .day-header {
+        transition: all 0.3s ease;
+    }
+    
+    .day-header:hover {
+        transform: scale(1.05);
+        text-shadow: 0 0 20px rgba(234, 88, 12, 0.5);
+    }
+    
+    /* Timeline dot pulse animation */
+    .timeline-dot {
+        position: relative;
+    }
+    
+    .timeline-dot::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        background: inherit;
+        transform: translate(-50%, -50%);
+        animation: pulse-ring 2s infinite;
+        opacity: 0.6;
+    }
+    
+    @keyframes pulse-ring {
+        0% {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 0.6;
+        }
+        100% {
+            transform: translate(-50%, -50%) scale(2);
+            opacity: 0;
+        }
+    }
+    
+    /* Special event highlighting */
+    .special-event {
+        position: relative;
+        background: linear-gradient(45deg, 
+            rgba(234, 88, 12, 0.2) 0%, 
+            rgba(245, 158, 11, 0.2) 50%, 
+            rgba(251, 191, 36, 0.2) 100%);
+        border: 2px solid transparent;
+        background-clip: padding-box;
+    }
+    
+    .special-event::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(45deg, #ea580c, #f59e0b, #fbbf24);
+        border-radius: inherit;
+        padding: 2px;
+        mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        mask-composite: exclude;
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+    }
+    
+    /* Responsive design for mobile devices */
+    @media (max-width: 768px) {
+        .timeline-item {
+            margin-left: 0 !important;
+            padding: 1rem !important;
+        }
+        
+        .timeline-item .flex {
+            flex-direction: column;
+            align-items: flex-start !important;
+        }
+        
+        .timeline-item .flex > span:first-child {
+            margin-bottom: 0.5rem;
+            margin-left: 0 !important;
+        }
+        
+        .day-header {
+            flex-direction: column;
+            text-align: center;
+        }
+        
+        .day-header .ml-6 {
+            margin-left: 0 !important;
+            margin-top: 1rem;
+        }
+        
+        .timeline-line {
+            left: 1rem !important;
+        }
+        
+        .timeline-dot {
+            position: absolute;
+            left: -2rem;
+            top: 1rem;
+        }
+        
+        .timeline-item:hover {
+            transform: none;
+        }
+        
+        .timeline-item:hover::before {
+            display: none;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .timeline-item {
+            padding: 0.75rem !important;
+        }
+        
+        .timeline-item .text-lg {
+            font-size: 0.875rem;
+        }
+        
+        .day-header h4 {
+            font-size: 1.5rem;
+        }
+        
+        .day-header p {
+            font-size: 0.875rem;
+        }
     }
 `;
 document.head.appendChild(style);
