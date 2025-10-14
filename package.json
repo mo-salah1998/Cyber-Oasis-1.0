@@ -5,12 +5,13 @@
   "type": "module",
   "main": "index.html",
   "scripts": {
-    "dev": "node server.js",
-    "dev:static": "npx serve . -p 3000",
+    "dev": "npm run build:css && node server.js",
+    "dev:static": "npm run build:css && npx serve . -p 3000",
     "test": "node test-api.js",
-    "build": "echo 'Static site - no build needed'",
-    "start": "node server.js",
-    "deploy": "vercel --prod"
+    "build": "npm run build:css",
+    "build:css": "postcss src/styles.css -o dist/styles.css",
+    "start": "npm run build:css && node server.js",
+    "deploy": "npm run build && vercel --prod"
   },
   "keywords": [
     "cybersecurity",
@@ -25,13 +26,16 @@
   "author": "Cyber Oasis 1.0 Team",
   "license": "MIT",
   "devDependencies": {
+    "postcss-cli": "^11.0.1",
     "serve": "^14.2.1",
     "tailwindcss": "^4.1.14"
   },
   "dependencies": {
+    "@tailwindcss/postcss": "^4.1.14",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
-    "googleapis": "^128.0.0"
+    "googleapis": "^128.0.0",
+    "postcss": "^8.5.6"
   },
   "engines": {
     "node": ">=14.0.0"
