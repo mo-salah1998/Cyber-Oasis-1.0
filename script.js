@@ -9,24 +9,52 @@ window.scrollToSection = function(sectionId) {
     }
 }
 
-// Mobile menu toggle
+// Mobile menu toggle - Enhanced with better error handling
 document.addEventListener('DOMContentLoaded', function() {
     const mobileMenuBtn = document.getElementById('mobile-menu-btn');
     const mobileMenu = document.getElementById('mobile-menu');
     
-    if (mobileMenuBtn && mobileMenu) {
-        mobileMenuBtn.addEventListener('click', function() {
-            mobileMenu.classList.toggle('hidden');
-        });
-    }
+    console.log('Mobile menu elements:', { mobileMenuBtn, mobileMenu });
     
-    // Close mobile menu when clicking on a link
-    const mobileLinks = mobileMenu.querySelectorAll('a');
-    mobileLinks.forEach(link => {
-        link.addEventListener('click', function() {
-            mobileMenu.classList.add('hidden');
+    if (mobileMenuBtn && mobileMenu) {
+        mobileMenuBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('Mobile menu button clicked');
+            
+            // Toggle the mobile menu
+            const isHidden = mobileMenu.classList.contains('hidden');
+            if (isHidden) {
+                mobileMenu.classList.remove('hidden');
+                mobileMenu.style.display = 'block';
+                console.log('Mobile menu opened');
+            } else {
+                mobileMenu.classList.add('hidden');
+                mobileMenu.style.display = 'none';
+                console.log('Mobile menu closed');
+            }
         });
-    });
+        
+        // Close mobile menu when clicking on a link
+        const mobileLinks = mobileMenu.querySelectorAll('a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                mobileMenu.classList.add('hidden');
+                mobileMenu.style.display = 'none';
+                console.log('Mobile menu closed via link click');
+            });
+        });
+        
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!mobileMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+                mobileMenu.classList.add('hidden');
+                mobileMenu.style.display = 'none';
+            }
+        });
+    } else {
+        console.error('Mobile menu elements not found:', { mobileMenuBtn, mobileMenu });
+    }
 });
 
 // Registration modal functions - explicitly define on window object for global access
@@ -594,7 +622,7 @@ style.textContent = `
             align-items: flex-start !important;
         }
         
-        .timeline-item .flex > span:first-child {
+        .timeline-item .flex > div:first-child {
             margin-bottom: 0.5rem;
             margin-left: 0 !important;
         }
@@ -604,19 +632,19 @@ style.textContent = `
             text-align: center;
         }
         
-        .day-header .ml-6 {
+        .day-header .md\\:ml-6 {
             margin-left: 0 !important;
             margin-top: 1rem;
         }
         
         .timeline-line {
-            left: 1rem !important;
+            left: 0.5rem !important;
         }
         
         .timeline-dot {
-            position: absolute;
-            left: -2rem;
-            top: 1rem;
+            position: relative;
+            left: auto !important;
+            top: auto !important;
         }
         
         .timeline-item:hover {
@@ -625,6 +653,41 @@ style.textContent = `
         
         .timeline-item:hover::before {
             display: none;
+        }
+        
+        /* Improve mobile button layout */
+        .hero-button {
+            width: 100%;
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Hero buttons container for mobile */
+        .hero-buttons-container {
+            min-height: auto;
+            padding: 2rem 1rem 3rem 1rem;
+            align-items: center;
+        }
+        
+        /* Better mobile text sizing */
+        .hero-text-shadow {
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8), 0 0 10px rgba(234, 88, 12, 0.3);
+        }
+        
+        /* Additional mobile overflow prevention */
+        .timeline-item .text-lg, .timeline-item .text-sm {
+            word-break: break-word;
+            hyphens: auto;
+        }
+        
+        /* Fix any wide elements */
+        .bg-white, .rounded-xl {
+            max-width: 100%;
+        }
+        
+        /* Ensure images don't overflow */
+        img {
+            max-width: 100%;
+            height: auto;
         }
     }
     
@@ -637,12 +700,29 @@ style.textContent = `
             font-size: 0.875rem;
         }
         
+        .timeline-item .text-sm {
+            font-size: 0.8rem;
+        }
+        
         .day-header h4 {
-            font-size: 1.5rem;
+            font-size: 1.25rem;
         }
         
         .day-header p {
             font-size: 0.875rem;
+        }
+        
+        /* Even smaller text for very small screens */
+        .hero-text-shadow h1 {
+            font-size: 2rem;
+        }
+        
+        .hero-text-shadow h2 {
+            font-size: 1.5rem;
+        }
+        
+        .hero-text-shadow p {
+            font-size: 0.9rem;
         }
     }
 `;
