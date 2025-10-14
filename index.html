@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cyber Oasis 1.0: Hack the Dunes</title>
-    <link href="/dist/styles.css" rel="stylesheet">
+    <link href="/styles.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
@@ -135,7 +135,7 @@
     <!-- Hero Section -->
     <section id="home" class="min-h-screen flex items-center justify-center relative overflow-hidden">
         <!-- Cover Image Background -->
-        <div class="absolute inset-0 w-full h-full parallax-bg hero-cover" style="background-image: url('https://drive.google.com/file/d/1cwbGfA2zjzwtF6SYS0TtR97umbk6E5eD/view?usp=sharing'), url('./assets/Cover.png'), url('./Cover.png'), url('/Cover.png');">
+        <div class="absolute inset-0 w-full h-full parallax-bg hero-cover" style="background-image: url('/assets/Cover.png'), url('/Cover.png'), url('/public/Cover.png');">
             <!-- Enhanced Gradient Overlay for better text readability -->
             <div class="absolute inset-0 gradient-overlay animate-gradient-shift"></div>
             <!-- Animated particles overlay -->
@@ -781,7 +781,7 @@
     </div>
     
     <!-- Load script.js at the end to ensure DOM is ready -->
-    <script src="script.js"></script>
+    <script src="/script.js"></script>
     
     <!-- Fallback script to ensure functions are available -->
     <script>
