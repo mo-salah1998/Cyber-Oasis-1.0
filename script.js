@@ -1,5 +1,5 @@
-// Smooth scrolling for navigation links
-function scrollToSection(sectionId) {
+// Smooth scrolling for navigation links - explicitly define on window object for global access
+window.scrollToSection = function(sectionId) {
     const element = document.getElementById(sectionId);
     if (element) {
         element.scrollIntoView({
@@ -29,8 +29,8 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// Registration modal functions
-function openRegistrationModal() {
+// Registration modal functions - explicitly define on window object for global access
+window.openRegistrationModal = function() {
     const modal = document.getElementById('registration-modal');
     if (modal) {
         modal.classList.remove('hidden');
@@ -38,7 +38,7 @@ function openRegistrationModal() {
     }
 }
 
-function closeRegistrationModal() {
+window.closeRegistrationModal = function() {
     const modal = document.getElementById('registration-modal');
     if (modal) {
         modal.classList.add('hidden');

@@ -7,7 +7,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <script src="script.js"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -859,5 +858,47 @@
             </form>
         </div>
     </div>
+    
+    <!-- Load script.js at the end to ensure DOM is ready -->
+    <script src="script.js"></script>
+    
+    <!-- Fallback script to ensure functions are available -->
+    <script>
+        // Ensure functions are available after script loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if functions exist, if not, define them as fallbacks
+            if (typeof window.openRegistrationModal !== 'function') {
+                window.openRegistrationModal = function() {
+                    const modal = document.getElementById('registration-modal');
+                    if (modal) {
+                        modal.classList.remove('hidden');
+                        document.body.style.overflow = 'hidden';
+                    }
+                };
+            }
+            
+            if (typeof window.closeRegistrationModal !== 'function') {
+                window.closeRegistrationModal = function() {
+                    const modal = document.getElementById('registration-modal');
+                    if (modal) {
+                        modal.classList.add('hidden');
+                        document.body.style.overflow = 'auto';
+                    }
+                };
+            }
+            
+            if (typeof window.scrollToSection !== 'function') {
+                window.scrollToSection = function(sectionId) {
+                    const element = document.getElementById(sectionId);
+                    if (element) {
+                        element.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                };
+            }
+        });
+    </script>
 </body>
 </html>
