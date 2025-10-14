@@ -12,7 +12,7 @@
   --color-cyber-orange: #ea580c;
   --color-cyber-sand: #f59e0b;
   
-  --font-family-orbitron: 'Orbitron', monospace;
+  --font-orbitron: 'Orbitron', monospace;
   
   --background-image-desert-gradient: linear-gradient(135deg, #0a0e1a 0%, #1e293b 50%, #ea580c 100%);
   --background-image-dune-gradient: linear-gradient(45deg, #f59e0b 0%, #ea580c 50%, #fbbf24 100%);
