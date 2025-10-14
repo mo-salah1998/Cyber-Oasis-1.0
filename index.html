@@ -334,7 +334,7 @@
             <div class="bg-desert-night/80 p-8 rounded-xl border border-desert-orange/30 backdrop-blur-sm">
                 <div class="flex justify-between items-center mb-10">
                     <h3 class="text-4xl font-bold text-desert-orange">Detailed Schedule</h3>
-                    <button onclick="downloadSchedule()" class="bg-gradient-to-r from-desert-orange to-desert-sand hover:from-orange-600 hover:to-yellow-500 text-white px-6 py-3 rounded-lg font-bold text-lg transition-all shadow-lg shadow-desert-orange/25 hover:scale-105">
+                    <button onclick="(typeof downloadSchedule === 'function' ? downloadSchedule : function(){try{const link=document.createElement('a');link.href='/assets/prog_cyber_oasisV_Ang.docx';link.download='Cyber_Oasis_1.0_Program_Schedule.docx';link.target='_blank';document.body.appendChild(link);link.click();document.body.removeChild(link);alert('Schedule downloaded successfully!');}catch(e){alert('Download failed. Please try again.');}})()" class="bg-gradient-to-r from-desert-orange to-desert-sand hover:from-orange-600 hover:to-yellow-500 text-white px-6 py-3 rounded-lg font-bold text-lg transition-all shadow-lg shadow-desert-orange/25 hover:scale-105">
                         <i class="fas fa-download mr-2"></i>Download Schedule
                     </button>
                 </div>
@@ -1004,8 +1004,54 @@
         </div>
     </div>
     
+    <!-- Immediate fallback for downloadSchedule function -->
+    <script>
+        // Define downloadSchedule immediately to prevent ReferenceError
+        window.downloadSchedule = function() {
+            try {
+                // Create a link element to download the Word document
+                const link = document.createElement('a');
+                link.href = '/assets/prog_cyber_oasisV_Ang.docx';
+                link.download = 'Cyber_Oasis_1.0_Program_Schedule.docx';
+                link.target = '_blank';
+                
+                // Append to body, click, and remove
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                // Show success notification
+                if (typeof showNotification === 'function') {
+                    showNotification('Schedule downloaded successfully!', 'success');
+                } else {
+                    alert('Schedule downloaded successfully!');
+                }
+            } catch (error) {
+                console.error('Download error:', error);
+                if (typeof showNotification === 'function') {
+                    showNotification('Download failed. Please try again or contact us directly.', 'error');
+                } else {
+                    alert('Download failed. Please try again or contact us directly.');
+                }
+            }
+        };
+    </script>
+    
     <!-- Load script.js at the end to ensure DOM is ready -->
-    <script src="/script.js"></script>
+    <script src="/script.js" onerror="console.error('Failed to load script.js')"></script>
+    
+    <!-- Alternative script loading for Vercel -->
+    <script>
+        // Try to load script.js with error handling
+        if (typeof window.downloadSchedule === 'undefined') {
+            const script = document.createElement('script');
+            script.src = './script.js';
+            script.onerror = function() {
+                console.warn('script.js failed to load, using fallback functions');
+            };
+            document.head.appendChild(script);
+        }
+    </script>
     
     <!-- Fallback script to ensure functions are available -->
     <script>
@@ -1042,6 +1088,38 @@
                             behavior: 'smooth',
                             block: 'start'
                         });
+                    }
+                };
+            }
+            
+            // Add downloadSchedule fallback function
+            if (typeof window.downloadSchedule !== 'function') {
+                window.downloadSchedule = function() {
+                    try {
+                        // Create a link element to download the Word document
+                        const link = document.createElement('a');
+                        link.href = '/assets/prog_cyber_oasisV_Ang.docx';
+                        link.download = 'Cyber_Oasis_1.0_Program_Schedule.docx';
+                        link.target = '_blank';
+                        
+                        // Append to body, click, and remove
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                        
+                        // Show success notification
+                        if (typeof showNotification === 'function') {
+                            showNotification('Schedule downloaded successfully!', 'success');
+                        } else {
+                            alert('Schedule downloaded successfully!');
+                        }
+                    } catch (error) {
+                        console.error('Download error:', error);
+                        if (typeof showNotification === 'function') {
+                            showNotification('Download failed. Please try again or contact us directly.', 'error');
+                        } else {
+                            alert('Download failed. Please try again or contact us directly.');
+                        }
                     }
                 };
             }
