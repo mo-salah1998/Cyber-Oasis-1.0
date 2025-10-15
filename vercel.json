@@ -38,7 +38,7 @@
       ]
     },
     {
-      "source": "/public/m (2).png",
+      "source": "/m (2).png",
       "headers": [
         {
           "key": "Cache-Control",
@@ -47,7 +47,7 @@
       ]
     },
     {
-      "source": "/public/ODC-3.png",
+      "source": "/ODC-3.png",
       "headers": [
         {
           "key": "Cache-Control",
@@ -56,7 +56,7 @@
       ]
     },
     {
-      "source": "/public/Cover.png",
+      "source": "/Cover.png",
       "headers": [
         {
           "key": "Cache-Control",
@@ -65,7 +65,7 @@
       ]
     },
     {
-      "source": "/public/favicon.ico",
+      "source": "/favicon.ico",
       "headers": [
         {
           "key": "Cache-Control",
@@ -74,7 +74,7 @@
       ]
     },
     {
-      "source": "/public/logo.png",
+      "source": "/logo.png",
       "headers": [
         {
           "key": "Cache-Control",
