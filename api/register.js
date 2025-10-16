@@ -20,6 +20,27 @@ export default async function handler(req, res) {
     }
     
     try {
+        // Handle both JSON and URL-encoded form data
+        let formData = req.body;
+        
+        // If it's URL-encoded form data, convert it to the expected format
+        if (req.headers['content-type'] === 'application/x-www-form-urlencoded') {
+            formData = {
+                teamName: req.body['team-name'],
+                university: req.body.university,
+                leaderName: req.body['leader-name'],
+                memberName: req.body['member-name'],
+                faculty: req.body.faculty,
+                studyLevel: req.body['study-level'],
+                fieldStudy: req.body['field-study'],
+                leaderEmail: req.body['leader-email'],
+                leaderPhone: req.body['leader-phone'],
+                cyberKnowledge: req.body['cyber-knowledge'],
+                hackathonExperience: req.body['hackathon-experience'],
+                hackathonSpecify: req.body['hackathon-specify']
+            };
+        }
+        
         const {
             teamName,
             university,
@@ -33,7 +54,7 @@ export default async function handler(req, res) {
             cyberKnowledge,
             hackathonExperience,
             hackathonSpecify
-        } = req.body;
+        } = formData;
         
         // Validate required fields
         const requiredFields = [
@@ -43,7 +64,7 @@ export default async function handler(req, res) {
         ];
         
         for (const field of requiredFields) {
-            if (!req.body[field]) {
+            if (!formData[field]) {
                 return res.status(400).json({ 
                     error: `Missing required field: ${field}` 
                 });
