@@ -452,8 +452,90 @@ function initProgressiveTimelineReveal() {
     lineObserver.observe(timelineContainer);
 }
 
+// Vercel animation fallback - ensure animations work even if CSS fails
+function ensureAnimationsWork() {
+    // Check if animations are working by testing a simple animation
+    const testElement = document.createElement('div');
+    testElement.style.cssText = `
+        position: fixed;
+        top: -100px;
+        left: -100px;
+        width: 1px;
+        height: 1px;
+        opacity: 0;
+        pointer-events: none;
+        animation: fadeIn 0.1s ease-in-out;
+    `;
+    document.body.appendChild(testElement);
+    
+    // If animations don't work, add fallback styles
+    setTimeout(() => {
+        const computedStyle = window.getComputedStyle(testElement);
+        if (computedStyle.animationName === 'none' || computedStyle.animationName === '') {
+            console.warn('CSS animations not working, applying JavaScript fallbacks');
+            applyAnimationFallbacks();
+        }
+        document.body.removeChild(testElement);
+    }, 100);
+}
+
+// Apply JavaScript animation fallbacks
+function applyAnimationFallbacks() {
+    // Add inline styles for critical animations
+    const style = document.createElement('style');
+    style.textContent = `
+        /* JavaScript fallback animations */
+        .animate-fade-in {
+            opacity: 0;
+            transform: scale(1.1);
+            transition: all 2s ease-in-out;
+        }
+        
+        .animate-slide-up {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 1.5s ease-out;
+        }
+        
+        .animate-float-1, .animate-float-2, .animate-float-3, 
+        .animate-float-4, .animate-float-5 {
+            animation: none;
+            transition: transform 0.3s ease;
+        }
+        
+        .animate-pulse-slow, .animate-pulse {
+            animation: none;
+            transition: opacity 0.5s ease;
+        }
+        
+        .animate-bounce-slow {
+            animation: none;
+            transition: transform 0.3s ease;
+        }
+    `;
+    document.head.appendChild(style);
+    
+    // Trigger animations with JavaScript
+    setTimeout(() => {
+        const fadeElements = document.querySelectorAll('.animate-fade-in');
+        fadeElements.forEach(el => {
+            el.style.opacity = '1';
+            el.style.transform = 'scale(1)';
+        });
+        
+        const slideElements = document.querySelectorAll('.animate-slide-up');
+        slideElements.forEach(el => {
+            el.style.opacity = '1';
+            el.style.transform = 'translateY(0)';
+        });
+    }, 100);
+}
+
 // Initialize animations when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
+    // Check if animations work on Vercel
+    ensureAnimationsWork();
+    
     initScrollAnimations();
     initParallaxEffect();
     initTimelineAnimations();

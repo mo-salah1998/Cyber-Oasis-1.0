@@ -2,14 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Vercel-compatible animations with hardware acceleration */
 @keyframes fadeIn {
-  0% { opacity: 0; transform: scale(1.1); }
-  100% { opacity: 1; transform: scale(1); }
+  0% { opacity: 0; transform: scale(1.1) translateZ(0); }
+  100% { opacity: 1; transform: scale(1) translateZ(0); }
 }
 
 @keyframes slideUp {
-  0% { opacity: 0; transform: translateY(50px); }
-  100% { opacity: 1; transform: translateY(0); }
+  0% { opacity: 0; transform: translateY(50px) translateZ(0); }
+  100% { opacity: 1; transform: translateY(0) translateZ(0); }
 }
 
 @keyframes gradientShift {
@@ -18,31 +19,113 @@
 }
 
 @keyframes float1 {
-  0%, 100% { transform: translateY(0px) translateX(0px); }
-  25% { transform: translateY(-20px) translateX(10px); }
-  50% { transform: translateY(-10px) translateX(-5px); }
-  75% { transform: translateY(-15px) translateX(8px); }
+  0%, 100% { transform: translateY(0px) translateX(0px) translateZ(0); }
+  25% { transform: translateY(-20px) translateX(10px) translateZ(0); }
+  50% { transform: translateY(-10px) translateX(-5px) translateZ(0); }
+  75% { transform: translateY(-15px) translateX(8px) translateZ(0); }
 }
 
 @keyframes float2 {
-  0%, 100% { transform: translateY(0px) translateX(0px); }
-  33% { transform: translateY(-25px) translateX(-8px); }
-  66% { transform: translateY(-15px) translateX(12px); }
+  0%, 100% { transform: translateY(0px) translateX(0px) translateZ(0); }
+  33% { transform: translateY(-25px) translateX(-8px) translateZ(0); }
+  66% { transform: translateY(-15px) translateX(12px) translateZ(0); }
 }
 
 @keyframes float3 {
-  0%, 100% { transform: translateY(0px) translateX(0px); }
-  50% { transform: translateY(-30px) translateX(-10px); }
+  0%, 100% { transform: translateY(0px) translateX(0px) translateZ(0); }
+  50% { transform: translateY(-30px) translateX(-10px) translateZ(0); }
 }
 
 @keyframes float4 {
-  0%, 100% { transform: translateY(0px) translateX(0px); }
-  25% { transform: translateY(-18px) translateX(15px); }
-  75% { transform: translateY(-22px) translateX(-12px); }
+  0%, 100% { transform: translateY(0px) translateX(0px) translateZ(0); }
+  25% { transform: translateY(-18px) translateX(15px) translateZ(0); }
+  75% { transform: translateY(-22px) translateX(-12px) translateZ(0); }
 }
 
 @keyframes float5 {
-  0%, 100% { transform: translateY(0px) translateX(0px); }
-  40% { transform: translateY(-12px) translateX(6px); }
-  80% { transform: translateY(-8px) translateX(-8px); }
+  0%, 100% { transform: translateY(0px) translateX(0px) translateZ(0); }
+  40% { transform: translateY(-12px) translateX(6px) translateZ(0); }
+  80% { transform: translateY(-8px) translateX(-8px) translateZ(0); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(-25%) translateZ(0); animation-timing-function: cubic-bezier(0.8,0,1,1); }
+  50% { transform: translateY(0) translateZ(0); animation-timing-function: cubic-bezier(0,0,0.2,1); }
+}
+
+/* Animation classes with hardware acceleration */
+.animate-fade-in {
+  animation: fadeIn 2s ease-in-out;
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+.animate-slide-up {
+  animation: slideUp 1.5s ease-out;
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+.animate-gradient-shift {
+  animation: gradientShift 8s ease-in-out infinite;
+  will-change: opacity;
+}
+
+.animate-float-1 {
+  animation: float1 6s ease-in-out infinite;
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+.animate-float-2 {
+  animation: float2 8s ease-in-out infinite;
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+.animate-float-3 {
+  animation: float3 7s ease-in-out infinite;
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+.animate-float-4 {
+  animation: float4 9s ease-in-out infinite;
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+.animate-float-5 {
+  animation: float5 5s ease-in-out infinite;
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+.animate-pulse-slow {
+  animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  will-change: opacity;
+}
+
+.animate-bounce-slow {
+  animation: bounce 3s infinite;
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  will-change: opacity;
 }

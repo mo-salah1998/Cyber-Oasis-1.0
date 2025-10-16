@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animation Test - Cyber Oasis</title>
+    <style>
+        body {
+            background: #0a0e1a;
+            color: white;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .test-box {
+            width: 200px;
+            height: 100px;
+            background: linear-gradient(45deg, #ea580c, #f59e0b);
+            margin: 20px 0;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        /* Test animations */
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: scale(1.1) translateZ(0); }
+            100% { opacity: 1; transform: scale(1) translateZ(0); }
+        }
+        
+        @keyframes slideUp {
+            0% { opacity: 0; transform: translateY(50px) translateZ(0); }
+            100% { opacity: 1; transform: translateY(0) translateZ(0); }
+        }
+        
+        @keyframes float1 {
+            0%, 100% { transform: translateY(0px) translateX(0px) translateZ(0); }
+            25% { transform: translateY(-20px) translateX(10px) translateZ(0); }
+            50% { transform: translateY(-10px) translateX(-5px) translateZ(0); }
+            75% { transform: translateY(-15px) translateX(8px) translateZ(0); }
+        }
+        
+        .animate-fade-in {
+            animation: fadeIn 2s ease-in-out;
+            will-change: transform, opacity;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+        }
+        
+        .animate-slide-up {
+            animation: slideUp 1.5s ease-out;
+            will-change: transform, opacity;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+        }
+        
+        .animate-float-1 {
+            animation: float1 6s ease-in-out infinite;
+            will-change: transform;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>Animation Test for Cyber Oasis</h1>
+        <p>This page tests if animations work properly before deploying to Vercel.</p>
+        
+        <div class="test-box animate-fade-in">
+            Fade In Animation
+        </div>
+        
+        <div class="test-box animate-slide-up">
+            Slide Up Animation
+        </div>
+        
+        <div class="test-box animate-float-1">
+            Float Animation
+        </div>
+        
+        <div class="test-box" style="background: linear-gradient(45deg, #1e293b, #ea580c);">
+            Static Box (No Animation)
+        </div>
+        
+        <h2>Test Results:</h2>
+        <ul>
+            <li>✅ If you see smooth animations above, they should work on Vercel</li>
+            <li>❌ If animations are choppy or don't work, there may be a browser compatibility issue</li>
+            <li>🔄 Refresh the page to see animations again</li>
+        </ul>
+        
+        <p><strong>Note:</strong> This test file can be deleted after confirming animations work.</p>
+    </div>
+</body>
+</html>
