@@ -607,6 +607,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Test navigation animations specifically
     testNavigationAnimations();
     
+    // Test smooth scrolling functionality
+    testSmoothScrolling();
+    
     initScrollAnimations();
     initParallaxEffect();
     initTimelineAnimations();
@@ -685,6 +688,9 @@ function enhanceScrollToSection() {
         const duration = Math.min(Math.abs(distance) / 1.5, 800);
         let startTime = null;
 
+        // Add visual feedback during scroll
+        document.body.classList.add('scrolling');
+
         function smoothScrollAnimation(currentTime) {
             if (startTime === null) startTime = currentTime;
             const timeElapsed = currentTime - startTime;
@@ -704,6 +710,9 @@ function enhanceScrollToSection() {
                     // Fallback for very old browsers
                     setTimeout(() => smoothScrollAnimation(currentTime + 16), 16);
                 }
+            } else {
+                // Remove scrolling class when animation completes
+                document.body.classList.remove('scrolling');
             }
         }
         
@@ -715,6 +724,35 @@ function enhanceScrollToSection() {
         
         console.log(`Enhanced scrolling to section: ${sectionId}`);
     };
+}
+
+// Test smooth scrolling functionality
+function testSmoothScrolling() {
+    console.log('Testing smooth scrolling functionality...');
+    
+    // Test if scrollToSection function works
+    const testSection = document.getElementById('about');
+    if (testSection) {
+        console.log('✅ Smooth scrolling test: About section found');
+        
+        // Test scroll behavior support
+        const supportsScrollBehavior = 'scrollBehavior' in document.documentElement.style;
+        const supportsRequestAnimationFrame = typeof requestAnimationFrame !== 'undefined';
+        
+        console.log('Scroll support:', {
+            supportsScrollBehavior,
+            supportsRequestAnimationFrame,
+            hasScrollToSection: typeof window.scrollToSection === 'function'
+        });
+        
+        if (supportsScrollBehavior && supportsRequestAnimationFrame) {
+            console.log('✅ Full smooth scrolling support detected');
+        } else {
+            console.log('⚠️ Limited smooth scrolling support, using fallbacks');
+        }
+    } else {
+        console.warn('❌ Test section not found for smooth scrolling test');
+    }
 }
 
 // Add CSS for animations
