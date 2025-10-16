@@ -1,15 +1,64 @@
-// Smooth scrolling for navigation links - explicitly define on window object for global access
+// Enhanced smooth scrolling for navigation links - Vercel compatible
 window.scrollToSection = function(sectionId) {
     const element = document.getElementById(sectionId);
-    if (element) {
+    if (!element) {
+        console.warn(`Section with id "${sectionId}" not found`);
+        return;
+    }
+
+    // Get current scroll position
+    const startPosition = window.pageYOffset;
+    const targetPosition = element.offsetTop - 80; // Account for fixed navbar
+    const distance = targetPosition - startPosition;
+    const duration = Math.min(Math.abs(distance) / 2, 1000); // Max 1 second
+    let startTime = null;
+
+    // Check if smooth scrolling is supported
+    const supportsSmoothScroll = 'scrollBehavior' in document.documentElement.style;
+    
+    if (supportsSmoothScroll && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        // Use native smooth scrolling if supported
+        document.body.classList.add('scrolling');
         element.scrollIntoView({
             behavior: 'smooth',
             block: 'start'
         });
+        
+        // Remove scrolling class after animation
+        setTimeout(() => {
+            document.body.classList.remove('scrolling');
+        }, duration + 100);
+    } else {
+        // Fallback to custom smooth scrolling animation
+        document.body.classList.add('scrolling');
+        
+        function smoothScrollAnimation(currentTime) {
+            if (startTime === null) startTime = currentTime;
+            const timeElapsed = currentTime - startTime;
+            const progress = Math.min(timeElapsed / duration, 1);
+            
+            // Easing function for smooth animation
+            const easeInOutCubic = progress < 0.5 
+                ? 4 * progress * progress * progress 
+                : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+            
+            window.scrollTo(0, startPosition + distance * easeInOutCubic);
+            
+            if (progress < 1) {
+                requestAnimationFrame(smoothScrollAnimation);
+            } else {
+                // Remove scrolling class when animation completes
+                document.body.classList.remove('scrolling');
+            }
+        }
+        
+        requestAnimationFrame(smoothScrollAnimation);
     }
+    
+    console.log(`Scrolling to section: ${sectionId}`);
 }
 
-// Mobile menu toggle - Enhanced with better error handling
+// Mobile menu toggle - Enhanced with better error handling and Vercel compatibility
 document.addEventListener('DOMContentLoaded', function() {
     const mobileMenuBtn = document.getElementById('mobile-menu-btn');
     const mobileMenu = document.getElementById('mobile-menu');
@@ -17,21 +66,29 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('Mobile menu elements:', { mobileMenuBtn, mobileMenu });
     
     if (mobileMenuBtn && mobileMenu) {
+        // Enhanced mobile menu toggle with smooth animations
         mobileMenuBtn.addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
             console.log('Mobile menu button clicked');
             
-            // Toggle the mobile menu
+            // Toggle the mobile menu with smooth animation
             const isHidden = mobileMenu.classList.contains('hidden');
             if (isHidden) {
+                // Show menu with animation
                 mobileMenu.classList.remove('hidden');
-                mobileMenu.style.display = 'block';
-                console.log('Mobile menu opened');
+                mobileMenu.classList.add('show');
+                console.log('Mobile menu opened with animation');
             } else {
-                mobileMenu.classList.add('hidden');
-                mobileMenu.style.display = 'none';
-                console.log('Mobile menu closed');
+                // Hide menu with animation
+                mobileMenu.classList.remove('show');
+                
+                // Hide after animation completes
+                setTimeout(() => {
+                    mobileMenu.classList.add('hidden');
+                }, 300);
+                
+                console.log('Mobile menu closed with animation');
             }
         });
         
@@ -39,8 +96,13 @@ document.addEventListener('DOMContentLoaded', function() {
         const mobileLinks = mobileMenu.querySelectorAll('a');
         mobileLinks.forEach(link => {
             link.addEventListener('click', function() {
-                mobileMenu.classList.add('hidden');
-                mobileMenu.style.display = 'none';
+                // Animate out before hiding
+                mobileMenu.classList.remove('show');
+                
+                setTimeout(() => {
+                    mobileMenu.classList.add('hidden');
+                }, 300);
+                
                 console.log('Mobile menu closed via link click');
             });
         });
@@ -48,8 +110,14 @@ document.addEventListener('DOMContentLoaded', function() {
         // Close mobile menu when clicking outside
         document.addEventListener('click', function(e) {
             if (!mobileMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
-                mobileMenu.classList.add('hidden');
-                mobileMenu.style.display = 'none';
+                if (!mobileMenu.classList.contains('hidden')) {
+                    // Animate out before hiding
+                    mobileMenu.classList.remove('show');
+                    
+                    setTimeout(() => {
+                        mobileMenu.classList.add('hidden');
+                    }, 300);
+                }
             }
         });
     } else {
@@ -536,12 +604,156 @@ document.addEventListener('DOMContentLoaded', function() {
     // Check if animations work on Vercel
     ensureAnimationsWork();
     
+    // Test navigation animations specifically
+    testNavigationAnimations();
+    
+    // Test smooth scrolling functionality
+    testSmoothScrolling();
+    
     initScrollAnimations();
     initParallaxEffect();
     initTimelineAnimations();
     initTimelineHoverEffects();
     initProgressiveTimelineReveal();
 });
+
+// Test navigation animations for Vercel compatibility
+function testNavigationAnimations() {
+    console.log('Testing navigation animations...');
+    
+    // Test if CSS animations are supported
+    const testElement = document.createElement('div');
+    testElement.style.cssText = `
+        position: fixed;
+        top: -100px;
+        left: -100px;
+        width: 1px;
+        height: 1px;
+        opacity: 0;
+        pointer-events: none;
+        transition: all 0.3s ease;
+    `;
+    document.body.appendChild(testElement);
+    
+    // Test transition
+    testElement.style.opacity = '1';
+    const hasTransitions = window.getComputedStyle(testElement).transition !== 'none';
+    
+    // Test transform
+    testElement.style.transform = 'translateY(10px)';
+    const hasTransforms = window.getComputedStyle(testElement).transform !== 'none';
+    
+    // Test smooth scrolling support
+    const hasSmoothScroll = 'scrollBehavior' in document.documentElement.style;
+    const supportsRequestAnimationFrame = typeof requestAnimationFrame !== 'undefined';
+    
+    document.body.removeChild(testElement);
+    
+    console.log('Animation support:', { 
+        hasTransitions, 
+        hasTransforms, 
+        hasSmoothScroll, 
+        supportsRequestAnimationFrame 
+    });
+    
+    // If animations don't work, add fallback classes
+    if (!hasTransitions || !hasTransforms) {
+        console.warn('Limited animation support detected, applying fallbacks');
+        document.body.classList.add('animation-fallback');
+    }
+    
+    // If smooth scrolling doesn't work, enhance the scrollToSection function
+    if (!hasSmoothScroll || !supportsRequestAnimationFrame) {
+        console.warn('Limited smooth scroll support detected, using enhanced fallback');
+        document.body.classList.add('scroll-fallback');
+        enhanceScrollToSection();
+    }
+}
+
+// Enhanced scroll function for environments with limited smooth scroll support
+function enhanceScrollToSection() {
+    const originalScrollToSection = window.scrollToSection;
+    
+    window.scrollToSection = function(sectionId) {
+        const element = document.getElementById(sectionId);
+        if (!element) {
+            console.warn(`Section with id "${sectionId}" not found`);
+            return;
+        }
+
+        // Always use custom animation for fallback
+        const startPosition = window.pageYOffset;
+        const targetPosition = element.offsetTop - 80;
+        const distance = targetPosition - startPosition;
+        const duration = Math.min(Math.abs(distance) / 1.5, 800);
+        let startTime = null;
+
+        // Add visual feedback during scroll
+        document.body.classList.add('scrolling');
+
+        function smoothScrollAnimation(currentTime) {
+            if (startTime === null) startTime = currentTime;
+            const timeElapsed = currentTime - startTime;
+            const progress = Math.min(timeElapsed / duration, 1);
+            
+            // Enhanced easing function
+            const easeInOutQuart = progress < 0.5 
+                ? 8 * progress * progress * progress * progress 
+                : 1 - Math.pow(-2 * progress + 2, 4) / 2;
+            
+            window.scrollTo(0, startPosition + distance * easeInOutQuart);
+            
+            if (progress < 1) {
+                if (typeof requestAnimationFrame !== 'undefined') {
+                    requestAnimationFrame(smoothScrollAnimation);
+                } else {
+                    // Fallback for very old browsers
+                    setTimeout(() => smoothScrollAnimation(currentTime + 16), 16);
+                }
+            } else {
+                // Remove scrolling class when animation completes
+                document.body.classList.remove('scrolling');
+            }
+        }
+        
+        if (typeof requestAnimationFrame !== 'undefined') {
+            requestAnimationFrame(smoothScrollAnimation);
+        } else {
+            smoothScrollAnimation(0);
+        }
+        
+        console.log(`Enhanced scrolling to section: ${sectionId}`);
+    };
+}
+
+// Test smooth scrolling functionality
+function testSmoothScrolling() {
+    console.log('Testing smooth scrolling functionality...');
+    
+    // Test if scrollToSection function works
+    const testSection = document.getElementById('about');
+    if (testSection) {
+        console.log('✅ Smooth scrolling test: About section found');
+        
+        // Test scroll behavior support
+        const supportsScrollBehavior = 'scrollBehavior' in document.documentElement.style;
+        const supportsRequestAnimationFrame = typeof requestAnimationFrame !== 'undefined';
+        
+        console.log('Scroll support:', {
+            supportsScrollBehavior,
+            supportsRequestAnimationFrame,
+            hasScrollToSection: typeof window.scrollToSection === 'function'
+        });
+        
+        if (supportsScrollBehavior && supportsRequestAnimationFrame) {
+            console.log('✅ Full smooth scrolling support detected');
+        } else {
+            console.log('⚠️ Limited smooth scrolling support, using fallbacks');
+        }
+    } else {
+        console.warn('❌ Test section not found for smooth scrolling test');
+    }
+}
 
 // Add CSS for animations
 const style = document.createElement('style');
