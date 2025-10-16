@@ -206,6 +206,70 @@
             z-index: 1;
         }
         
+        /* Vercel-compatible navigation animations */
+        .nav-link {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #ea580c, #f59e0b);
+            transition: width 0.3s ease-in-out;
+        }
+        
+        .nav-link:hover::before {
+            width: 100%;
+        }
+        
+        /* Mobile menu slide animation */
+        .mobile-menu-slide {
+            transform: translateY(-100%);
+            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+        }
+        
+        .mobile-menu-slide.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        /* Enhanced hover effects for Vercel */
+        .hover-lift {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 10px 25px rgba(234, 88, 12, 0.2);
+        }
+        
+        /* Fallback styles for limited animation support */
+        .animation-fallback .hover-lift {
+            transition: color 0.3s ease, background-color 0.3s ease;
+        }
+        
+        .animation-fallback .hover-lift:hover {
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .animation-fallback .mobile-menu-slide {
+            transition: opacity 0.3s ease;
+        }
+        
+        .animation-fallback .mobile-menu-slide.show {
+            opacity: 1;
+        }
+        
+        .animation-fallback .nav-link::before {
+            transition: width 0.3s ease;
+        }
+        
         .section-transition::before {
             content: '';
             position: absolute;
@@ -384,13 +448,13 @@
                     <img src="/m (2).png" alt="Cyber Oasis 1.0" class="xl:h-16 h-10 w-auto hover:scale-110 transition-transform duration-300">
                 </div>
                 <div class="hidden md:flex space-x-8">
-                    <a href="#home" class="hover:text-desert-orange font-orbitron transition-colors duration-300">Home</a>
-                    <a href="#about" class="hover:text-desert-orange font-orbitron transition-colors duration-300">About</a>
-                    <a href="#program" class="hover:text-desert-orange font-orbitron transition-colors duration-300">Program</a>
-                    <a href="#hackathon" class="hover:text-desert-orange font-orbitron transition-colors duration-300">Hackathon</a>
-                    <a href="#conferences" class="hover:text-desert-orange font-orbitron transition-colors duration-300">Conferences</a>
-                    <a href="#partners" class="hover:text-desert-orange font-orbitron transition-colors duration-300">Partners</a>
-                    <a href="#contact" class="hover:text-desert-orange font-orbitron transition-colors duration-300">Contact</a>
+                    <a href="#home" class="nav-link hover:text-desert-orange font-orbitron hover-lift">Home</a>
+                    <a href="#about" class="nav-link hover:text-desert-orange font-orbitron hover-lift">About</a>
+                    <a href="#program" class="nav-link hover:text-desert-orange font-orbitron hover-lift">Program</a>
+                    <a href="#hackathon" class="nav-link hover:text-desert-orange font-orbitron hover-lift">Hackathon</a>
+                    <a href="#conferences" class="nav-link hover:text-desert-orange font-orbitron hover-lift">Conferences</a>
+                    <a href="#partners" class="nav-link hover:text-desert-orange font-orbitron hover-lift">Partners</a>
+                    <a href="#contact" class="nav-link hover:text-desert-orange font-orbitron hover-lift">Contact</a>
                 </div>
                 <button id="mobile-menu-btn" class="md:hidden text-desert-orange" onclick="toggleMobileMenu()">
                     <i class="fas fa-bars text-xl"></i>
@@ -398,15 +462,15 @@
             </div>
         </div>
         <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-desert-night border-t border-desert-orange/30">
+        <div id="mobile-menu" class="hidden md:hidden bg-desert-night border-t border-desert-orange/30 mobile-menu-slide">
             <div class="px-4 py-2 space-y-2">
-                <a href="#home" class="block py-2 hover:text-desert-orange transition-colors">Home</a>
-                <a href="#about" class="block py-2 hover:text-desert-orange transition-colors">About</a>
-                <a href="#program" class="block py-2 hover:text-desert-orange transition-colors">Program</a>
-                <a href="#hackathon" class="block py-2 hover:text-desert-orange transition-colors">Hackathon</a>
-                <a href="#conferences" class="block py-2 hover:text-desert-orange transition-colors">Conferences</a>
-                <a href="#partners" class="block py-2 hover:text-desert-orange transition-colors">Partners</a>
-                <a href="#contact" class="block py-2 hover:text-desert-orange transition-colors">Contact</a>
+                <a href="#home" class="block py-2 hover:text-desert-orange hover-lift">Home</a>
+                <a href="#about" class="block py-2 hover:text-desert-orange hover-lift">About</a>
+                <a href="#program" class="block py-2 hover:text-desert-orange hover-lift">Program</a>
+                <a href="#hackathon" class="block py-2 hover:text-desert-orange hover-lift">Hackathon</a>
+                <a href="#conferences" class="block py-2 hover:text-desert-orange hover-lift">Conferences</a>
+                <a href="#partners" class="block py-2 hover:text-desert-orange hover-lift">Partners</a>
+                <a href="#contact" class="block py-2 hover:text-desert-orange hover-lift">Contact</a>
             </div>
         </div>
     </nav>

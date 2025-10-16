@@ -9,7 +9,7 @@ window.scrollToSection = function(sectionId) {
     }
 }
 
-// Mobile menu toggle - Enhanced with better error handling
+// Mobile menu toggle - Enhanced with better error handling and Vercel compatibility
 document.addEventListener('DOMContentLoaded', function() {
     const mobileMenuBtn = document.getElementById('mobile-menu-btn');
     const mobileMenu = document.getElementById('mobile-menu');
@@ -17,21 +17,29 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('Mobile menu elements:', { mobileMenuBtn, mobileMenu });
     
     if (mobileMenuBtn && mobileMenu) {
+        // Enhanced mobile menu toggle with smooth animations
         mobileMenuBtn.addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
             console.log('Mobile menu button clicked');
             
-            // Toggle the mobile menu
+            // Toggle the mobile menu with smooth animation
             const isHidden = mobileMenu.classList.contains('hidden');
             if (isHidden) {
+                // Show menu with animation
                 mobileMenu.classList.remove('hidden');
-                mobileMenu.style.display = 'block';
-                console.log('Mobile menu opened');
+                mobileMenu.classList.add('show');
+                console.log('Mobile menu opened with animation');
             } else {
-                mobileMenu.classList.add('hidden');
-                mobileMenu.style.display = 'none';
-                console.log('Mobile menu closed');
+                // Hide menu with animation
+                mobileMenu.classList.remove('show');
+                
+                // Hide after animation completes
+                setTimeout(() => {
+                    mobileMenu.classList.add('hidden');
+                }, 300);
+                
+                console.log('Mobile menu closed with animation');
             }
         });
         
@@ -39,8 +47,13 @@ document.addEventListener('DOMContentLoaded', function() {
         const mobileLinks = mobileMenu.querySelectorAll('a');
         mobileLinks.forEach(link => {
             link.addEventListener('click', function() {
-                mobileMenu.classList.add('hidden');
-                mobileMenu.style.display = 'none';
+                // Animate out before hiding
+                mobileMenu.classList.remove('show');
+                
+                setTimeout(() => {
+                    mobileMenu.classList.add('hidden');
+                }, 300);
+                
                 console.log('Mobile menu closed via link click');
             });
         });
@@ -48,8 +61,14 @@ document.addEventListener('DOMContentLoaded', function() {
         // Close mobile menu when clicking outside
         document.addEventListener('click', function(e) {
             if (!mobileMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
-                mobileMenu.classList.add('hidden');
-                mobileMenu.style.display = 'none';
+                if (!mobileMenu.classList.contains('hidden')) {
+                    // Animate out before hiding
+                    mobileMenu.classList.remove('show');
+                    
+                    setTimeout(() => {
+                        mobileMenu.classList.add('hidden');
+                    }, 300);
+                }
             }
         });
     } else {
@@ -536,12 +555,52 @@ document.addEventListener('DOMContentLoaded', function() {
     // Check if animations work on Vercel
     ensureAnimationsWork();
     
+    // Test navigation animations specifically
+    testNavigationAnimations();
+    
     initScrollAnimations();
     initParallaxEffect();
     initTimelineAnimations();
     initTimelineHoverEffects();
     initProgressiveTimelineReveal();
 });
+
+// Test navigation animations for Vercel compatibility
+function testNavigationAnimations() {
+    console.log('Testing navigation animations...');
+    
+    // Test if CSS animations are supported
+    const testElement = document.createElement('div');
+    testElement.style.cssText = `
+        position: fixed;
+        top: -100px;
+        left: -100px;
+        width: 1px;
+        height: 1px;
+        opacity: 0;
+        pointer-events: none;
+        transition: all 0.3s ease;
+    `;
+    document.body.appendChild(testElement);
+    
+    // Test transition
+    testElement.style.opacity = '1';
+    const hasTransitions = window.getComputedStyle(testElement).transition !== 'none';
+    
+    // Test transform
+    testElement.style.transform = 'translateY(10px)';
+    const hasTransforms = window.getComputedStyle(testElement).transform !== 'none';
+    
+    document.body.removeChild(testElement);
+    
+    console.log('Animation support:', { hasTransitions, hasTransforms });
+    
+    // If animations don't work, add fallback classes
+    if (!hasTransitions || !hasTransforms) {
+        console.warn('Limited animation support detected, applying fallbacks');
+        document.body.classList.add('animation-fallback');
+    }
+}
 
 // Add CSS for animations
 const style = document.createElement('style');
