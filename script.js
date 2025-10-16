@@ -196,58 +196,43 @@ async function handleRegistrationSubmission(event) {
         event.preventDefault();
     }
     
-    // Wait a bit to ensure DOM is ready
-    await new Promise(resolve => setTimeout(resolve, 100));
+    console.log('Form submission started');
     
-    // Get form elements
-    const teamNameEl = document.getElementById('team-name');
-    const universityEl = document.getElementById('university');
-    const leaderNameEl = document.getElementById('leader-name');
-    const memberNameEl = document.getElementById('member-name');
-    const facultyEl = document.getElementById('faculty');
-    const studyLevelEl = document.getElementById('study-level');
-    const fieldStudyEl = document.getElementById('field-study');
-    const leaderEmailEl = document.getElementById('leader-email');
-    const leaderPhoneEl = document.getElementById('leader-phone');
-    const cyberKnowledgeEl = document.getElementById('cyber-knowledge');
-    const hackathonExperienceEl = document.querySelector('input[name="hackathon-experience"]:checked');
-    const hackathonSpecifyEl = document.getElementById('hackathon-specify');
-    
-    // Check if elements exist
-    if (!teamNameEl || !universityEl || !leaderNameEl || !memberNameEl || !facultyEl || !studyLevelEl || !fieldStudyEl || !leaderEmailEl || !leaderPhoneEl || !cyberKnowledgeEl) {
-        console.error('Form elements not found!');
+    // Get form data using FormData for reliable data collection
+    const form = document.getElementById('registration-form');
+    if (!form) {
+        console.error('Form not found!');
         showNotification('Form error: Please refresh the page and try again.', 'error');
         return false;
     }
     
-    // Get form data using FormData for reliable data collection
-    const form = document.getElementById('registration-form');
     const formDataObj = new FormData(form);
     
-    // Helper function to get value from FormData or element
-    const getValue = (element, formDataKey) => {
-        const formDataValue = formDataObj.get(formDataKey);
-        const elementValue = element?.value;
-        return formDataValue || elementValue || '';
-    };
+    // Convert FormData to object
+    const formData = {};
+    for (let [key, value] of formDataObj.entries()) {
+        formData[key] = value;
+    }
     
-    const formData = {
-        teamName: getValue(teamNameEl, 'team-name'),
-        university: getValue(universityEl, 'university'),
-        leaderName: getValue(leaderNameEl, 'leader-name'),
-        memberName: getValue(memberNameEl, 'member-name'),
-        faculty: getValue(facultyEl, 'faculty'),
-        studyLevel: getValue(studyLevelEl, 'study-level'),
-        fieldStudy: getValue(fieldStudyEl, 'field-study'),
-        leaderEmail: getValue(leaderEmailEl, 'leader-email'),
-        leaderPhone: getValue(leaderPhoneEl, 'leader-phone'),
-        cyberKnowledge: getValue(cyberKnowledgeEl, 'cyber-knowledge'),
-        hackathonExperience: getValue(hackathonExperienceEl, 'hackathon-experience'),
-        hackathonSpecify: getValue(hackathonSpecifyEl, 'hackathon-specify')
+    // Map form field names to API field names
+    const apiFormData = {
+        teamName: formData['team-name'] || '',
+        university: formData['university'] || '',
+        leaderName: formData['leader-name'] || '',
+        memberName: formData['member-name'] || '',
+        faculty: formData['faculty'] || '',
+        studyLevel: formData['study-level'] || '',
+        fieldStudy: formData['field-study'] || '',
+        leaderEmail: formData['leader-email'] || '',
+        leaderPhone: formData['leader-phone'] || '',
+        cyberKnowledge: formData['cyber-knowledge'] || '',
+        hackathonExperience: formData['hackathon-experience'] || '',
+        hackathonSpecify: formData['hackathon-specify'] || ''
     };
     
     // Debug: Log the form data to see what's being sent
-    console.log('Form data being sent:', formData);
+    console.log('Raw form data:', formData);
+    console.log('API form data:', apiFormData);
     
     // Debug: Check FormData object
     console.log('FormData entries:');
@@ -255,16 +240,9 @@ async function handleRegistrationSubmission(event) {
         console.log(`${key}: ${value}`);
     }
     
-    // Debug: Check if form elements exist and have values
-    console.log('Form element checks:');
-    console.log('team-name element:', document.getElementById('team-name'));
-    console.log('team-name value:', document.getElementById('team-name')?.value);
-    console.log('university value:', document.getElementById('university')?.value);
-    console.log('leader-name value:', document.getElementById('leader-name')?.value);
-    
     // Check for empty required fields before validation
     const requiredFields = ['teamName', 'university', 'leaderName', 'memberName', 'faculty', 'studyLevel', 'fieldStudy', 'leaderEmail', 'leaderPhone', 'cyberKnowledge', 'hackathonExperience'];
-    const emptyFields = requiredFields.filter(field => !formData[field] || formData[field].trim() === '');
+    const emptyFields = requiredFields.filter(field => !apiFormData[field] || apiFormData[field].trim() === '');
     
     if (emptyFields.length > 0) {
         console.error('Empty required fields:', emptyFields);
@@ -273,7 +251,7 @@ async function handleRegistrationSubmission(event) {
     }
     
     // Validate required fields
-    if (!validateRegistrationForm(formData)) {
+    if (!validateRegistrationForm(apiFormData)) {
         return false;
     }
     
@@ -285,7 +263,7 @@ async function handleRegistrationSubmission(event) {
         submitBtn.disabled = true;
         
         // Debug logging
-        console.log('Submitting registration form with data:', formData);
+        console.log('Submitting registration form with data:', apiFormData);
         
         // Submit to serverless function
         const response = await fetch('/api/register', {
@@ -293,7 +271,7 @@ async function handleRegistrationSubmission(event) {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(formData)
+            body: JSON.stringify(apiFormData)
         });
         
         const responseData = await response.json();
