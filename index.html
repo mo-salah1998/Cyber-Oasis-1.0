@@ -1228,7 +1228,13 @@
                 </p>
             </div>
             
-            <form id="registration-form" class="p-8 space-y-8" method="POST" action="/api/register" onsubmit="return handleRegistrationSubmission(event)">
+            <form id="registration-form" class="p-8 space-y-8" method="POST" action="/api/form-handler" enctype="application/x-www-form-urlencoded" onsubmit="return handleFormSubmission(event)">
+                <!-- Error Message Display -->
+                <div id="error-message" class="hidden bg-red-600/20 border border-red-500/50 text-red-300 px-4 py-3 rounded-lg">
+                    <i class="fas fa-exclamation-triangle mr-2"></i>
+                    <span id="error-text">Please fill in all required fields.</span>
+                </div>
+                
                 <div class="grid md:grid-cols-2 gap-8">
                     <div>
                         <label class="block text-desert-sand font-bold mb-3 text-lg">Team Name (Nickname) *</label>

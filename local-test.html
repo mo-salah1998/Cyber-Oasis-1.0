@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Local Form Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; max-width: 600px; margin: 0 auto; }
+        .form-group { margin: 15px 0; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input, select, textarea { width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px; }
+        button { padding: 12px 24px; background: #007bff; color: white; border: none; cursor: pointer; border-radius: 4px; }
+        .debug { background: #f8f9fa; padding: 15px; margin: 15px 0; border: 1px solid #dee2e6; border-radius: 4px; }
+        .error { color: red; }
+        .success { color: green; }
+    </style>
+</head>
+<body>
+    <h1>Local Registration Form Test</h1>
+    <p>This tests the form data collection logic locally before deployment.</p>
+    
+    <form id="registration-form" method="POST" action="https://cyber-oasis-website.vercel.app/api/register">
+        <div class="form-group">
+            <label for="team-name">Team Name *</label>
+            <input type="text" id="team-name" name="team-name" required value="Test Team">
+        </div>
+        
+        <div class="form-group">
+            <label for="university">University *</label>
+            <select id="university" name="university" required>
+                <option value="">Select University</option>
+                <option value="test-university" selected>Test University</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="leader-name">Leader Name *</label>
+            <input type="text" id="leader-name" name="leader-name" required value="Test Leader">
+        </div>
+        
+        <div class="form-group">
+            <label for="member-name">Member Name *</label>
+            <input type="text" id="member-name" name="member-name" required value="Test Member">
+        </div>
+        
+        <div class="form-group">
+            <label for="faculty">Faculty *</label>
+            <input type="text" id="faculty" name="faculty" required value="Test Faculty">
+        </div>
+        
+        <div class="form-group">
+            <label for="study-level">Study Level *</label>
+            <select id="study-level" name="study-level" required>
+                <option value="">Select Level</option>
+                <option value="bachelor" selected>Bachelor</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="field-study">Field of Study *</label>
+            <input type="text" id="field-study" name="field-study" required value="Test Field">
+        </div>
+        
+        <div class="form-group">
+            <label for="leader-email">Leader Email *</label>
+            <input type="email" id="leader-email" name="leader-email" required value="test@example.com">
+        </div>
+        
+        <div class="form-group">
+            <label for="leader-phone">Leader Phone *</label>
+            <input type="tel" id="leader-phone" name="leader-phone" required value="1234567890">
+        </div>
+        
+        <div class="form-group">
+            <label for="cyber-knowledge">Cyber Knowledge *</label>
+            <select id="cyber-knowledge" name="cyber-knowledge" required>
+                <option value="">Select Level</option>
+                <option value="beginner" selected>Beginner</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label>Hackathon Experience *</label>
+            <label><input type="radio" name="hackathon-experience" value="no" checked> No</label>
+        </div>
+        
+        <button type="submit">Submit Registration</button>
+    </form>
+    
+    <div class="debug">
+        <h3>Debug Info:</h3>
+        <div id="debug-output">Click submit to see debug information...</div>
+    </div>
+
+    <script>
+        // This is the exact same logic we implemented in script.js
+        async function handleRegistrationSubmission(event) {
+            event.preventDefault();
+            
+            console.log('Form submission started');
+            
+            const form = document.getElementById('registration-form');
+            if (!form) {
+                console.error('Form not found!');
+                return false;
+            }
+            
+            const formDataObj = new FormData(form);
+            
+            // Convert FormData to object
+            const formData = {};
+            for (let [key, value] of formDataObj.entries()) {
+                formData[key] = value;
+            }
+            
+            // Map form field names to API field names
+            const apiFormData = {
+                teamName: formData['team-name'] || '',
+                university: formData['university'] || '',
+                leaderName: formData['leader-name'] || '',
+                memberName: formData['member-name'] || '',
+                faculty: formData['faculty'] || '',
+                studyLevel: formData['study-level'] || '',
+                fieldStudy: formData['field-study'] || '',
+                leaderEmail: formData['leader-email'] || '',
+                leaderPhone: formData['leader-phone'] || '',
+                cyberKnowledge: formData['cyber-knowledge'] || '',
+                hackathonExperience: formData['hackathon-experience'] || '',
+                hackathonSpecify: formData['hackathon-specify'] || ''
+            };
+            
+            const debugOutput = document.getElementById('debug-output');
+            debugOutput.innerHTML = `
+                <p><strong>Raw Form Data:</strong></p>
+                <pre>${JSON.stringify(formData, null, 2)}</pre>
+                <p><strong>API Form Data:</strong></p>
+                <pre>${JSON.stringify(apiFormData, null, 2)}</pre>
+            `;
+            
+            // Check for empty required fields
+            const requiredFields = ['teamName', 'university', 'leaderName', 'memberName', 'faculty', 'studyLevel', 'fieldStudy', 'leaderEmail', 'leaderPhone', 'cyberKnowledge', 'hackathonExperience'];
+            const emptyFields = requiredFields.filter(field => !apiFormData[field] || apiFormData[field].trim() === '');
+            
+            if (emptyFields.length > 0) {
+                debugOutput.innerHTML += `<p class="error">❌ Empty required fields: ${emptyFields.join(', ')}</p>`;
+                return false;
+            }
+            
+            try {
+                const response = await fetch('https://cyber-oasis-website.vercel.app/api/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(apiFormData)
+                });
+                
+                const result = await response.json();
+                
+                debugOutput.innerHTML += `
+                    <p><strong>Response:</strong></p>
+                    <pre>${JSON.stringify(result, null, 2)}</pre>
+                `;
+                
+                if (response.ok) {
+                    debugOutput.innerHTML += '<p class="success">✅ Registration successful!</p>';
+                } else {
+                    debugOutput.innerHTML += '<p class="error">❌ Registration failed!</p>';
+                }
+            } catch (error) {
+                debugOutput.innerHTML += `<p class="error">❌ Error: ${error.message}</p>`;
+            }
+        }
+        
+        document.getElementById('registration-form').addEventListener('submit', handleRegistrationSubmission);
+    </script>
+</body>
+</html>

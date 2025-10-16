@@ -189,7 +189,20 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// Registration form submission
+// Simple form submission handler
+function handleFormSubmission(event) {
+    // Show loading state
+    const submitBtn = document.querySelector('#registration-form button[type="submit"]');
+    const originalText = submitBtn.innerHTML;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Submitting...';
+    submitBtn.disabled = true;
+    
+    // Let the form submit naturally to the server
+    // The server will handle the processing and return a response
+    return true;
+}
+
+// Registration form submission (old method - keeping for fallback)
 async function handleRegistrationSubmission(event) {
     // Prevent default form submission if called from event
     if (event) {
@@ -672,7 +685,43 @@ document.addEventListener('DOMContentLoaded', function() {
     initTimelineAnimations();
     initTimelineHoverEffects();
     initProgressiveTimelineReveal();
+    
+    // Handle error messages from URL parameters
+    handleErrorMessages();
 });
+
+// Handle error messages from URL parameters
+function handleErrorMessages() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const error = urlParams.get('error');
+    
+    if (error) {
+        const errorMessage = document.getElementById('error-message');
+        const errorText = document.getElementById('error-text');
+        
+        if (errorMessage && errorText) {
+            let errorMsg = 'Please fill in all required fields.';
+            
+            if (error.startsWith('missing_')) {
+                const field = error.replace('missing_', '').replace(/([A-Z])/g, ' $1').toLowerCase();
+                errorMsg = `Please fill in the ${field} field.`;
+            }
+            
+            errorText.textContent = errorMsg;
+            errorMessage.classList.remove('hidden');
+            
+            // Open the registration modal if it's not already open
+            const modal = document.getElementById('registration-modal');
+            if (modal && modal.classList.contains('hidden')) {
+                openRegistrationModal();
+            }
+            
+            // Remove error parameter from URL
+            const newUrl = window.location.pathname;
+            window.history.replaceState({}, document.title, newUrl);
+        }
+    }
+}
 
 // Test navigation animations for Vercel compatibility
 function testNavigationAnimations() {
