@@ -1228,7 +1228,7 @@
                 </p>
             </div>
             
-            <form id="registration-form" class="p-8 space-y-8" method="POST" action="/api/register">
+            <form id="registration-form" class="p-8 space-y-8" method="POST" action="/api/register" onsubmit="return handleRegistrationSubmission(event)">
                 <div class="grid md:grid-cols-2 gap-8">
                     <div>
                         <label class="block text-desert-sand font-bold mb-3 text-lg">Team Name (Nickname) *</label>

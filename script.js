@@ -175,7 +175,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (registrationForm) {
         registrationForm.addEventListener('submit', function(e) {
             e.preventDefault();
-            handleRegistrationSubmission();
+            handleRegistrationSubmission(e);
         });
     }
     
@@ -190,7 +190,12 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // Registration form submission
-async function handleRegistrationSubmission() {
+async function handleRegistrationSubmission(event) {
+    // Prevent default form submission if called from event
+    if (event) {
+        event.preventDefault();
+    }
+    
     const formData = {
         teamName: document.getElementById('team-name').value,
         university: document.getElementById('university').value,
@@ -208,7 +213,7 @@ async function handleRegistrationSubmission() {
     
     // Validate required fields
     if (!validateRegistrationForm(formData)) {
-        return;
+        return false;
     }
     
     try {
@@ -237,6 +242,7 @@ async function handleRegistrationSubmission() {
             showNotification('Registration submitted successfully! We will contact you soon.', 'success');
             closeRegistrationModal();
             document.getElementById('registration-form').reset();
+            return false; // Prevent form submission
         } else {
             // Show specific error message from server
             const errorMessage = responseData.error || responseData.message || 'Registration failed';
@@ -248,6 +254,7 @@ async function handleRegistrationSubmission() {
         // Show more specific error message
         const errorMessage = error.message || 'Registration failed. Please try again or contact us directly.';
         showNotification(errorMessage, 'error');
+        return false; // Prevent form submission
     } finally {
         // Reset button state
         const submitBtn = document.querySelector('#registration-form button[type="submit"]');
