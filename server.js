@@ -18,6 +18,7 @@ const PORT = process.env.PORT || 3000;
 // Middleware
 app.use(express.json());
 app.use(express.static(__dirname));
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Import API handlers
 import registerHandler from './api/register.js';
@@ -38,7 +39,24 @@ app.get('/api/health', (req, res) => {
     });
 });
 
-// Serve static files
+// Serve static files from public directory first
+app.get('/main.css', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'main.css'));
+});
+
+app.get('/m (2).png', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'm (2).png'));
+});
+
+app.get('/ODC-3.png', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'ODC-3.png'));
+});
+
+app.get('/Cover.png', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'Cover.png'));
+});
+
+// Serve index.html for all other routes
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
