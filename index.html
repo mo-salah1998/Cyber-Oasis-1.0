@@ -11,10 +11,29 @@
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link href="/main.css" rel="stylesheet">
     <style>
-        /* Global overflow prevention */
-        html, body {
+        /* Global overflow prevention and smooth scrolling */
+        html {
+            scroll-behavior: smooth;
             overflow-x: hidden;
             max-width: 100vw;
+        }
+        
+        body {
+            overflow-x: hidden;
+            max-width: 100vw;
+        }
+        
+        /* Enhanced smooth scrolling for Vercel */
+        @media (prefers-reduced-motion: no-preference) {
+            html {
+                scroll-behavior: smooth;
+            }
+        }
+        
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
         }
         
         /* Vercel-compatible animations - defined directly in HTML */
@@ -268,6 +287,30 @@
         
         .animation-fallback .nav-link::before {
             transition: width 0.3s ease;
+        }
+        
+        /* Enhanced scroll behavior for Vercel */
+        .scroll-fallback {
+            scroll-behavior: auto;
+        }
+        
+        /* Visual feedback during scroll */
+        .scrolling {
+            pointer-events: none;
+        }
+        
+        .scrolling * {
+            pointer-events: none;
+        }
+        
+        /* Smooth scroll enhancement */
+        html {
+            scroll-padding-top: 80px;
+        }
+        
+        /* Section scroll indicators */
+        section {
+            scroll-margin-top: 80px;
         }
         
         .section-transition::before {

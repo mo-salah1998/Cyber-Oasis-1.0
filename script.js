@@ -1,12 +1,61 @@
-// Smooth scrolling for navigation links - explicitly define on window object for global access
+// Enhanced smooth scrolling for navigation links - Vercel compatible
 window.scrollToSection = function(sectionId) {
     const element = document.getElementById(sectionId);
-    if (element) {
+    if (!element) {
+        console.warn(`Section with id "${sectionId}" not found`);
+        return;
+    }
+
+    // Get current scroll position
+    const startPosition = window.pageYOffset;
+    const targetPosition = element.offsetTop - 80; // Account for fixed navbar
+    const distance = targetPosition - startPosition;
+    const duration = Math.min(Math.abs(distance) / 2, 1000); // Max 1 second
+    let startTime = null;
+
+    // Check if smooth scrolling is supported
+    const supportsSmoothScroll = 'scrollBehavior' in document.documentElement.style;
+    
+    if (supportsSmoothScroll && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        // Use native smooth scrolling if supported
+        document.body.classList.add('scrolling');
         element.scrollIntoView({
             behavior: 'smooth',
             block: 'start'
         });
+        
+        // Remove scrolling class after animation
+        setTimeout(() => {
+            document.body.classList.remove('scrolling');
+        }, duration + 100);
+    } else {
+        // Fallback to custom smooth scrolling animation
+        document.body.classList.add('scrolling');
+        
+        function smoothScrollAnimation(currentTime) {
+            if (startTime === null) startTime = currentTime;
+            const timeElapsed = currentTime - startTime;
+            const progress = Math.min(timeElapsed / duration, 1);
+            
+            // Easing function for smooth animation
+            const easeInOutCubic = progress < 0.5 
+                ? 4 * progress * progress * progress 
+                : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+            
+            window.scrollTo(0, startPosition + distance * easeInOutCubic);
+            
+            if (progress < 1) {
+                requestAnimationFrame(smoothScrollAnimation);
+            } else {
+                // Remove scrolling class when animation completes
+                document.body.classList.remove('scrolling');
+            }
+        }
+        
+        requestAnimationFrame(smoothScrollAnimation);
     }
+    
+    console.log(`Scrolling to section: ${sectionId}`);
 }
 
 // Mobile menu toggle - Enhanced with better error handling and Vercel compatibility
@@ -591,15 +640,81 @@ function testNavigationAnimations() {
     testElement.style.transform = 'translateY(10px)';
     const hasTransforms = window.getComputedStyle(testElement).transform !== 'none';
     
+    // Test smooth scrolling support
+    const hasSmoothScroll = 'scrollBehavior' in document.documentElement.style;
+    const supportsRequestAnimationFrame = typeof requestAnimationFrame !== 'undefined';
+    
     document.body.removeChild(testElement);
     
-    console.log('Animation support:', { hasTransitions, hasTransforms });
+    console.log('Animation support:', { 
+        hasTransitions, 
+        hasTransforms, 
+        hasSmoothScroll, 
+        supportsRequestAnimationFrame 
+    });
     
     // If animations don't work, add fallback classes
     if (!hasTransitions || !hasTransforms) {
         console.warn('Limited animation support detected, applying fallbacks');
         document.body.classList.add('animation-fallback');
     }
+    
+    // If smooth scrolling doesn't work, enhance the scrollToSection function
+    if (!hasSmoothScroll || !supportsRequestAnimationFrame) {
+        console.warn('Limited smooth scroll support detected, using enhanced fallback');
+        document.body.classList.add('scroll-fallback');
+        enhanceScrollToSection();
+    }
+}
+
+// Enhanced scroll function for environments with limited smooth scroll support
+function enhanceScrollToSection() {
+    const originalScrollToSection = window.scrollToSection;
+    
+    window.scrollToSection = function(sectionId) {
+        const element = document.getElementById(sectionId);
+        if (!element) {
+            console.warn(`Section with id "${sectionId}" not found`);
+            return;
+        }
+
+        // Always use custom animation for fallback
+        const startPosition = window.pageYOffset;
+        const targetPosition = element.offsetTop - 80;
+        const distance = targetPosition - startPosition;
+        const duration = Math.min(Math.abs(distance) / 1.5, 800);
+        let startTime = null;
+
+        function smoothScrollAnimation(currentTime) {
+            if (startTime === null) startTime = currentTime;
+            const timeElapsed = currentTime - startTime;
+            const progress = Math.min(timeElapsed / duration, 1);
+            
+            // Enhanced easing function
+            const easeInOutQuart = progress < 0.5 
+                ? 8 * progress * progress * progress * progress 
+                : 1 - Math.pow(-2 * progress + 2, 4) / 2;
+            
+            window.scrollTo(0, startPosition + distance * easeInOutQuart);
+            
+            if (progress < 1) {
+                if (typeof requestAnimationFrame !== 'undefined') {
+                    requestAnimationFrame(smoothScrollAnimation);
+                } else {
+                    // Fallback for very old browsers
+                    setTimeout(() => smoothScrollAnimation(currentTime + 16), 16);
+                }
+            }
+        }
+        
+        if (typeof requestAnimationFrame !== 'undefined') {
+            requestAnimationFrame(smoothScrollAnimation);
+        } else {
+            smoothScrollAnimation(0);
+        }
+        
+        console.log(`Enhanced scrolling to section: ${sectionId}`);
+    };
 }
 
 // Add CSS for animations
