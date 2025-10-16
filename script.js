@@ -196,20 +196,64 @@ async function handleRegistrationSubmission(event) {
         event.preventDefault();
     }
     
+    // Wait a bit to ensure DOM is ready
+    await new Promise(resolve => setTimeout(resolve, 100));
+    
+    // Get form elements
+    const teamNameEl = document.getElementById('team-name');
+    const universityEl = document.getElementById('university');
+    const leaderNameEl = document.getElementById('leader-name');
+    const memberNameEl = document.getElementById('member-name');
+    const facultyEl = document.getElementById('faculty');
+    const studyLevelEl = document.getElementById('study-level');
+    const fieldStudyEl = document.getElementById('field-study');
+    const leaderEmailEl = document.getElementById('leader-email');
+    const leaderPhoneEl = document.getElementById('leader-phone');
+    const cyberKnowledgeEl = document.getElementById('cyber-knowledge');
+    const hackathonExperienceEl = document.querySelector('input[name="hackathon-experience"]:checked');
+    const hackathonSpecifyEl = document.getElementById('hackathon-specify');
+    
+    // Check if elements exist
+    if (!teamNameEl || !universityEl || !leaderNameEl || !memberNameEl || !facultyEl || !studyLevelEl || !fieldStudyEl || !leaderEmailEl || !leaderPhoneEl || !cyberKnowledgeEl) {
+        console.error('Form elements not found!');
+        showNotification('Form error: Please refresh the page and try again.', 'error');
+        return false;
+    }
+    
+    // Try to get form data using FormData as fallback
+    const form = document.getElementById('registration-form');
+    const formDataObj = new FormData(form);
+    
     const formData = {
-        teamName: document.getElementById('team-name').value,
-        university: document.getElementById('university').value,
-        leaderName: document.getElementById('leader-name').value,
-        memberName: document.getElementById('member-name').value,
-        faculty: document.getElementById('faculty').value,
-        studyLevel: document.getElementById('study-level').value,
-        fieldStudy: document.getElementById('field-study').value,
-        leaderEmail: document.getElementById('leader-email').value,
-        leaderPhone: document.getElementById('leader-phone').value,
-        cyberKnowledge: document.getElementById('cyber-knowledge').value,
-        hackathonExperience: document.querySelector('input[name="hackathon-experience"]:checked')?.value,
-        hackathonSpecify: document.getElementById('hackathon-specify').value
+        teamName: teamNameEl.value || formDataObj.get('team-name') || '',
+        university: universityEl.value || formDataObj.get('university') || '',
+        leaderName: leaderNameEl.value || formDataObj.get('leader-name') || '',
+        memberName: memberNameEl.value || formDataObj.get('member-name') || '',
+        faculty: facultyEl.value || formDataObj.get('faculty') || '',
+        studyLevel: studyLevelEl.value || formDataObj.get('study-level') || '',
+        fieldStudy: fieldStudyEl.value || formDataObj.get('field-study') || '',
+        leaderEmail: leaderEmailEl.value || formDataObj.get('leader-email') || '',
+        leaderPhone: leaderPhoneEl.value || formDataObj.get('leader-phone') || '',
+        cyberKnowledge: cyberKnowledgeEl.value || formDataObj.get('cyber-knowledge') || '',
+        hackathonExperience: hackathonExperienceEl?.value || formDataObj.get('hackathon-experience') || '',
+        hackathonSpecify: hackathonSpecifyEl?.value || formDataObj.get('hackathon-specify') || ''
     };
+    
+    // Debug: Log the form data to see what's being sent
+    console.log('Form data being sent:', formData);
+    
+    // Debug: Check FormData object
+    console.log('FormData entries:');
+    for (let [key, value] of formDataObj.entries()) {
+        console.log(`${key}: ${value}`);
+    }
+    
+    // Debug: Check if form elements exist and have values
+    console.log('Form element checks:');
+    console.log('team-name element:', document.getElementById('team-name'));
+    console.log('team-name value:', document.getElementById('team-name')?.value);
+    console.log('university value:', document.getElementById('university')?.value);
+    console.log('leader-name value:', document.getElementById('leader-name')?.value);
     
     // Validate required fields
     if (!validateRegistrationForm(formData)) {
