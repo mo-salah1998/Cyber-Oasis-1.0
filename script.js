@@ -220,23 +220,30 @@ async function handleRegistrationSubmission(event) {
         return false;
     }
     
-    // Try to get form data using FormData as fallback
+    // Get form data using FormData for reliable data collection
     const form = document.getElementById('registration-form');
     const formDataObj = new FormData(form);
     
+    // Helper function to get value from FormData or element
+    const getValue = (element, formDataKey) => {
+        const formDataValue = formDataObj.get(formDataKey);
+        const elementValue = element?.value;
+        return formDataValue || elementValue || '';
+    };
+    
     const formData = {
-        teamName: teamNameEl.value || formDataObj.get('team-name') || '',
-        university: universityEl.value || formDataObj.get('university') || '',
-        leaderName: leaderNameEl.value || formDataObj.get('leader-name') || '',
-        memberName: memberNameEl.value || formDataObj.get('member-name') || '',
-        faculty: facultyEl.value || formDataObj.get('faculty') || '',
-        studyLevel: studyLevelEl.value || formDataObj.get('study-level') || '',
-        fieldStudy: fieldStudyEl.value || formDataObj.get('field-study') || '',
-        leaderEmail: leaderEmailEl.value || formDataObj.get('leader-email') || '',
-        leaderPhone: leaderPhoneEl.value || formDataObj.get('leader-phone') || '',
-        cyberKnowledge: cyberKnowledgeEl.value || formDataObj.get('cyber-knowledge') || '',
-        hackathonExperience: hackathonExperienceEl?.value || formDataObj.get('hackathon-experience') || '',
-        hackathonSpecify: hackathonSpecifyEl?.value || formDataObj.get('hackathon-specify') || ''
+        teamName: getValue(teamNameEl, 'team-name'),
+        university: getValue(universityEl, 'university'),
+        leaderName: getValue(leaderNameEl, 'leader-name'),
+        memberName: getValue(memberNameEl, 'member-name'),
+        faculty: getValue(facultyEl, 'faculty'),
+        studyLevel: getValue(studyLevelEl, 'study-level'),
+        fieldStudy: getValue(fieldStudyEl, 'field-study'),
+        leaderEmail: getValue(leaderEmailEl, 'leader-email'),
+        leaderPhone: getValue(leaderPhoneEl, 'leader-phone'),
+        cyberKnowledge: getValue(cyberKnowledgeEl, 'cyber-knowledge'),
+        hackathonExperience: getValue(hackathonExperienceEl, 'hackathon-experience'),
+        hackathonSpecify: getValue(hackathonSpecifyEl, 'hackathon-specify')
     };
     
     // Debug: Log the form data to see what's being sent
@@ -254,6 +261,16 @@ async function handleRegistrationSubmission(event) {
     console.log('team-name value:', document.getElementById('team-name')?.value);
     console.log('university value:', document.getElementById('university')?.value);
     console.log('leader-name value:', document.getElementById('leader-name')?.value);
+    
+    // Check for empty required fields before validation
+    const requiredFields = ['teamName', 'university', 'leaderName', 'memberName', 'faculty', 'studyLevel', 'fieldStudy', 'leaderEmail', 'leaderPhone', 'cyberKnowledge', 'hackathonExperience'];
+    const emptyFields = requiredFields.filter(field => !formData[field] || formData[field].trim() === '');
+    
+    if (emptyFields.length > 0) {
+        console.error('Empty required fields:', emptyFields);
+        showNotification(`Please fill in the following required fields: ${emptyFields.join(', ')}`, 'error');
+        return false;
+    }
     
     // Validate required fields
     if (!validateRegistrationForm(formData)) {
