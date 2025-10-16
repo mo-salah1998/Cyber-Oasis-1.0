@@ -218,6 +218,9 @@ async function handleRegistrationSubmission() {
         submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Submitting...';
         submitBtn.disabled = true;
         
+        // Debug logging
+        console.log('Submitting registration form with data:', formData);
+        
         // Submit to serverless function
         const response = await fetch('/api/register', {
             method: 'POST',
@@ -227,16 +230,24 @@ async function handleRegistrationSubmission() {
             body: JSON.stringify(formData)
         });
         
+        const responseData = await response.json();
+        console.log('Registration response:', responseData);
+        
         if (response.ok) {
             showNotification('Registration submitted successfully! We will contact you soon.', 'success');
             closeRegistrationModal();
             document.getElementById('registration-form').reset();
         } else {
-            throw new Error('Registration failed');
+            // Show specific error message from server
+            const errorMessage = responseData.error || responseData.message || 'Registration failed';
+            console.error('Registration failed with response:', responseData);
+            throw new Error(errorMessage);
         }
     } catch (error) {
         console.error('Registration error:', error);
-        showNotification('Registration failed. Please try again or contact us directly.', 'error');
+        // Show more specific error message
+        const errorMessage = error.message || 'Registration failed. Please try again or contact us directly.';
+        showNotification(errorMessage, 'error');
     } finally {
         // Reset button state
         const submitBtn = document.querySelector('#registration-form button[type="submit"]');

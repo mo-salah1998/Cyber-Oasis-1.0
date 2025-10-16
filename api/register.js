@@ -92,8 +92,13 @@ export default async function handler(req, res) {
         // Save to Google Sheets
         let sheetsResult = null;
         try {
-            sheetsResult = await saveRegistration(registrationData);
-            console.log('Registration saved to Google Sheets:', registrationData);
+            // Check if Google Sheets is configured
+            if (!process.env.GOOGLE_SHEET_ID) {
+                console.warn('Google Sheets not configured - skipping database save');
+            } else {
+                sheetsResult = await saveRegistration(registrationData);
+                console.log('Registration saved to Google Sheets:', registrationData);
+            }
         } catch (error) {
             console.error('Failed to save registration to Google Sheets:', error);
             // Continue with response even if Google Sheets fails
