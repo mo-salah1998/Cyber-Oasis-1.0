@@ -1228,15 +1228,15 @@
                 </p>
             </div>
             
-            <form id="registration-form" class="p-8 space-y-8">
+            <form id="registration-form" class="p-8 space-y-8" method="POST" action="/api/register">
                 <div class="grid md:grid-cols-2 gap-8">
                     <div>
                         <label class="block text-desert-sand font-bold mb-3 text-lg">Team Name (Nickname) *</label>
-                        <input type="text" id="team-name" required class="w-full px-4 py-4 bg-desert-night border border-desert-orange/30 rounded-lg text-white placeholder-gray-400 focus:border-desert-orange focus:outline-none text-lg">
+                        <input type="text" id="team-name" name="team-name" required class="w-full px-4 py-4 bg-desert-night border border-desert-orange/30 rounded-lg text-white placeholder-gray-400 focus:border-desert-orange focus:outline-none text-lg">
                     </div>
                     <div>
                         <label class="block text-desert-sand font-bold mb-3 text-lg">University *</label>
-                        <select id="university" required class="w-full px-4 py-4 bg-desert-night border border-desert-orange/30 rounded-lg text-white focus:border-desert-orange focus:outline-none text-lg">
+                        <select id="university" name="university" required class="w-full px-4 py-4 bg-desert-night border border-desert-orange/30 rounded-lg text-white focus:border-desert-orange focus:outline-none text-lg">
                             <option value="">Select University</option>
                             <option value="university-gabes">University of Gabès (Tunisia)</option>
                             <option value="university-guelma">University 8 May 1945 Guelma (Algeria)</option>
@@ -1249,22 +1249,22 @@
                 <div class="grid md:grid-cols-2 gap-8">
                     <div>
                         <label class="block text-desert-sand font-bold mb-3 text-lg">Team Leader - First Name & Last Name *</label>
-                        <input type="text" id="leader-name" required class="w-full px-4 py-4 bg-desert-night border border-desert-orange/30 rounded-lg text-white placeholder-gray-400 focus:border-desert-orange focus:outline-none text-lg">
+                        <input type="text" id="leader-name" name="leader-name" required class="w-full px-4 py-4 bg-desert-night border border-desert-orange/30 rounded-lg text-white placeholder-gray-400 focus:border-desert-orange focus:outline-none text-lg">
                     </div>
                     <div>
                         <label class="block text-desert-sand font-bold mb-3 text-lg">Team Member - First Name & Last Name *</label>
-                        <input type="text" id="member-name" required class="w-full px-4 py-4 bg-desert-night border border-desert-orange/30 rounded-lg text-white placeholder-gray-400 focus:border-desert-orange focus:outline-none text-lg">
+                        <input type="text" id="member-name" name="member-name" required class="w-full px-4 py-4 bg-desert-night border border-desert-orange/30 rounded-lg text-white placeholder-gray-400 focus:border-desert-orange focus:outline-none text-lg">
                     </div>
                 </div>
 
                 <div class="grid md:grid-cols-2 gap-8">
                     <div>
                         <label class="block text-desert-sand font-bold mb-3 text-lg">Faculty / School / Institute *</label>
-                        <input type="text" id="faculty" required class="w-full px-4 py-4 bg-desert-night border border-desert-orange/30 rounded-lg text-white placeholder-gray-400 focus:border-desert-orange focus:outline-none text-lg">
+                        <input type="text" id="faculty" name="faculty" required class="w-full px-4 py-4 bg-desert-night border border-desert-orange/30 rounded-lg text-white placeholder-gray-400 focus:border-desert-orange focus:outline-none text-lg">
                     </div>
                     <div>
                         <label class="block text-desert-sand font-bold mb-3 text-lg">Level of Study *</label>
-                        <select id="study-level" required class="w-full px-4 py-4 bg-desert-night border border-desert-orange/30 rounded-lg text-white focus:border-desert-orange focus:outline-none text-lg">
+                        <select id="study-level" name="study-level" required class="w-full px-4 py-4 bg-desert-night border border-desert-orange/30 rounded-lg text-white focus:border-desert-orange focus:outline-none text-lg">
                             <option value="">Select Level</option>
                             <option value="bachelor">Bachelor's Student</option>
                             <option value="master">Master's Student</option>
@@ -1277,22 +1277,22 @@
                 <div class="grid md:grid-cols-2 gap-8">
                     <div>
                         <label class="block text-desert-sand font-bold mb-3 text-lg">Field of Study / Major *</label>
-                        <input type="text" id="field-study" required class="w-full px-4 py-4 bg-desert-night border border-desert-orange/30 rounded-lg text-white placeholder-gray-400 focus:border-desert-orange focus:outline-none text-lg">
+                        <input type="text" id="field-study" name="field-study" required class="w-full px-4 py-4 bg-desert-night border border-desert-orange/30 rounded-lg text-white placeholder-gray-400 focus:border-desert-orange focus:outline-none text-lg">
                     </div>
                     <div>
                         <label class="block text-desert-sand font-bold mb-3 text-lg">Team Leader Email Address *</label>
-                        <input type="email" id="leader-email" required class="w-full px-4 py-4 bg-desert-night border border-desert-orange/30 rounded-lg text-white placeholder-gray-400 focus:border-desert-orange focus:outline-none text-lg">
+                        <input type="email" id="leader-email" name="leader-email" required class="w-full px-4 py-4 bg-desert-night border border-desert-orange/30 rounded-lg text-white placeholder-gray-400 focus:border-desert-orange focus:outline-none text-lg">
                     </div>
                 </div>
 
                 <div class="grid md:grid-cols-2 gap-8">
                     <div>
                         <label class="block text-desert-sand font-bold mb-3 text-lg">Team Leader Mobile / WhatsApp Number *</label>
-                        <input type="tel" id="leader-phone" required class="w-full px-4 py-4 bg-desert-night border border-desert-orange/30 rounded-lg text-white placeholder-gray-400 focus:border-desert-orange focus:outline-none text-lg">
+                        <input type="tel" id="leader-phone" name="leader-phone" required class="w-full px-4 py-4 bg-desert-night border border-desert-orange/30 rounded-lg text-white placeholder-gray-400 focus:border-desert-orange focus:outline-none text-lg">
                     </div>
                     <div>
                         <label class="block text-desert-sand font-bold mb-3 text-lg">Previous Knowledge in Cybersecurity *</label>
-                        <select id="cyber-knowledge" required class="w-full px-4 py-4 bg-desert-night border border-desert-orange/30 rounded-lg text-white focus:border-desert-orange focus:outline-none text-lg">
+                        <select id="cyber-knowledge" name="cyber-knowledge" required class="w-full px-4 py-4 bg-desert-night border border-desert-orange/30 rounded-lg text-white focus:border-desert-orange focus:outline-none text-lg">
                             <option value="">Select Level</option>
                             <option value="beginner">Beginner</option>
                             <option value="intermediate">Intermediate</option>
@@ -1317,7 +1317,7 @@
 
                 <div id="hackathon-details" class="hidden">
                     <label class="block text-desert-sand font-bold mb-3 text-lg">If Yes, please specify</label>
-                    <textarea id="hackathon-specify" rows="4" class="w-full px-4 py-4 bg-desert-night border border-desert-orange/30 rounded-lg text-white placeholder-gray-400 focus:border-desert-orange focus:outline-none resize-none text-lg" placeholder="Please describe your previous hackathon experience..."></textarea>
+                    <textarea id="hackathon-specify" name="hackathon-specify" rows="4" class="w-full px-4 py-4 bg-desert-night border border-desert-orange/30 rounded-lg text-white placeholder-gray-400 focus:border-desert-orange focus:outline-none resize-none text-lg" placeholder="Please describe your previous hackathon experience..."></textarea>
                 </div>
 
                 <div class="flex justify-end space-x-6 pt-8 border-t border-desert-orange/30">
