@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Test - Cyber Oasis</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #1a1a1a;
+            color: white;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #333;
+            color: white;
+        }
+        button {
+            background-color: #ea580c;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #dc2626;
+        }
+        button:disabled {
+            background-color: #666;
+            cursor: not-allowed;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 4px;
+            white-space: pre-wrap;
+        }
+        .success {
+            background-color: #065f46;
+            border: 1px solid #10b981;
+        }
+        .error {
+            background-color: #7f1d1d;
+            border: 1px solid #ef4444;
+        }
+        .info {
+            background-color: #1e3a8a;
+            border: 1px solid #3b82f6;
+        }
+    </style>
+</head>
+<body>
+    <h1>Cyber Oasis Registration Test</h1>
+    <p>This page helps test the registration form submission to identify any issues.</p>
+    
+    <form id="test-form">
+        <div class="form-group">
+            <label for="team-name">Team Name *</label>
+            <input type="text" id="team-name" required value="Test Team">
+        </div>
+        
+        <div class="form-group">
+            <label for="university">University *</label>
+            <select id="university" required>
+                <option value="">Select University</option>
+                <option value="university-gabes" selected>University of Gabès (Tunisia)</option>
+                <option value="university-guelma">University 8 May 1945 Guelma (Algeria)</option>
+                <option value="university-zawia">University of Zawia (Libya)</option>
+                <option value="other">Other</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="leader-name">Team Leader Name *</label>
+            <input type="text" id="leader-name" required value="Test Leader">
+        </div>
+        
+        <div class="form-group">
+            <label for="member-name">Team Member Name *</label>
+            <input type="text" id="member-name" required value="Test Member">
+        </div>
+        
+        <div class="form-group">
+            <label for="faculty">Faculty *</label>
+            <input type="text" id="faculty" required value="Computer Science">
+        </div>
+        
+        <div class="form-group">
+            <label for="study-level">Study Level *</label>
+            <select id="study-level" required>
+                <option value="">Select Level</option>
+                <option value="bachelor" selected>Bachelor's Student</option>
+                <option value="master">Master's Student</option>
+                <option value="engineering">Engineering Student</option>
+                <option value="phd">PhD Student</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="field-study">Field of Study *</label>
+            <input type="text" id="field-study" required value="Cybersecurity">
+        </div>
+        
+        <div class="form-group">
+            <label for="leader-email">Leader Email *</label>
+            <input type="email" id="leader-email" required value="test@example.com">
+        </div>
+        
+        <div class="form-group">
+            <label for="leader-phone">Leader Phone *</label>
+            <input type="tel" id="leader-phone" required value="+21612345678">
+        </div>
+        
+        <div class="form-group">
+            <label for="cyber-knowledge">Cyber Knowledge *</label>
+            <select id="cyber-knowledge" required>
+                <option value="">Select Level</option>
+                <option value="beginner" selected>Beginner</option>
+                <option value="intermediate">Intermediate</option>
+                <option value="advanced">Advanced</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label>Hackathon Experience *</label>
+            <label><input type="radio" name="hackathon-experience" value="no" checked> No</label>
+            <label><input type="radio" name="hackathon-experience" value="yes"> Yes</label>
+        </div>
+        
+        <button type="submit" id="submit-btn">Test Registration</button>
+    </form>
+    
+    <div id="result"></div>
+    
+    <script>
+        document.getElementById('test-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submit-btn');
+            const resultDiv = document.getElementById('result');
+            
+            // Show loading state
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Testing...';
+            resultDiv.innerHTML = '';
+            
+            // Collect form data
+            const formData = {
+                teamName: document.getElementById('team-name').value,
+                university: document.getElementById('university').value,
+                leaderName: document.getElementById('leader-name').value,
+                memberName: document.getElementById('member-name').value,
+                faculty: document.getElementById('faculty').value,
+                studyLevel: document.getElementById('study-level').value,
+                fieldStudy: document.getElementById('field-study').value,
+                leaderEmail: document.getElementById('leader-email').value,
+                leaderPhone: document.getElementById('leader-phone').value,
+                cyberKnowledge: document.getElementById('cyber-knowledge').value,
+                hackathonExperience: document.querySelector('input[name="hackathon-experience"]:checked').value,
+                hackathonSpecify: ''
+            };
+            
+            try {
+                console.log('Sending registration data:', formData);
+                
+                const response = await fetch('/api/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+                
+                console.log('Response status:', response.status);
+                console.log('Response headers:', [...response.headers.entries()]);
+                
+                const responseText = await response.text();
+                console.log('Response text:', responseText);
+                
+                let result;
+                try {
+                    result = JSON.parse(responseText);
+                } catch (parseError) {
+                    result = { error: 'Invalid JSON response', raw: responseText };
+                }
+                
+                if (response.ok) {
+                    resultDiv.className = 'result success';
+                    resultDiv.textContent = `✅ SUCCESS!\n\nStatus: ${response.status}\nResponse: ${JSON.stringify(result, null, 2)}`;
+                } else {
+                    resultDiv.className = 'result error';
+                    resultDiv.textContent = `❌ ERROR!\n\nStatus: ${response.status}\nResponse: ${JSON.stringify(result, null, 2)}`;
+                }
+                
+            } catch (error) {
+                console.error('Test error:', error);
+                resultDiv.className = 'result error';
+                resultDiv.textContent = `❌ NETWORK ERROR!\n\nError: ${error.message}\n\nThis usually means:\n1. The API endpoint is not accessible\n2. CORS issues\n3. Network connectivity problems`;
+            } finally {
+                // Reset button
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Test Registration';
+            }
+        });
+        
+        // Test API availability on page load
+        window.addEventListener('load', async function() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.className = 'result info';
+            resultDiv.textContent = 'Testing API availability...';
+            
+            try {
+                const response = await fetch('/api/register', {
+                    method: 'OPTIONS'
+                });
+                
+                if (response.ok) {
+                    resultDiv.textContent = '✅ API endpoint is accessible. You can now test the registration form.';
+                } else {
+                    resultDiv.textContent = `⚠️ API endpoint returned status ${response.status}. There might be an issue.`;
+                }
+            } catch (error) {
+                resultDiv.textContent = `❌ Cannot reach API endpoint: ${error.message}`;
+            }
+        });
+    </script>
+</body>
+</html>

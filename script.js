@@ -228,15 +228,30 @@ async function handleRegistrationSubmission() {
         });
         
         if (response.ok) {
+            const result = await response.json();
             showNotification('Registration submitted successfully! We will contact you soon.', 'success');
             closeRegistrationModal();
             document.getElementById('registration-form').reset();
+            console.log('Registration successful:', result);
         } else {
-            throw new Error('Registration failed');
+            const errorData = await response.json().catch(() => ({ error: 'Unknown error' }));
+            console.error('Registration failed:', errorData);
+            throw new Error(errorData.error || 'Registration failed');
         }
     } catch (error) {
         console.error('Registration error:', error);
-        showNotification('Registration failed. Please try again or contact us directly.', 'error');
+        let errorMessage = 'Registration failed. Please try again or contact us directly.';
+        
+        // Provide more specific error messages
+        if (error.message.includes('fetch')) {
+            errorMessage = 'Network error. Please check your internet connection and try again.';
+        } else if (error.message.includes('timeout')) {
+            errorMessage = 'Request timed out. Please try again.';
+        } else if (error.message) {
+            errorMessage = error.message;
+        }
+        
+        showNotification(errorMessage, 'error');
     } finally {
         // Reset button state
         const submitBtn = document.querySelector('#registration-form button[type="submit"]');

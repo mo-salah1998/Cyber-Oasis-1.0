@@ -8,6 +8,9 @@
     },
     "api/admin.js": {
       "maxDuration": 10
+    },
+    "api/env-check.js": {
+      "maxDuration": 5
     }
   },
   "headers": [
