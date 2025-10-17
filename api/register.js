@@ -30,10 +30,14 @@ export default async function handler(req, res) {
             fieldStudy,
             leaderEmail,
             leaderPhone,
+            countryCode,
             cyberKnowledge,
             hackathonExperience,
             hackathonSpecify
         } = req.body;
+        
+        // Combine country code and phone number if provided separately
+        const fullPhoneNumber = countryCode && leaderPhone ? `${countryCode}${leaderPhone}` : leaderPhone;
         
         // Validate required fields
         const requiredFields = [
@@ -60,7 +64,7 @@ export default async function handler(req, res) {
         
         // Phone validation
         const phoneRegex = /^[\+]?[0-9\s\-\(\)]{10,}$/;
-        if (!phoneRegex.test(leaderPhone)) {
+        if (!phoneRegex.test(fullPhoneNumber)) {
             return res.status(400).json({ 
                 error: 'Invalid phone number format' 
             });
@@ -80,7 +84,7 @@ export default async function handler(req, res) {
             studyLevel,
             fieldStudy,
             leaderEmail,
-            leaderPhone,
+            leaderPhone: fullPhoneNumber,
             cyberKnowledge,
             hackathonExperience,
             hackathonSpecify: hackathonExperience === 'yes' ? hackathonSpecify : null,

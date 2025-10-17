@@ -1238,7 +1238,7 @@
                 <div class="grid md:grid-cols-2 gap-8">
                     <div>
                         <label class="block text-desert-sand font-bold mb-3 text-lg">Team Name (Nickname) *</label>
-                        <input type="text" id="team-name" name="team-name" required class="w-full px-4 py-4 bg-desert-night border border-desert-orange/30 rounded-lg text-white placeholder-gray-400 focus:border-desert-orange focus:outline-none text-lg">
+                        <input type="text" id="team-name" name="team-name" required placeholder="Enter your team nickname" class="w-full px-4 py-4 bg-desert-night border border-desert-orange/30 rounded-lg text-white placeholder-gray-400 focus:border-desert-orange focus:outline-none text-lg">
                     </div>
                     <div>
                         <label class="block text-desert-sand font-bold mb-3 text-lg">University *</label>
@@ -1255,18 +1255,18 @@
                 <div class="grid md:grid-cols-2 gap-8">
                     <div>
                         <label class="block text-desert-sand font-bold mb-3 text-lg">Team Leader - First Name & Last Name *</label>
-                        <input type="text" id="leader-name" name="leader-name" required class="w-full px-4 py-4 bg-desert-night border border-desert-orange/30 rounded-lg text-white placeholder-gray-400 focus:border-desert-orange focus:outline-none text-lg">
+                        <input type="text" id="leader-name" name="leader-name" required placeholder="Enter leader's full name" class="w-full px-4 py-4 bg-desert-night border border-desert-orange/30 rounded-lg text-white placeholder-gray-400 focus:border-desert-orange focus:outline-none text-lg">
                     </div>
                     <div>
                         <label class="block text-desert-sand font-bold mb-3 text-lg">Team Member - First Name & Last Name *</label>
-                        <input type="text" id="member-name" name="member-name" required class="w-full px-4 py-4 bg-desert-night border border-desert-orange/30 rounded-lg text-white placeholder-gray-400 focus:border-desert-orange focus:outline-none text-lg">
+                        <input type="text" id="member-name" name="member-name" required placeholder="Enter member's full name" class="w-full px-4 py-4 bg-desert-night border border-desert-orange/30 rounded-lg text-white placeholder-gray-400 focus:border-desert-orange focus:outline-none text-lg">
                     </div>
                 </div>
 
                 <div class="grid md:grid-cols-2 gap-8">
                     <div>
                         <label class="block text-desert-sand font-bold mb-3 text-lg">Faculty / School / Institute *</label>
-                        <input type="text" id="faculty" name="faculty" required class="w-full px-4 py-4 bg-desert-night border border-desert-orange/30 rounded-lg text-white placeholder-gray-400 focus:border-desert-orange focus:outline-none text-lg">
+                        <input type="text" id="faculty" name="faculty" required placeholder="e.g., Faculty of Computer Science" class="w-full px-4 py-4 bg-desert-night border border-desert-orange/30 rounded-lg text-white placeholder-gray-400 focus:border-desert-orange focus:outline-none text-lg">
                     </div>
                     <div>
                         <label class="block text-desert-sand font-bold mb-3 text-lg">Level of Study *</label>
@@ -1283,18 +1283,52 @@
                 <div class="grid md:grid-cols-2 gap-8">
                     <div>
                         <label class="block text-desert-sand font-bold mb-3 text-lg">Field of Study / Major *</label>
-                        <input type="text" id="field-study" name="field-study" required class="w-full px-4 py-4 bg-desert-night border border-desert-orange/30 rounded-lg text-white placeholder-gray-400 focus:border-desert-orange focus:outline-none text-lg">
+                        <input type="text" id="field-study" name="field-study" required placeholder="e.g., Computer Science, Cybersecurity" class="w-full px-4 py-4 bg-desert-night border border-desert-orange/30 rounded-lg text-white placeholder-gray-400 focus:border-desert-orange focus:outline-none text-lg">
                     </div>
                     <div>
                         <label class="block text-desert-sand font-bold mb-3 text-lg">Team Leader Email Address *</label>
-                        <input type="email" id="leader-email" name="leader-email" required class="w-full px-4 py-4 bg-desert-night border border-desert-orange/30 rounded-lg text-white placeholder-gray-400 focus:border-desert-orange focus:outline-none text-lg">
+                        <input type="email" id="leader-email" name="leader-email" required placeholder="Enter your email address" class="w-full px-4 py-4 bg-desert-night border border-desert-orange/30 rounded-lg text-white placeholder-gray-400 focus:border-desert-orange focus:outline-none text-lg">
                     </div>
                 </div>
 
                 <div class="grid md:grid-cols-2 gap-8">
                     <div>
                         <label class="block text-desert-sand font-bold mb-3 text-lg">Team Leader Mobile / WhatsApp Number *</label>
-                        <input type="tel" id="leader-phone" name="leader-phone" required class="w-full px-4 py-4 bg-desert-night border border-desert-orange/30 rounded-lg text-white placeholder-gray-400 focus:border-desert-orange focus:outline-none text-lg">
+                        <div class="flex gap-2">
+                            <div class="relative">
+                                <select id="country-code" name="country-code" required class="px-4 py-4 pr-10 bg-desert-night border border-desert-orange/30 rounded-lg text-white focus:border-desert-orange focus:outline-none text-lg min-w-[140px] appearance-none cursor-pointer">
+                                <option value="">Code</option>
+                                <option value="+216">🇹🇳 +216</option>
+                                <option value="+213">🇩🇿 +213</option>
+                                <option value="+218">🇱🇾 +218</option>
+                                <option value="+212">🇲🇦 +212</option>
+                                <option value="+33">🇫🇷 +33</option>
+                                <option value="+1">🇺🇸 +1</option>
+                                <option value="+44">🇬🇧 +44</option>
+                                <option value="+49">🇩🇪 +49</option>
+                                <option value="+39">🇮🇹 +39</option>
+                                <option value="+34">🇪🇸 +34</option>
+                                <option value="+90">🇹🇷 +90</option>
+                                <option value="+966">🇸🇦 +966</option>
+                                <option value="+971">🇦🇪 +971</option>
+                                <option value="+20">🇪🇬 +20</option>
+                                <option value="+27">🇿🇦 +27</option>
+                                <option value="+91">🇮🇳 +91</option>
+                                <option value="+86">🇨🇳 +86</option>
+                                <option value="+81">🇯🇵 +81</option>
+                                <option value="+82">🇰🇷 +82</option>
+                                <option value="+55">🇧🇷 +55</option>
+                                <option value="+52">🇲🇽 +52</option>
+                                <option value="+54">🇦🇷 +54</option>
+                                <option value="+61">🇦🇺 +61</option>
+                                <option value="+1">🇨🇦 +1</option>
+                            </select>
+                            <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                <i class="fas fa-chevron-down text-desert-orange"></i>
+                            </div>
+                            </div>
+                            <input type="tel" id="leader-phone" name="leader-phone" required placeholder="Enter your phone number" class="flex-1 px-4 py-4 bg-desert-night border border-desert-orange/30 rounded-lg text-white placeholder-gray-400 focus:border-desert-orange focus:outline-none text-lg">
+                        </div>
                     </div>
                     <div>
                         <label class="block text-desert-sand font-bold mb-3 text-lg">Previous Knowledge in Cybersecurity *</label>
@@ -1323,7 +1357,7 @@
 
                 <div id="hackathon-details" class="hidden">
                     <label class="block text-desert-sand font-bold mb-3 text-lg">If Yes, please specify</label>
-                    <textarea id="hackathon-specify" name="hackathon-specify" rows="4" class="w-full px-4 py-4 bg-desert-night border border-desert-orange/30 rounded-lg text-white placeholder-gray-400 focus:border-desert-orange focus:outline-none resize-none text-lg" placeholder="Please describe your previous hackathon experience..."></textarea>
+                    <textarea id="hackathon-specify" name="hackathon-specify" rows="4" class="w-full px-4 py-4 bg-desert-night border border-desert-orange/30 rounded-lg text-white placeholder-gray-400 focus:border-desert-orange focus:outline-none resize-none text-lg" placeholder="Please describe your previous hackathon experience, competitions, or cybersecurity projects..."></textarea>
                 </div>
 
                 <div class="flex justify-end space-x-6 pt-8 border-t border-desert-orange/30">

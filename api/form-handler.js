@@ -33,6 +33,11 @@ export default async function handler(req, res) {
         
         console.log('Received form data:', formData);
         
+        // Combine country code and phone number
+        const countryCode = formData['country-code'] || formData.countryCode || '';
+        const phoneNumber = formData['leader-phone'] || formData.leaderPhone || '';
+        const fullPhoneNumber = countryCode && phoneNumber ? `${countryCode}${phoneNumber}` : phoneNumber;
+        
         // Map form field names to API field names
         const apiFormData = {
             teamName: formData['team-name'] || formData.teamName || '',
@@ -43,7 +48,7 @@ export default async function handler(req, res) {
             studyLevel: formData['study-level'] || formData.studyLevel || '',
             fieldStudy: formData['field-study'] || formData.fieldStudy || '',
             leaderEmail: formData['leader-email'] || formData.leaderEmail || '',
-            leaderPhone: formData['leader-phone'] || formData.leaderPhone || '',
+            leaderPhone: fullPhoneNumber,
             cyberKnowledge: formData['cyber-knowledge'] || formData.cyberKnowledge || '',
             hackathonExperience: formData['hackathon-experience'] || formData.hackathonExperience || '',
             hackathonSpecify: formData['hackathon-specify'] || formData.hackathonSpecify || ''
