@@ -144,11 +144,36 @@ window.closeRegistrationModal = function() {
     }
 }
 
+// Success modal functions
+window.openSuccessModal = function() {
+    const modal = document.getElementById('success-modal');
+    if (modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+window.closeSuccessModal = function() {
+    const modal = document.getElementById('success-modal');
+    if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+        document.body.style.overflow = 'auto';
+    }
+}
+
 // Close modal when clicking outside
 document.addEventListener('click', function(event) {
-    const modal = document.getElementById('registration-modal');
-    if (event.target === modal) {
+    const registrationModal = document.getElementById('registration-modal');
+    const successModal = document.getElementById('success-modal');
+    
+    if (event.target === registrationModal) {
         closeRegistrationModal();
+    }
+    
+    if (event.target === successModal) {
+        closeSuccessModal();
     }
 });
 
@@ -690,12 +715,20 @@ document.addEventListener('DOMContentLoaded', function() {
     handleErrorMessages();
 });
 
-// Handle error messages from URL parameters
+// Handle error messages and success messages from URL parameters
 function handleErrorMessages() {
     const urlParams = new URLSearchParams(window.location.search);
     const error = urlParams.get('error');
+    const success = urlParams.get('success');
     
-    if (error) {
+    if (success === 'true') {
+        // Show success modal
+        openSuccessModal();
+        
+        // Remove success parameter from URL
+        const newUrl = window.location.pathname;
+        window.history.replaceState({}, document.title, newUrl);
+    } else if (error) {
         const errorMessage = document.getElementById('error-message');
         const errorText = document.getElementById('error-text');
         

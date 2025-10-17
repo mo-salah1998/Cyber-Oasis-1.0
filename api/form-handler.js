@@ -142,8 +142,8 @@ export default async function handler(req, res) {
                                 req.headers['content-type']?.includes('multipart/form-data');
         
         if (isFormSubmission) {
-            // Redirect to success page for form submissions
-            return res.redirect(302, '/success.html');
+            // Redirect to main page with success parameter for form submissions
+            return res.redirect(302, '/?success=true');
         } else {
             // Return JSON response for API calls
             return res.status(200).json({
