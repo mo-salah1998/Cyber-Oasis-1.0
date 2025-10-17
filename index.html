@@ -1272,36 +1272,36 @@
     </div>
 
     <!-- Registration Modal -->
-    <div id="registration-modal" class="fixed inset-0 bg-black/60 backdrop-blur-md z-50 hidden items-center justify-center p-4">
-        <div class="bg-desert-night border border-desert-orange/40 rounded-xl max-w-5xl w-full max-h-[90vh] overflow-y-auto">
-            <div class="p-8 border-b border-desert-orange/30">
-                <div class="flex justify-between items-center">
-                    <h2 class="text-4xl font-bold font-orbitron bg-gradient-to-r from-desert-orange to-desert-sand bg-clip-text text-transparent">Registration Form</h2>
-                    <button onclick="closeRegistrationModal()" class="text-gray-400 hover:text-white text-3xl">
+    <div id="registration-modal" class="fixed inset-0 bg-black/60 backdrop-blur-md z-50 hidden items-center justify-center p-2 sm:p-4">
+        <div class="bg-desert-night border border-desert-orange/40 rounded-xl max-w-5xl w-full max-h-[95vh] sm:max-h-[90vh] overflow-y-auto">
+            <div class="p-4 sm:p-6 lg:p-8 border-b border-desert-orange/30">
+                <div class="flex justify-between items-start sm:items-center">
+                    <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold font-orbitron bg-gradient-to-r from-desert-orange to-desert-sand bg-clip-text text-transparent pr-4">Registration Form</h2>
+                    <button onclick="closeRegistrationModal()" class="text-gray-400 hover:text-white text-2xl sm:text-3xl flex-shrink-0">
                         <i class="fas fa-times"></i>
                     </button>
                 </div>
-                <p class="text-gray-300 mt-4 text-lg">
+                <p class="text-gray-300 mt-4 text-sm sm:text-base lg:text-lg">
                     Cyber Oasis 1.0 – Hack The Dunes<br>
                     Welcome to the First Maghrebian Student Forum & Hackathon in Cybersecurity
                 </p>
             </div>
             
-            <form id="registration-form" class="p-8 space-y-8" method="POST" action="/api/form-handler" enctype="application/x-www-form-urlencoded" onsubmit="return handleFormSubmission(event)">
+            <form id="registration-form" class="p-4 sm:p-6 lg:p-8 space-y-6 sm:space-y-8" method="POST" action="/api/form-handler" enctype="application/x-www-form-urlencoded" onsubmit="return handleFormSubmission(event)">
                 <!-- Error Message Display -->
                 <div id="error-message" class="hidden bg-red-600/20 border border-red-500/50 text-red-300 px-4 py-3 rounded-lg">
                     <i class="fas fa-exclamation-triangle mr-2"></i>
                     <span id="error-text">Please fill in all required fields.</span>
                 </div>
                 
-                <div class="grid md:grid-cols-2 gap-8">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
                     <div>
-                        <label class="block text-desert-sand font-bold mb-3 text-lg">Team Name (Nickname) *</label>
-                        <input type="text" id="team-name" name="team-name" required placeholder="Enter your team nickname" class="w-full px-4 py-4 bg-desert-night border border-desert-orange/30 rounded-lg text-white placeholder-gray-400 focus:border-desert-orange focus:outline-none text-lg">
+                        <label class="block text-desert-sand font-bold mb-2 sm:mb-3 text-base sm:text-lg">Team Name (Nickname) *</label>
+                        <input type="text" id="team-name" name="team-name" required placeholder="Enter your team nickname" class="w-full px-3 sm:px-4 py-3 sm:py-4 bg-desert-night border border-desert-orange/30 rounded-lg text-white placeholder-gray-400 focus:border-desert-orange focus:outline-none text-base sm:text-lg">
                     </div>
                     <div>
-                        <label class="block text-desert-sand font-bold mb-3 text-lg">University *</label>
-                        <select id="university" name="university" required class="w-full px-4 py-4 bg-desert-night border border-desert-orange/30 rounded-lg text-white focus:border-desert-orange focus:outline-none text-lg">
+                        <label class="block text-desert-sand font-bold mb-2 sm:mb-3 text-base sm:text-lg">University *</label>
+                        <select id="university" name="university" required class="w-full px-3 sm:px-4 py-3 sm:py-4 bg-desert-night border border-desert-orange/30 rounded-lg text-white focus:border-desert-orange focus:outline-none text-base sm:text-lg">
                             <option value="">Select University</option>
                             <option value="university-gabes">University of Gabès (Tunisia)</option>
                             <option value="university-guelma">University 8 May 1945 Guelma (Algeria)</option>
@@ -1311,25 +1311,25 @@
                     </div>
                 </div>
 
-                <div class="grid md:grid-cols-2 gap-8">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
                     <div>
-                        <label class="block text-desert-sand font-bold mb-3 text-lg">Team Leader - First Name & Last Name *</label>
-                        <input type="text" id="leader-name" name="leader-name" required placeholder="Enter leader's full name" class="w-full px-4 py-4 bg-desert-night border border-desert-orange/30 rounded-lg text-white placeholder-gray-400 focus:border-desert-orange focus:outline-none text-lg">
+                        <label class="block text-desert-sand font-bold mb-2 sm:mb-3 text-base sm:text-lg">Team Leader - First Name & Last Name *</label>
+                        <input type="text" id="leader-name" name="leader-name" required placeholder="Enter leader's full name" class="w-full px-3 sm:px-4 py-3 sm:py-4 bg-desert-night border border-desert-orange/30 rounded-lg text-white placeholder-gray-400 focus:border-desert-orange focus:outline-none text-base sm:text-lg">
                     </div>
                     <div>
-                        <label class="block text-desert-sand font-bold mb-3 text-lg">Team Member - First Name & Last Name *</label>
-                        <input type="text" id="member-name" name="member-name" required placeholder="Enter member's full name" class="w-full px-4 py-4 bg-desert-night border border-desert-orange/30 rounded-lg text-white placeholder-gray-400 focus:border-desert-orange focus:outline-none text-lg">
+                        <label class="block text-desert-sand font-bold mb-2 sm:mb-3 text-base sm:text-lg">Team Member - First Name & Last Name *</label>
+                        <input type="text" id="member-name" name="member-name" required placeholder="Enter member's full name" class="w-full px-3 sm:px-4 py-3 sm:py-4 bg-desert-night border border-desert-orange/30 rounded-lg text-white placeholder-gray-400 focus:border-desert-orange focus:outline-none text-base sm:text-lg">
                     </div>
                 </div>
 
-                <div class="grid md:grid-cols-2 gap-8">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
                     <div>
-                        <label class="block text-desert-sand font-bold mb-3 text-lg">Faculty / School / Institute *</label>
-                        <input type="text" id="faculty" name="faculty" required placeholder="e.g., Faculty of Computer Science" class="w-full px-4 py-4 bg-desert-night border border-desert-orange/30 rounded-lg text-white placeholder-gray-400 focus:border-desert-orange focus:outline-none text-lg">
+                        <label class="block text-desert-sand font-bold mb-2 sm:mb-3 text-base sm:text-lg">Faculty / School / Institute *</label>
+                        <input type="text" id="faculty" name="faculty" required placeholder="e.g., Faculty of Computer Science" class="w-full px-3 sm:px-4 py-3 sm:py-4 bg-desert-night border border-desert-orange/30 rounded-lg text-white placeholder-gray-400 focus:border-desert-orange focus:outline-none text-base sm:text-lg">
                     </div>
                     <div>
-                        <label class="block text-desert-sand font-bold mb-3 text-lg">Level of Study *</label>
-                        <select id="study-level" name="study-level" required class="w-full px-4 py-4 bg-desert-night border border-desert-orange/30 rounded-lg text-white focus:border-desert-orange focus:outline-none text-lg">
+                        <label class="block text-desert-sand font-bold mb-2 sm:mb-3 text-base sm:text-lg">Level of Study *</label>
+                        <select id="study-level" name="study-level" required class="w-full px-3 sm:px-4 py-3 sm:py-4 bg-desert-night border border-desert-orange/30 rounded-lg text-white focus:border-desert-orange focus:outline-none text-base sm:text-lg">
                             <option value="">Select Level</option>
                             <option value="bachelor">Bachelor's Student</option>
                             <option value="master">Master's Student</option>
@@ -1339,38 +1339,38 @@
                     </div>
                 </div>
 
-                <div class="grid md:grid-cols-2 gap-8">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
                     <div>
-                        <label class="block text-desert-sand font-bold mb-3 text-lg">Field of Study / Major *</label>
-                        <input type="text" id="field-study" name="field-study" required placeholder="e.g., Computer Science, Cybersecurity" class="w-full px-4 py-4 bg-desert-night border border-desert-orange/30 rounded-lg text-white placeholder-gray-400 focus:border-desert-orange focus:outline-none text-lg">
+                        <label class="block text-desert-sand font-bold mb-2 sm:mb-3 text-base sm:text-lg">Field of Study / Major *</label>
+                        <input type="text" id="field-study" name="field-study" required placeholder="e.g., Computer Science, Cybersecurity" class="w-full px-3 sm:px-4 py-3 sm:py-4 bg-desert-night border border-desert-orange/30 rounded-lg text-white placeholder-gray-400 focus:border-desert-orange focus:outline-none text-base sm:text-lg">
                     </div>
                     <div>
-                        <label class="block text-desert-sand font-bold mb-3 text-lg">Team Leader Email Address *</label>
-                        <input type="email" id="leader-email" name="leader-email" required placeholder="Enter your email address" class="w-full px-4 py-4 bg-desert-night border border-desert-orange/30 rounded-lg text-white placeholder-gray-400 focus:border-desert-orange focus:outline-none text-lg">
+                        <label class="block text-desert-sand font-bold mb-2 sm:mb-3 text-base sm:text-lg">Team Leader Email Address *</label>
+                        <input type="email" id="leader-email" name="leader-email" required placeholder="Enter your email address" class="w-full px-3 sm:px-4 py-3 sm:py-4 bg-desert-night border border-desert-orange/30 rounded-lg text-white placeholder-gray-400 focus:border-desert-orange focus:outline-none text-base sm:text-lg">
                     </div>
                 </div>
 
-                <div class="grid md:grid-cols-2 gap-8">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
                     <div>
-                        <label class="block text-desert-sand font-bold mb-3 text-lg">Team Leader Mobile / WhatsApp Number *</label>
-                        <div class="flex gap-2">
-                            <div class="relative">
-                                <select id="country-code" name="country-code" required class="px-4 py-4 pr-10 bg-desert-night border border-desert-orange/30 rounded-lg text-white focus:border-desert-orange focus:outline-none text-lg min-w-[140px] appearance-none cursor-pointer">
+                        <label class="block text-desert-sand font-bold mb-2 sm:mb-3 text-base sm:text-lg">Team Leader Mobile / WhatsApp Number *</label>
+                        <div class="flex flex-col sm:flex-row gap-2 sm:gap-2">
+                            <div class="relative flex-shrink-0">
+                                <select id="country-code" name="country-code" required class="w-full sm:w-auto px-3 sm:px-4 py-3 sm:py-4 pr-8 sm:pr-10 bg-desert-night border border-desert-orange/30 rounded-lg text-white focus:border-desert-orange focus:outline-none text-base sm:text-lg min-w-[120px] sm:min-w-[140px] appearance-none cursor-pointer">
                                 <option value="">Code</option>
                                 <option value="+216">🇹🇳 +216</option>
                                 <option value="+213">🇩🇿 +213</option>
                                 <option value="+218">🇱🇾 +218</option>
                             </select>
-                            <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                                <i class="fas fa-chevron-down text-desert-orange"></i>
+                            <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:pr-3 pointer-events-none">
+                                <i class="fas fa-chevron-down text-desert-orange text-sm sm:text-base"></i>
                             </div>
                             </div>
-                            <input type="tel" id="leader-phone" name="leader-phone" required placeholder="Enter your phone number" class="flex-1 px-4 py-4 bg-desert-night border border-desert-orange/30 rounded-lg text-white placeholder-gray-400 focus:border-desert-orange focus:outline-none text-lg">
+                            <input type="tel" id="leader-phone" name="leader-phone" required placeholder="Enter your phone number" class="flex-1 px-3 sm:px-4 py-3 sm:py-4 bg-desert-night border border-desert-orange/30 rounded-lg text-white placeholder-gray-400 focus:border-desert-orange focus:outline-none text-base sm:text-lg">
                         </div>
                     </div>
                     <div>
-                        <label class="block text-desert-sand font-bold mb-3 text-lg">Previous Knowledge in Cybersecurity *</label>
-                        <select id="cyber-knowledge" name="cyber-knowledge" required class="w-full px-4 py-4 bg-desert-night border border-desert-orange/30 rounded-lg text-white focus:border-desert-orange focus:outline-none text-lg">
+                        <label class="block text-desert-sand font-bold mb-2 sm:mb-3 text-base sm:text-lg">Previous Knowledge in Cybersecurity *</label>
+                        <select id="cyber-knowledge" name="cyber-knowledge" required class="w-full px-3 sm:px-4 py-3 sm:py-4 bg-desert-night border border-desert-orange/30 rounded-lg text-white focus:border-desert-orange focus:outline-none text-base sm:text-lg">
                             <option value="">Select Level</option>
                             <option value="beginner">Beginner</option>
                             <option value="intermediate">Intermediate</option>
@@ -1380,30 +1380,30 @@
                 </div>
 
                 <div>
-                    <label class="block text-desert-sand font-bold mb-4 text-lg">Has your team already participated in other cybersecurity hackathons? *</label>
-                    <div class="space-y-3">
+                    <label class="block text-desert-sand font-bold mb-3 sm:mb-4 text-base sm:text-lg">Has your team already participated in other cybersecurity hackathons? *</label>
+                    <div class="space-y-2 sm:space-y-3">
                         <label class="flex items-center">
-                            <input type="radio" name="hackathon-experience" value="yes" class="mr-4 text-desert-orange text-lg">
-                            <span class="text-gray-300 text-lg">Yes</span>
+                            <input type="radio" name="hackathon-experience" value="yes" class="mr-3 sm:mr-4 text-desert-orange text-base sm:text-lg">
+                            <span class="text-gray-300 text-base sm:text-lg">Yes</span>
                         </label>
                         <label class="flex items-center">
-                            <input type="radio" name="hackathon-experience" value="no" class="mr-4 text-desert-orange text-lg">
-                            <span class="text-gray-300 text-lg">No</span>
+                            <input type="radio" name="hackathon-experience" value="no" class="mr-3 sm:mr-4 text-desert-orange text-base sm:text-lg">
+                            <span class="text-gray-300 text-base sm:text-lg">No</span>
                         </label>
                     </div>
                 </div>
 
                 <div id="hackathon-details" class="hidden">
-                    <label class="block text-desert-sand font-bold mb-3 text-lg">If Yes, please specify</label>
-                    <textarea id="hackathon-specify" name="hackathon-specify" rows="4" class="w-full px-4 py-4 bg-desert-night border border-desert-orange/30 rounded-lg text-white placeholder-gray-400 focus:border-desert-orange focus:outline-none resize-none text-lg" placeholder="Please describe your previous hackathon experience, competitions, or cybersecurity projects..."></textarea>
+                    <label class="block text-desert-sand font-bold mb-2 sm:mb-3 text-base sm:text-lg">If Yes, please specify</label>
+                    <textarea id="hackathon-specify" name="hackathon-specify" rows="4" class="w-full px-3 sm:px-4 py-3 sm:py-4 bg-desert-night border border-desert-orange/30 rounded-lg text-white placeholder-gray-400 focus:border-desert-orange focus:outline-none resize-none text-base sm:text-lg" placeholder="Please describe your previous hackathon experience, competitions, or cybersecurity projects..."></textarea>
                 </div>
 
-                <div class="flex justify-end space-x-6 pt-8 border-t border-desert-orange/30">
-                    <button type="button" onclick="closeRegistrationModal()" class="px-8 py-4 border border-desert-orange text-desert-orange hover:bg-desert-orange hover:text-white rounded-lg font-bold text-lg transition-all">
+                <div class="flex flex-col sm:flex-row justify-end gap-3 sm:gap-6 pt-6 sm:pt-8 border-t border-desert-orange/30">
+                    <button type="button" onclick="closeRegistrationModal()" class="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 border border-desert-orange text-desert-orange hover:bg-desert-orange hover:text-white rounded-lg font-bold text-base sm:text-lg transition-all">
                         Cancel
                     </button>
-                    <button type="submit" class="px-10 py-4 bg-gradient-to-r from-desert-orange to-desert-sand hover:from-orange-600 hover:to-yellow-500 text-white rounded-lg font-bold text-lg transition-all shadow-lg shadow-desert-orange/25">
-                        <i class="fas fa-paper-plane mr-3"></i>Submit Registration
+                    <button type="submit" class="w-full sm:w-auto px-8 sm:px-10 py-3 sm:py-4 bg-gradient-to-r from-desert-orange to-desert-sand hover:from-orange-600 hover:to-yellow-500 text-white rounded-lg font-bold text-base sm:text-lg transition-all shadow-lg shadow-desert-orange/25">
+                        <i class="fas fa-paper-plane mr-2 sm:mr-3"></i>Submit Registration
                     </button>
                 </div>
             </form>
