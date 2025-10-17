@@ -72,8 +72,160 @@ export default async function handler(req, res) {
                                         req.headers['content-type']?.includes('multipart/form-data');
                 
                 if (isFormSubmission) {
-                    // Redirect back to form with error message
-                    return res.redirect(302, `/?error=missing_${field}`);
+                    // Return HTML error page for form submissions
+                    const errorHtml = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#ea580c">
+    <title>Registration Error - Cyber Oasis 1.0</title>
+    <link rel="icon" type="image/png" href="/m (2).png">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="/main.css" rel="stylesheet">
+    <style>
+        .error-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+            padding: 2rem;
+        }
+        
+        .error-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 20px;
+            padding: 3rem;
+            text-align: center;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .error-icon {
+            font-size: 4rem;
+            color: #ef4444;
+            margin-bottom: 1.5rem;
+        }
+        
+        .error-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fbbf24;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 20px rgba(251, 191, 36, 0.5);
+        }
+        
+        .error-message {
+            font-size: 1.2rem;
+            color: #e2e8f0;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #ea580c, #f59e0b);
+            color: white;
+            border: none;
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #dc2626, #ea580c);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(234, 88, 12, 0.3);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: #fbbf24;
+            border: 2px solid #fbbf24;
+        }
+        
+        .btn-secondary:hover {
+            background: #fbbf24;
+            color: #0f172a;
+            transform: translateY(-2px);
+        }
+        
+        @media (max-width: 768px) {
+            .error-container {
+                padding: 1rem;
+            }
+            
+            .error-card {
+                padding: 2rem;
+            }
+            
+            .error-title {
+                font-size: 2rem;
+            }
+            
+            .btn-group {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <div class="error-card">
+            <div class="error-icon">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            
+            <h1 class="error-title">Registration Error</h1>
+            
+            <p class="error-message">
+                Please fill in the <strong>${field}</strong> field and try again.<br>
+                All fields marked with * are required.
+            </p>
+            
+            <div class="btn-group">
+                <a href="/" class="btn btn-primary">
+                    <i class="fas fa-arrow-left"></i>
+                    Back to Registration
+                </a>
+                <a href="/#contact" class="btn btn-secondary">
+                    <i class="fas fa-envelope"></i>
+                    Contact Support
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>`;
+                    
+                    return res.status(400).setHeader('Content-Type', 'text/html').send(errorHtml);
                 } else {
                     // Return JSON error for API calls
                     return res.status(400).json({ 
@@ -88,17 +240,73 @@ export default async function handler(req, res) {
         // Email validation
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(apiFormData.leaderEmail)) {
-            return res.status(400).json({ 
-                error: 'Invalid email format' 
-            });
+            if (isFormSubmission) {
+                return res.status(400).setHeader('Content-Type', 'text/html').send(`
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Error - Cyber Oasis 1.0</title>
+    <link rel="icon" type="image/png" href="/m (2).png">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body { font-family: Arial, sans-serif; background: #0f172a; color: white; margin: 0; padding: 2rem; display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+        .error-card { background: rgba(255,255,255,0.1); padding: 2rem; border-radius: 10px; text-align: center; max-width: 500px; border: 1px solid #ef4444; }
+        .error-icon { font-size: 3rem; color: #ef4444; margin-bottom: 1rem; }
+        .error-title { font-size: 1.5rem; margin-bottom: 1rem; color: #fbbf24; }
+        .error-message { margin-bottom: 2rem; }
+        .btn { padding: 10px 20px; background: #ea580c; color: white; text-decoration: none; border-radius: 5px; display: inline-block; }
+    </style>
+</head>
+<body>
+    <div class="error-card">
+        <div class="error-icon"><i class="fas fa-exclamation-triangle"></i></div>
+        <h1 class="error-title">Registration Error</h1>
+        <p class="error-message">Please enter a valid email address and try again.</p>
+        <a href="/" class="btn">Back to Registration</a>
+    </div>
+</body>
+</html>`);
+            } else {
+                return res.status(400).json({ error: 'Invalid email format' });
+            }
         }
         
         // Phone validation
         const phoneRegex = /^[\+]?[0-9\s\-\(\)]{10,}$/;
-        if (!phoneRegex.test(apiFormData.leaderPhone)) {
-            return res.status(400).json({ 
-                error: 'Invalid phone number format' 
-            });
+        if (!phoneRegex.test(fullPhoneNumber)) {
+            if (isFormSubmission) {
+                return res.status(400).setHeader('Content-Type', 'text/html').send(`
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Error - Cyber Oasis 1.0</title>
+    <link rel="icon" type="image/png" href="/m (2).png">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body { font-family: Arial, sans-serif; background: #0f172a; color: white; margin: 0; padding: 2rem; display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+        .error-card { background: rgba(255,255,255,0.1); padding: 2rem; border-radius: 10px; text-align: center; max-width: 500px; border: 1px solid #ef4444; }
+        .error-icon { font-size: 3rem; color: #ef4444; margin-bottom: 1rem; }
+        .error-title { font-size: 1.5rem; margin-bottom: 1rem; color: #fbbf24; }
+        .error-message { margin-bottom: 2rem; }
+        .btn { padding: 10px 20px; background: #ea580c; color: white; text-decoration: none; border-radius: 5px; display: inline-block; }
+    </style>
+</head>
+<body>
+    <div class="error-card">
+        <div class="error-icon"><i class="fas fa-exclamation-triangle"></i></div>
+        <h1 class="error-title">Registration Error</h1>
+        <p class="error-message">Please enter a valid phone number and try again.</p>
+        <a href="/" class="btn">Back to Registration</a>
+    </div>
+</body>
+</html>`);
+            } else {
+                return res.status(400).json({ error: 'Invalid phone number format' });
+            }
         }
         
         // Generate registration ID
@@ -142,8 +350,222 @@ export default async function handler(req, res) {
                                 req.headers['content-type']?.includes('multipart/form-data');
         
         if (isFormSubmission) {
-            // Redirect to main page with success parameter for form submissions
-            return res.redirect(302, '/?success=true');
+            // Return HTML success page for form submissions
+            const successHtml = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#ea580c">
+    <title>Registration Successful - Cyber Oasis 1.0</title>
+    <link rel="icon" type="image/png" href="/m (2).png">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="/main.css" rel="stylesheet">
+    <style>
+        .success-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+            padding: 2rem;
+        }
+        
+        .success-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            border-radius: 20px;
+            padding: 3rem;
+            text-align: center;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .success-icon {
+            font-size: 4rem;
+            color: #10b981;
+            margin-bottom: 1.5rem;
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+        
+        .success-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fbbf24;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 20px rgba(251, 191, 36, 0.5);
+        }
+        
+        .success-message {
+            font-size: 1.2rem;
+            color: #e2e8f0;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        
+        .success-details {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-left: 4px solid #ea580c;
+        }
+        
+        .success-details h3 {
+            color: #fbbf24;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+        
+        .success-details p {
+            color: #cbd5e1;
+            margin: 0.5rem 0;
+        }
+        
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #ea580c, #f59e0b);
+            color: white;
+            border: none;
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #dc2626, #ea580c);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(234, 88, 12, 0.3);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: #fbbf24;
+            border: 2px solid #fbbf24;
+        }
+        
+        .btn-secondary:hover {
+            background: #fbbf24;
+            color: #0f172a;
+            transform: translateY(-2px);
+        }
+        
+        @media (max-width: 768px) {
+            .success-container {
+                padding: 1rem;
+            }
+            
+            .success-card {
+                padding: 2rem;
+            }
+            
+            .success-title {
+                font-size: 2rem;
+            }
+            
+            .btn-group {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="success-container">
+        <div class="success-card">
+            <div class="success-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            
+            <h1 class="success-title">Registration Successful!</h1>
+            
+            <p class="success-message">
+                Thank you for registering for Cyber Oasis 1.0: Hack the Dunes!<br>
+                We have received your registration and will contact you soon with further details.
+            </p>
+            
+            <div class="success-details">
+                <h3><i class="fas fa-info-circle"></i> What's Next?</h3>
+                <p><i class="fas fa-envelope"></i> You will receive a confirmation email shortly</p>
+                <p><i class="fas fa-calendar"></i> Event details will be sent closer to the date</p>
+                <p><i class="fas fa-users"></i> Join our community for updates and networking</p>
+            </div>
+            
+            <div class="btn-group">
+                <a href="/" class="btn btn-primary">
+                    <i class="fas fa-home"></i>
+                    Back to Home
+                </a>
+                <a href="/#about" class="btn btn-secondary">
+                    <i class="fas fa-info"></i>
+                    Learn More
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Auto-redirect after 10 seconds
+        setTimeout(() => {
+            window.location.href = '/';
+        }, 10000);
+        
+        // Show countdown
+        let countdown = 10;
+        const countdownElement = document.createElement('p');
+        countdownElement.style.color = '#94a3b8';
+        countdownElement.style.marginTop = '1rem';
+        countdownElement.innerHTML = \`Redirecting to home page in <span id="countdown">\${countdown}</span> seconds...\`;
+        document.querySelector('.success-card').appendChild(countdownElement);
+        
+        const countdownInterval = setInterval(() => {
+            countdown--;
+            document.getElementById('countdown').textContent = countdown;
+            if (countdown <= 0) {
+                clearInterval(countdownInterval);
+            }
+        }, 1000);
+    </script>
+</body>
+</html>`;
+            
+            return res.status(200).setHeader('Content-Type', 'text/html').send(successHtml);
         } else {
             // Return JSON response for API calls
             return res.status(200).json({

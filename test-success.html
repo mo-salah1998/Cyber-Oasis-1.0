@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Success Modal</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .desert-night { background-color: #0f172a; }
+        .desert-orange { color: #ea580c; }
+        .desert-sand { color: #fbbf24; }
+    </style>
+</head>
+<body class="desert-night text-white min-h-screen flex items-center justify-center">
+    <div class="text-center">
+        <h1 class="text-4xl font-bold mb-8">Test Success Modal</h1>
+        <button onclick="openSuccessModal()" class="px-6 py-3 bg-desert-orange text-white rounded-lg font-bold text-lg">
+            Test Success Modal
+        </button>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="success-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+        <div class="bg-gradient-to-br from-desert-night/95 to-desert-sand/10 backdrop-blur-sm rounded-2xl border border-green-500/30 shadow-2xl max-w-md w-full">
+            <div class="p-8 text-center">
+                <div class="text-6xl text-green-500 mb-4">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h3 class="text-3xl font-bold text-green-400 mb-4">Registration Successful!</h3>
+                <p class="text-gray-300 mb-6">
+                    Thank you for registering for Cyber Oasis 1.0: Hack the Dunes!<br>
+                    We have received your registration and will contact you soon with further details.
+                </p>
+                <div class="space-y-3 text-left bg-black/20 rounded-lg p-4 mb-6">
+                    <p class="text-sm text-gray-300"><i class="fas fa-envelope text-green-400 mr-2"></i> You will receive a confirmation email shortly</p>
+                    <p class="text-sm text-gray-300"><i class="fas fa-calendar text-green-400 mr-2"></i> Event details will be sent closer to the date</p>
+                    <p class="text-sm text-gray-300"><i class="fas fa-users text-green-400 mr-2"></i> Join our community for updates and networking</p>
+                </div>
+                <button onclick="closeSuccessModal()" class="w-full px-6 py-3 bg-gradient-to-r from-green-600 to-green-500 hover:from-green-700 hover:to-green-600 text-white rounded-lg font-bold text-lg transition-all">
+                    <i class="fas fa-home mr-2"></i>Back to Home
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openSuccessModal() {
+            const modal = document.getElementById('success-modal');
+            if (modal) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeSuccessModal() {
+            const modal = document.getElementById('success-modal');
+            if (modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        // Close modal when clicking outside
+        document.addEventListener('click', function(event) {
+            const successModal = document.getElementById('success-modal');
+            if (event.target === successModal) {
+                closeSuccessModal();
+            }
+        });
+    </script>
+</body>
+</html>
